@@ -3,6 +3,7 @@ import { LocalStorage } from 'quasar'
 const user = {
   state: {
     token: LocalStorage.getItem('token'),
+    roles: [],
   },
 
   mutations: {

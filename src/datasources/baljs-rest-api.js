@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const axiosInstance = axios.create({
-  baseURL: process.env.BALJS_URL,
+  baseURL: process.env.MAIN_BE_URL,
   timeout: 5000
 })
 

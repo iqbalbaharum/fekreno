@@ -1,18 +1,30 @@
+import MainLayout from 'layouts/MainLayout'
 
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: MainLayout,
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
-      { path: 'session', component: () => import('pages/Session.vue') }
+      {
+        path: '',
+        component: () => import('pages/Index.vue')
+      },
+      {
+        path: 'session',
+        meta: {
+          title: 'Session Management',
+          roles: []
+        },
+        component: () => import('pages/Session.vue')
+      }
     ]
   },
 
   {
     path: '/login',
     meta: {
-      auth: false
+      title: 'Login',
+      roles: []
     },
     component: () => import('pages/Auth/Login.vue')
   },
