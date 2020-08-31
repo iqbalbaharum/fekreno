@@ -1,6 +1,7 @@
-import DataSource from './../datasources/baljs-rest-api'
+import datasource from './../datasources/baljs-rest-api'
 import Repository from './Repository'
 import User from './../models/User'
+import qs from 'qs'
 
 const resource = '/user'
 
@@ -23,10 +24,19 @@ export default class UserReposiitory extends Repository {
   }
 
   async login (username, password) {
-    await DataSource.post(`${User.entity}`, {
-      username: username,
-      password: password
+    const response = await datasource({
+      method: 'post',
+      url: `${User.entity}/login`,
+      data: qs.stringify({
+        username: username,
+        password: password
+      }),
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+      }
     })
+
+    console.log(response)
   }
 
   async getInfo() {

@@ -1,20 +1,8 @@
-const RepositoryInterface = {
-  get() {},
-  list() {}
-}
 
-function bind(repositoryName, Interface) {
-  return {
-    ...Object.keys(Interface).reduce((prev, method) => {
-      const resolveableMethod = async (...args) => {
-        const repository = await import(`./repositories/${repositoryName}`);
-        return repository.default[method](...args);
-      };
-      return { ...prev, [method]: resolveableMethod };
-    }, {}),
-  };
-}
+
+import UserRepository from './UserRepository'
 
 export default {
-  userRepository: bind('userRepository', RepositoryInterface)
+  //userRepository: bind('userRepository', RepositoryInterface)
+  user: new UserRepository()
 }

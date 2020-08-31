@@ -1,15 +1,15 @@
 import axios from 'axios'
 
 const axiosInstance = axios.create({
-  baseURL: '',
+  baseURL: process.env.BALJS_URL,
   timeout: 5000
 })
 
 axiosInstance.interceptors.request.use(
   config => {
-    if(store.getters.token) {
-      config.headers['Authorization'] = 'Bearer ' + store.getters.token
-    }
+    //if(store.getters.token) {
+    //  config.headers['Authorization'] = 'Bearer ' + store.getters.token
+    //}
 
     return config
   },
@@ -19,8 +19,5 @@ axiosInstance.interceptors.request.use(
   }
 )
 
-export default ({ Vue  }) => {
-  Vue.prototype.$axios = axiosInstance
-}
+export default axiosInstance
 
-export { axiosInstance }

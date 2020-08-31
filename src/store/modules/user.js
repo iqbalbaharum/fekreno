@@ -1,5 +1,4 @@
 import { LocalStorage } from 'quasar'
-import UserRepo from '../../repositories/UserRepository'
 
 const user = {
   state: {
@@ -23,7 +22,7 @@ const user = {
   actions: {
     Login ({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
-        UserRepo.login(userInfo)
+        this.$repository.user.login(userInfo.username, userInfo.password)
           .then(res => {
             const token = res.data.token
             commit('LOGIN', token)
@@ -39,7 +38,7 @@ const user = {
 
     GetInfo () {
       return new Promise((resolve, reject) => {
-        UserRepo.getInfo()
+        this.$repository.user.getInfo()
           .then(res => {
             resolve(res)
           })

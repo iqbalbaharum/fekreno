@@ -77,6 +77,8 @@
 
 <script>
 import { minLength, required } from 'vuelidate/lib/validators'
+import repository from '../../repositories/RepositoryFactory'
+//const userRepo = repository.userRepository
 
 export default {
   name: 'Login',
@@ -103,11 +105,11 @@ export default {
       this.$v.form.$touch()
 
       this.$store.dispatch('Login', this.form)
-        rthen(res => {
+        .then(res => {
           console.log('success')        
         })
         .catch(err => {
-          console.log('error')
+          console.log(err)
         })
     },
 
