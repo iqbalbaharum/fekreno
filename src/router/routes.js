@@ -7,13 +7,18 @@ const routes = [
     children: [
       {
         path: '',
+        meta: {
+          sidebar: false
+        },
         component: () => import('pages/Index.vue')
       },
       {
         path: 'session',
         meta: {
           title: 'Session Management',
-          roles: []
+          roles: [],
+          sidebar: true,
+          icon: 'school'
         },
         component: () => import('pages/Session.vue')
       }
@@ -24,9 +29,21 @@ const routes = [
     path: '/login',
     meta: {
       title: 'Login',
+      sidebar: false,
       roles: []
     },
     component: () => import('pages/Auth/Login.vue')
+  },
+
+
+  {
+    path: '/first-time-registration',
+    meta: {
+      title: 'First Time Registration',
+      roles: [],
+      sidebar: false
+    },
+    component: () => import('pages/Auth/FirstTimeRegister.vue')
   },
 
   // Always leave this as last one,

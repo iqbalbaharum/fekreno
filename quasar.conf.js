@@ -23,6 +23,7 @@ module.exports = function (/* ctx */) {
       'vuelidate',
       'repository',
       'routing',
+      'sidebar'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css

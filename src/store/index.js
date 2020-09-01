@@ -5,8 +5,7 @@ import getters from './getters'
 import database from '../database'
 
 import user from './modules/user'
-
-// import example from './module-example'
+import app from './modules/app'
 
 Vue.use(Vuex)
 
@@ -22,7 +21,8 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      user
+      user,
+      app
     },
     getters,
     plugins: [VuexORM.install(database)],

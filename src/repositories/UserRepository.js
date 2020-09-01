@@ -36,7 +36,6 @@ export default class UserReposiitory extends Repository {
       }
     })
 
-    console.log(response)
   }
 
   async getInfo() {
