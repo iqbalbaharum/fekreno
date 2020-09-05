@@ -1,4 +1,4 @@
-import { getToken, setToken, removeToken } from './../../utils/token'
+import { getToken, setToken, removeToken } from './../../datasources/localstorage.storage'
 
 const user = {
   state: {
