@@ -11,12 +11,12 @@
             dark
             outlined
             standout
-            label="Username"
+            label="Email"
             color="text-white"
-            v-model.trim="form.username"
-            ref="username"
-            :error="$v.form.username.$error"
-            error-message="Need a valid username"
+            v-model.trim="form.email"
+            ref="email"
+            :error="$v.form.email.$error"
+            error-message="Need a valid email"
           />
 
           <q-input
@@ -76,16 +76,14 @@
 </template>
 
 <script>
-import { minLength, required } from 'vuelidate/lib/validators'
-import repository from '../../repositories/RepositoryFactory'
-//const userRepo = repository.userRepository
+import { minLength, required, email } from 'vuelidate/lib/validators'
 
 export default {
   name: 'Login',
   data() {
     return {
       form: {
-        username: '',
+        email: '',
         password: '',
       },
 
@@ -95,7 +93,7 @@ export default {
 
   validations: {
     form: {
-      username: { required },
+      email: { required, email },
       password: { required, minLength: minLength(4) }
     }
   },
@@ -106,7 +104,7 @@ export default {
 
       this.$store.dispatch('Login', this.form)
         .then(res => {
-          console.log('success')        
+          console.log('success')       
         })
         .catch(err => {
           console.log(err)

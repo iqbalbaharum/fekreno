@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getToken } from '../utils/token'
 
 const axiosInstance = axios.create({
   baseURL: process.env.MAIN_BE_URL,
@@ -7,9 +8,9 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   config => {
-    //if(store.getters.token) {
-    //  config.headers['Authorization'] = 'Bearer ' + store.getters.token
-    //}
+    if(getToken(process.env.MAIN_BE_TOKEN)) {
+      config.headers['Authorization'] = 'Bearer ' + getToken(process.env.MAIN_BE_TOKEN)
+    }
 
     return config
   },

@@ -13,10 +13,32 @@ export default async ({ app, router, store, Vue }) => {
   // URLs which gonna be public access
   const whiteListURL = ['/login']
 
-  router.beforeEach((to, from, next) => {
+  router.beforeEach( async(to, from, next) => {
 
     if(getToken(process.env.MAIN_BE_TOKEN)) {
-      next()
+
+      if(to.path === '/login') {
+        next({ path: '/' })
+      } else {
+        if(store.getters.roles.length === 0) {
+
+          try {
+            await store.dispatch('GetInfo')
+            next({ ...to, replace: true })
+          } catch(err) {
+            console.log(err)
+            store.dispatch('Logout')
+                .then(() => {
+                  console.log('logout')
+                  next({ path: '/login' })
+                })
+          }
+
+        } else {
+          next()
+        }
+
+      }
     } else {
       if (whiteListURL.indexOf(to.path) !== -1) {
         next()

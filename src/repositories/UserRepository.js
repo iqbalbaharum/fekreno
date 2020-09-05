@@ -3,9 +3,7 @@ import Repository from './Repository'
 import User from './../models/User'
 import qs from 'qs'
 
-const resource = '/user'
-
-export default class UserReposiitory extends Repository {
+export default class UserRepository extends Repository {
 
   constructor () {
     super(new User(), datasource)
@@ -23,12 +21,12 @@ export default class UserReposiitory extends Repository {
     await DataSource.post(`${User.entity}`)
   }
 
-  async login (username, password) {
+  async login (email, password) {
     const response = await datasource({
       method: 'post',
       url: `${User.entity}/login`,
       data: qs.stringify({
-        username: username,
+        email: email,
         password: password
       }),
       headers: {
@@ -36,8 +34,22 @@ export default class UserReposiitory extends Repository {
       }
     })
 
+    return response
   }
 
   async getInfo() {
+    const response = await datasource({
+      method: 'get',
+      url: `me`,
+    })
+
+    return response
+  }
+
+  async logout() {
+    await datasource({
+      method: 'post',
+      url: `${User.entity}/user/logout`,
+    })
   }
 }
