@@ -26,7 +26,7 @@
 
     <div class="flex flex-center">
       <databox 
-        title="PWA Sessions" 
+        title="User Sessions" 
         :crud="['delete', 'read']" 
         :editablescol="['session']"
         :rows="sessions" 
