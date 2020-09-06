@@ -54,9 +54,8 @@
         <template v-slot:body="props">
           
           <q-tr :props="props">
-            <q-td v-for="(value, key) in props.row" :align="props.cols.find(element => element.name === key).align" :key="key">
-              
-              <template v-if="key === 'action'">
+            <q-td v-for="(col, index) in props.cols" :key="col.field">
+              <template v-if="index == (props.cols.length - 1) && crud.includes('delete')">
                 <q-btn flat round icon="more_vert">
                   <q-menu
                     anchor="center middle"
@@ -71,9 +70,9 @@
                 </q-btn>
 
               </template>
-
+              
               <template v-else>
-                {{ props.row[key] }}
+                {{ props.row[col.field] }}
                 <q-popup-edit v-if="crud.includes('update') && editablescol.includes(key)" v-model="props.row[key]">
                   <q-input v-model="props.row[key]" dense autofocus />
                 </q-popup-edit>

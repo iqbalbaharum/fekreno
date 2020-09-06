@@ -27,9 +27,9 @@
     <div class="flex flex-center">
       <databox 
         title="PWA Sessions" 
-        :crud="['delete', 'read', 'create', 'update']" 
+        :crud="['delete', 'read']" 
         :editablescol="['session']"
-        :rows="rows" 
+        :rows="sessions" 
         :columns="columns" 
       >
         <template v-slot:create-dialog-body>
@@ -54,6 +54,7 @@
 
 <script>
 import Databox from '../components/Databox'
+import Session from './../models/Session'
 
 export default {
   data() {
@@ -61,21 +62,23 @@ export default {
       data: {
         tabs: 'session'
       },
-      rows: [
-        {
-          session: 'Iqbal',
-          createdAt: '28 Day',
-          signedInAt: '2 days ago',
-          action: ''
-        }
-      ],
       columns: [
-        { name: 'session', align: 'left', label: 'Session', field: 'session', sortable: true },
-        { name: 'createdAt', align: 'center', label: 'Created At', field: 'createdAt', sortable: true },
+        { name: 'session', align: 'left', label: 'Session', field: 'uuid', sortable: true },
+        { name: 'user', align: 'center', label: 'User', field: 'user', sortable: true },
         { name: 'signedInAt', align: 'center', label: 'Signed In', field: 'createdAt', sortable: true },
         { name: 'action', align: 'center', label: 'Action' }
       ]
     }
+  },
+
+  computed: {
+    sessions() {
+      return Session.all()
+    }
+  },
+
+  created() {
+    this.$store.dispatch('GetAllSessions')
   },
 
   components: {

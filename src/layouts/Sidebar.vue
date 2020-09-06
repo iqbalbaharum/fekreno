@@ -8,9 +8,12 @@
         Essential Links
       </q-item-label>
       <EssentialLink
-        v-for="link in essentialLinks"
-        :key="link.title"
-        v-bind="link"
+        v-for="link in menus"
+        :key="link.meta.title"
+        :title="link.meta.title"
+        :caption="link.meta.title"
+        :link="link.path"
+        :icon="link.meta.icon"
       />
     </q-list>
 
@@ -19,12 +22,18 @@
 
 <script>
 import EssentialLink from '../components/EssentialLink'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
     return {
-
     }
+  },
+
+  computed: {
+    ...mapGetters([
+      'menus'
+    ])
   },
 
   components: {

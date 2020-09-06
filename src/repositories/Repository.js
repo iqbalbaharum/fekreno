@@ -10,4 +10,9 @@ export default class Repository {
     this.model.insert({ data: response })
   }
 
+  async listing() {
+    const response = await this.datasource.get(`${this.model.entity}`)
+    this.model.insert({ data: response.data })
+  }
+
 }
