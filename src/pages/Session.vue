@@ -30,7 +30,8 @@
         :crud="['delete', 'read']" 
         :editablescol="['session']"
         :rows="sessions" 
-        :columns="columns" 
+        :columns="columns"
+        @delete="onDelete"
       >
         <template v-slot:create-dialog-body>
           <div class="row q-gutter-sm">
@@ -83,6 +84,12 @@ export default {
 
   components: {
     Databox
+  },
+
+  methods: {
+    onDelete(id) {
+      this.$store.dispatch('DeleteSession', id)
+    }
   }
 }
 </script>

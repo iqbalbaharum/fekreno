@@ -24,6 +24,20 @@ const session = {
       })
     },
 
+    DeleteSession({ commit }, id) {
+      return new Promise(async (resolve, reject) => {
+        this.$repository.session.delete(id)
+          .then(res => {
+            Session.delete(id)
+
+            resolve(res)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    }
+
   }
 }
 

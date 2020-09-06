@@ -11,8 +11,11 @@ export default class Repository {
   }
 
   async listing() {
-    const response = await this.datasource.get(`${this.model.entity}`)
-    this.model.insert({ data: response.data })
+    return await this.datasource.get(`${this.model.entity}`)
+  }
+
+  async delete(id) {
+    return await this.datasource.delete(`${this.model.entity}/${id}`)
   }
 
 }

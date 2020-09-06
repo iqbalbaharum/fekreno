@@ -5,7 +5,7 @@ import Repository from './Repository'
 export default class SessionRepository extends Repository {
 
   constructor () {
-    super(new Session(), datasource)
+    super(Session, datasource)
   }
 
   async listing() {

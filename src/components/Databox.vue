@@ -63,7 +63,7 @@
                   >
                     <q-list style="min-width: 100px">
                       <q-item clickable v-close-popup v-if="crud.includes('delete')">
-                        <q-item-section>Delete session</q-item-section>
+                        <q-item-section @click="onClickDelete(props.row['$id'])">Delete</q-item-section>
                       </q-item>
                     </q-list>
                   </q-menu>
@@ -116,6 +116,12 @@ export default {
     editablescol: {
       type: Array,
       default: () => []
+    }
+  },
+
+  methods: {
+    onClickDelete(id) {
+      this.$emit('delete', id)
     }
   }
 }
