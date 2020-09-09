@@ -6,7 +6,7 @@ import qs from 'qs'
 export default class UserRepository extends Repository {
 
   constructor () {
-    super(new User(), datasource)
+    super(User, datasource)
   }
 
   get() {
@@ -17,8 +17,17 @@ export default class UserRepository extends Repository {
 
   }
 
-  async register() {
-    await DataSource.post(`${User.entity}`)
+  async register(data) {
+    const response = await datasource({
+      method: 'post',
+      url: `${User.entity}`,
+      data: qs.stringify(data),
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+      }
+    })
+
+    return response
   }
 
   async login (email, password) {

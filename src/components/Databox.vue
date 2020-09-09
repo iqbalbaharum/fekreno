@@ -43,7 +43,7 @@
               <div class="flex justify-end q-mt-md q-pa-sm q-gutter-sm">
                 <slot name="create-dialog-footer">
                   <q-btn flat color="primary" label="Cancel" @click="isCreateDialogOpened = false" />
-                  <q-btn color="primary" label="Submit" />
+                  <q-btn color="primary" label="Submit" @click="onClickSubmit" />
                 </slot>
               </div>
             </q-td>
@@ -63,7 +63,7 @@
                   >
                     <q-list style="min-width: 100px">
                       <q-item clickable v-close-popup v-if="crud.includes('delete')">
-                        <q-item-section @click="onClickDelete(props.row['$id'])">Delete</q-item-section>
+                        <q-item-section @click="onClickConfirmation(props.row['$id'])">Delete</q-item-section>
                       </q-item>
                     </q-list>
                   </q-menu>
@@ -73,8 +73,8 @@
               
               <template v-else>
                 {{ props.row[col.field] }}
-                <q-popup-edit v-if="crud.includes('update') && editablescol.includes(key)" v-model="props.row[key]">
-                  <q-input v-model="props.row[key]" dense autofocus />
+                <q-popup-edit v-if="crud.includes('update') && editablescol.includes(col.field)" v-model="props.row[col.field]">
+                  <q-input v-model="props.row[col.field]" dense autofocus />
                 </q-popup-edit>
               </template>
 
@@ -85,6 +85,23 @@
 
       </q-table>
     </div>
+
+    <q-dialog v-if="crud.includes('delete')" v-model="dialog.confirm" persistent>
+      <q-card class="bg-negative text-white">
+        <q-card-section>
+          <div class="text-h6">Are you sure?</div>
+        </q-card-section>
+
+        <q-card-section class="row items-center">          
+          <span class="q-ml-sm">Do you really want to delete these record? This process cannot be undone</span>
+        </q-card-section>
+
+        <q-card-actions align="right" class="bg-white text-dark">
+          <q-btn flat label="Cancel" @click="onClickCancel" />
+          <q-btn flat label="Delete" color="negative" @click="onClickDelete"/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -93,7 +110,10 @@ export default {
   data() {
     return {
       isCreateDialogOpened: false,
-      test: 'test'
+      dialog: {
+        id: '',
+        confirm: false
+      }
     }
   },
 
@@ -120,8 +140,21 @@ export default {
   },
 
   methods: {
-    onClickDelete(id) {
-      this.$emit('delete', id)
+    onClickDelete() {
+      this.$emit('delete', this.dialog.id)
+      this.dialog.id = ''
+      this.dialog.confirm = false
+    },
+    onClickCancel() {
+      this.dialog.id = ''
+      this.dialog.confirm = false
+    },
+    onClickSubmit() {
+      this.$emit('onAdd')
+    },
+    onClickConfirmation(id) {
+      this.dialog.id = id
+      this.dialog.confirm = true
     }
   }
 }

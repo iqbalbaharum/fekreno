@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div class="flex flex-center">
+    <div v-if="data.tabs === 'session'" class="flex flex-center">
       <databox 
         title="User Sessions" 
         :crud="['delete', 'read']" 

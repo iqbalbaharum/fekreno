@@ -5,9 +5,8 @@ export default class Repository {
     this.datasource = datasource
   }
 
-  async create() {
-    const response = await this.datasource.get(`${this.model.entity}`)
-    this.model.insert({ data: response })
+  async create(data) {
+    return await this.datasource.get(`${this.model.entity}`, data)
   }
 
   async listing() {
@@ -18,4 +17,7 @@ export default class Repository {
     return await this.datasource.delete(`${this.model.entity}/${id}`)
   }
 
+  async delete(id) {
+    return await this.datasource.delete(`${this.model.entity}/${id}`)
+  }
 }

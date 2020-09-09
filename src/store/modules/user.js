@@ -1,4 +1,5 @@
 import { getToken, setToken, removeToken } from './../../datasources/localstorage.storage'
+import User from './../../models/User'
 
 const user = {
   state: {
@@ -68,6 +69,49 @@ const user = {
         commit('LOGOUT')
         resolve()
       })
+    },
+
+    GetAllUsers() {
+      return new Promise((resolve, reject) => {
+        this.$repository.user.listing()
+          .then(res => {
+            User.insert({ data: res.data })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
+
+    RegisterUser({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        this.$repository.user.register(data)
+          .then(res => {
+            resolve(res.data)
+            User.insert({ data: res.data })
+            dispatch('GetAllUsers')
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
+
+    DeleteUser({ commit }, id) {
+      return new Promise((resolve, reject) => {
+        this.$repository.user.delete(id)
+          .then(res => {
+            resolve(res)
+            User.delete(id)
+            dispatch('GetAllUsers')
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+
     }
   }
 }

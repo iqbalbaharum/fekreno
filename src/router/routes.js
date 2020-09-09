@@ -21,7 +21,18 @@ const routes = [
           icon: 'school'
         },
         component: () => import('pages/Session.vue')
+      },
+      {
+        path: 'user',
+        meta: {
+          title: 'User Management',
+          roles: [],
+          sidebar: true,
+          icon: 'school'
+        },
+        component: () => import('pages/User.vue')
       }
+
     ]
   },
 
