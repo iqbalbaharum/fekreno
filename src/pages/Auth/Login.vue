@@ -104,7 +104,7 @@ export default {
 
       this.$store.dispatch('Login', this.form)
         .then(res => {
-          console.log('success')       
+          this.$router.push({ path: '/' })       
         })
         .catch(err => {
           console.log(err)
