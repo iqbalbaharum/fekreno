@@ -1,5 +1,6 @@
 import { getToken, setToken, removeToken } from './../../datasources/localstorage.storage'
 import User from './../../models/User'
+import UserRole from './../../models/UserRole'
 
 const user = {
   state: {
@@ -112,6 +113,22 @@ const user = {
           })
       })
 
+    },
+
+    async GetUserRoles({ commit }, id) {
+      let res = await this.$repository.user.getUserRoles(id)
+      const data = res.data
+      
+      for (let role of data) {
+        await UserRole.create({
+          data: {
+            roleId: role.uuid,
+            userId: id
+          }
+        })
+      }
+
+      return res.data
     }
   }
 }

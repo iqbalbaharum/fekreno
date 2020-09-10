@@ -65,6 +65,10 @@
                       <q-item clickable v-close-popup v-if="crud.includes('delete')">
                         <q-item-section @click="onClickConfirmation(props.row['$id'])">Delete</q-item-section>
                       </q-item>
+                      <q-separator v-if="menus.length" />
+                      <q-item clickable v-close-popup v-for="menu in menus" :key="menu.label">
+                        <q-item-section @click="menu.trigger(props.row['$id'])">{{ menu.label }}</q-item-section>
+                      </q-item>
                     </q-list>
                   </q-menu>
                 </q-btn>
@@ -135,6 +139,10 @@ export default {
       default: () => []
     },
     editablescol: {
+      type: Array,
+      default: () => []
+    },
+    menus: {
       type: Array,
       default: () => []
     }

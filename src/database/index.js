@@ -4,6 +4,8 @@ import Session from '../models/Session'
 import Locker from '../models/Locker'
 import Zone from '../models/Zone'
 import Role from '../models/Role'
+// Relation
+import UserRole from '../models/UserRole'
 
 const database = new Database()
 
@@ -12,5 +14,7 @@ database.register(Session)
 database.register(Locker)
 database.register(Zone)
 database.register(Role)
+//
+database.register(UserRole)
 
 export default database

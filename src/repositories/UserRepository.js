@@ -61,4 +61,11 @@ export default class UserRepository extends Repository {
       url: `${User.entity}/user/logout`,
     })
   }
+
+  async getUserRoles(id) {
+    return datasource({
+      method: 'get',
+      url: `users/${id}/roles`,
+    })
+  }
 }

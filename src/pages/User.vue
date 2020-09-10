@@ -25,47 +25,19 @@
     </div>
 
     <div v-if="data.tabs === 'list'" class="flex flex-center">
-      <databox 
-        title="User" 
-        :crud="['create', 'update', 'delete', 'read']" 
-        :editablescol="['mobile', 'email']"
-        :rows="users" 
-        :columns="columns"
-        @delete="onDelete"
-        @onAdd="onAddUser"
-      >
-        <template v-slot:create-dialog-body>
-          <div class="row q-gutter-sm">
-            <div class="col">
-              <q-input outlined v-model="form.user.name" label="Name" />
-            </div>   
-            <div class="col">
-              <q-input outlined v-model="form.user.mobile" label="Mobile" />
-            </div>
-            <div class="col">
-              <q-input outlined v-model="form.user.email" label="Email" />
-            </div>   
-            <div class="col">
-              <q-input outlined type="password" v-model="form.user.password" label="Password" />
-            </div> 
-          </div>
-        </template>
-
-      </databox>
+      <userbox />
     </div>
 
     <div v-if="data.tabs === 'role'" class="flex flex-center">
       <rolebox />
     </div>
 
-
   </div>
 </template>
 
 <script>
-import Databox from '../components/Databox'
-import User from './../models/User'
 import Rolebox from './Tab/Role'
+import Userbox from './Tab/User'
 
 export default {
   data() {
@@ -73,49 +45,12 @@ export default {
       data: {
         tabs: 'list'
       },
-      columns: [
-        { name: 'id', align: 'left', label: 'ID', field: 'uuid' },
-        { name: 'name', align: 'left', label: 'Name', field: 'name', sortable: true },
-        { name: 'email', align: 'left', label: 'Email', field: 'email', sortable: true },
-        { name: 'mobile', align: 'center', label: 'Mobile', field: 'mobile' },
-        { name: 'action', align: 'center', label: 'Action' }
-      ],
-      form: {
-        user: {
-          mobile: '',
-          name: '',
-          email: '',
-          password: ''
-        }
-      }
     }
-  },
-
-  computed: {
-    users() {
-      return User.all()
-    }
-  },
-
-  created() {
-    this.$store.dispatch('GetAllUsers')
   },
 
   components: {
-    Databox,
-    Rolebox
+    Rolebox,
+    Userbox
   },
-
-  methods: {
-    onDelete(id) {
-      this.$store.dispatch('DeleteUser', id)
-    },
-    onAddUser() {
-      this.$store.dispatch('RegisterUser', this.form.user)
-        .then(res => {
-        })
-    },
-
-  }
 }
 </script>
