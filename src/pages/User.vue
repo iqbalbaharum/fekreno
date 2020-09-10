@@ -5,6 +5,7 @@
         <q-breadcrumbs-el label="Home" to="/" />
         <q-breadcrumbs-el label="User Management" />
         <q-breadcrumbs-el label="List" v-if="data.tabs === 'list'" />
+        <q-breadcrumbs-el label="Role" v-if="data.tabs === 'role'" />
       </q-breadcrumbs>
     </div>
 
@@ -18,6 +19,7 @@
           class="text-primary"
         >
           <q-tab name="list" label="Users" />
+          <q-tab name="role" label="Roles" />
         </q-tabs>
       </div>
     </div>
@@ -52,12 +54,18 @@
       </databox>
     </div>
 
+    <div v-if="data.tabs === 'role'" class="flex flex-center">
+      <rolebox />
+    </div>
+
+
   </div>
 </template>
 
 <script>
 import Databox from '../components/Databox'
 import User from './../models/User'
+import Rolebox from './Tab/Role'
 
 export default {
   data() {
@@ -94,7 +102,8 @@ export default {
   },
 
   components: {
-    Databox
+    Databox,
+    Rolebox
   },
 
   methods: {

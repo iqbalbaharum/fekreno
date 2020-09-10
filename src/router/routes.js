@@ -31,6 +31,16 @@ const routes = [
           icon: 'school'
         },
         component: () => import('pages/User.vue')
+      },
+      {
+        path: 'asset',
+        meta: {
+          title: 'Asset Management',
+          roles: [],
+          sidebar: true,
+          icon: 'school'
+        },
+        component: () => import('pages/Assets.vue')
       }
 
     ]

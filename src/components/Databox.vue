@@ -113,7 +113,8 @@ export default {
       dialog: {
         id: '',
         confirm: false
-      }
+      },
+      filter: ''
     }
   },
 
@@ -150,6 +151,7 @@ export default {
       this.dialog.confirm = false
     },
     onClickSubmit() {
+      this.isCreateDialogOpened = false
       this.$emit('onAdd')
     },
     onClickConfirmation(id) {

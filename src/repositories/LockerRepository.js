@@ -1,8 +1,9 @@
-import User from './../models/Locker'
+import Repository from './Repository'
+import Locker from './../models/Locker'
+import datasource from '../datasources/baljs-rest-api'
 
 export default class LockerRepository extends Repository {
-
   constructor () {
-    super(User, datasource)
+    super(Locker, datasource)
   }
 }

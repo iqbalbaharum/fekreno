@@ -6,7 +6,7 @@ export default class Repository {
   }
 
   async create(data) {
-    return await this.datasource.get(`${this.model.entity}`, data)
+    return await this.datasource.post(`${this.model.entity}`, data)
   }
 
   async listing() {

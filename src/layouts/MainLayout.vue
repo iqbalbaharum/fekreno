@@ -12,10 +12,10 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          MaiCuci Admin
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>v0.01</div>
       </q-toolbar>
     </q-header>
 
