@@ -68,4 +68,24 @@ export default class UserRepository extends Repository {
       url: `users/${id}/roles`,
     })
   }
+
+  async assignUserRoles(userId, rid) {
+    return datasource({
+      method: 'post',
+      url: `users/${userId}/roles`,
+      data: {
+        roleId: rid
+      }
+    })
+  }
+
+  async unassignUserRoles(userId, rid) {
+    return datasource({
+      method: 'post',
+      url: `users/${userId}/roles/unassign`,
+      data: {
+        roleId: rid
+      }
+    })
+  }
 }

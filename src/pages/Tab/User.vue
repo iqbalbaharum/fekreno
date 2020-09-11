@@ -29,25 +29,25 @@
 
 	</databox>
 
-	<q-dialog v-model="dialog.role.show">
+	<q-dialog v-model="dialog.show">
 		<q-card style="min-width: 300px;">
 			<q-card-section class="row items-center q-pb-none">
 				<div class="text-h6">Assigning Roles</div>
 				<q-space />
-				<q-btn icon="close" flat round dense v-close-popup />
+				<q-btn icon="close" flat round dense @click="onClickCancel" />
 			</q-card-section>
 
 			<q-card-section>
-				<q-select
-					v-model="dialog.role.user"
-					multiple
-					emit-value
-					map-options
-					:options="options.roles"
-					use-chips
-					stack-label
-					label="Role"
-				/>
+				<q-list separator bordered>
+					<q-item v-for="(role, index) in roles" :key="role.$id">
+						<q-item-section>
+							<q-item-label>{{ role.name }}</q-item-label>
+						</q-item-section>
+						<q-item-section side top>
+							<q-checkbox v-if="dialog.roleArr[index]" v-model="dialog.roleArr[index].value" @input="assignRole(index)" />
+						</q-item-section>
+					</q-item>
+				</q-list>
 			</q-card-section>
 
 		</q-card>
@@ -81,17 +81,16 @@ export default {
 				roles: []
 			},
 			dialog: {
-				role: {
-					show: false,
-					user: []
-				}
+				show: false,
+				userId: '',
+				roleArr: []
 			},
       form: {
         mobile: '',
 				name: '',
 				email: '',
 				password: ''
-      }
+			}
 		}
 	},
 
@@ -136,19 +135,54 @@ export default {
 		},
 		
     async manageRole(id) {
-			this.dialog.role.user = []
+			this.dialog.roleArr = []
 
 			const user = User.query().whereId(id).with('roles').first()
 
-			await this.$store.dispatch('GetUserRoles', id)
-			for await(let role of user.roles) {
-				this.dialog.role.user.push(role.uuid)
+			for await(let arole of this.roles) {
+				this.dialog.roleArr.push({
+					id: arole.uuid,
+					value: false
+				})
 			}
+
+			const userRoles = await this.$store.dispatch('GetUserRoles', id)
+			for await(let urole of userRoles) {
+				let u = this.dialog.roleArr.find(element => element.id === urole.uuid)
+				if(u) {
+					console.log(u.id)
+					u.value = true
+				}
+			}
+
+			this.dialog.userId = id
+			this.dialog.show = true
 			
-			this.dialog.role.show = true
+		},
+		
+		onClickSave() {
 			
-    }
- 
+		},
+
+		onClickCancel() {
+			this.dialog.roleArr = []
+			this.dialog.userId = ''
+			this.dialog.show = false
+		},
+
+		assignRole(index) {
+			
+			const data = {
+				roleId: this.dialog.roleArr[index].id,
+				userId: this.dialog.userId
+			}
+
+			if(this.dialog.roleArr[index].value) {
+				this.$store.dispatch('AssignUserRole', data)
+			} else {
+				this.$store.dispatch('UnassignUserRole', data)
+			}
+		}
   }
 }
 </script>

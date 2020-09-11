@@ -129,6 +129,16 @@ const user = {
       }
 
       return res.data
+    },
+
+    async AssignUserRole({ commit }, data) {
+      let res = await this.$repository.user.assignUserRoles(data.userId, data.roleId)
+      return res.data
+    },
+
+    async UnassignUserRole({ commit }, data) {
+      let res = await this.$repository.user.unassignUserRoles(data.userId, data.roleId)
+      return res.data
     }
   }
 }
