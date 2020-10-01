@@ -4,7 +4,7 @@
       <q-breadcrumbs>
         <q-breadcrumbs-el label="Home" to="/" />
         <q-breadcrumbs-el label="Asset Management" />
-        <q-breadcrumbs-el label="Locker" v-if="data.tabs === 'locker'" />
+        <q-breadcrumbs-el label="Zone" v-if="data.tabs === 'zone'" />
       </q-breadcrumbs>
     </div>
 
@@ -18,7 +18,6 @@
           class="text-primary"
         >
           <q-tab name="zone" label="Zones" />
-          <q-tab name="locker" label="Lockers" />
         </q-tabs>
       </div>
     </div>
@@ -27,16 +26,11 @@
       <zone-box />
     </div>
 
-    <div v-if="data.tabs === 'locker'" class="flex flex-center">
-      <locker-box />
-    </div>
-
   </div>
 </template>
 
 <script>
 import ZoneBox from './Tab/Zone'
-import LockerBox from './Tab/Locker'
 
 export default {
   data() {
@@ -51,12 +45,10 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('GetAllLockers')
   },
 
   components: {
     ZoneBox,
-    LockerBox,
   },
 
   methods: {

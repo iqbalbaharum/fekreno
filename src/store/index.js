@@ -7,7 +7,6 @@ import database from '../database'
 import user from './modules/user'
 import app from './modules/app'
 import session from './modules/session'
-import locker from './modules/locker'
 import zone from './modules/zone'
 import role from './modules/role'
 
@@ -28,7 +27,6 @@ export default function (/* { ssrContext } */) {
       user,
       app,
       session,
-      locker,
       zone,
       role
     },

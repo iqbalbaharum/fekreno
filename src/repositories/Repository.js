@@ -9,8 +9,26 @@ export default class Repository {
     return await this.datasource.post(`${this.model.entity}`, data)
   }
 
-  async listing() {
-    return await this.datasource.get(`${this.model.entity}`)
+  async getById(id, filter) {
+    return await this.datasource.get(
+      `${this.model.entity}/${id}`,
+      {
+        params: {
+          filter: filter
+        }
+      }
+    )
+  }
+
+  async listing(filter) {
+    return await this.datasource.get(
+      `${this.model.entity}`,
+      {
+        params: {
+          filter: filter
+        }
+      }
+    )
   }
 
   async delete(id) {
