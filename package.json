@@ -1,7 +1,7 @@
 {
   "name": "baladmin",
   "version": "0.0.1",
-  "description": "BalAdmin for BalJS",
+  "description": "BalAdmin for KrenoLMS",
   "productName": "BalAdmin App",
   "author": "iqbal <balainkk@gmail.com>",
   "private": true,

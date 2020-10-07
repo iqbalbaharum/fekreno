@@ -1,6 +1,5 @@
 <template>
-  <div style="min-width: 800px">
-    <div class="text-3" v-if="title">{{ title }}</div>
+  <div>
 
     <div class="q-pa-md">
       <q-table

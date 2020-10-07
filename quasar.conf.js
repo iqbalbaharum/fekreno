@@ -22,8 +22,7 @@ module.exports = function (/* ctx */) {
       'axios',
       'vuelidate',
       'repository',
-      'routing',
-      'sidebar'
+      'routing'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -104,7 +103,8 @@ cfg.module.rules.push({
       // Quasar plugins
       plugins: [
         'LocalStorage',
-        'SessionStorage'
+        'SessionStorage',
+        'Loading'
       ]
     },
 
@@ -124,7 +124,7 @@ cfg.module.rules.push({
       manifest: {
         name: `BalAdmin App`,
         short_name: `BalAdmin App`,
-        description: `BalAdmin for BalJS`,
+        description: `BalAdmin for KrenoLMS`,
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',

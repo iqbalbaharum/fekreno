@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Admin
+          
         </q-toolbar-title>
 
         <div>v0.01</div>

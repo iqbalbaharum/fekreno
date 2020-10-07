@@ -3,8 +3,13 @@ import User from '../models/User'
 import Session from '../models/Session'
 import Zone from '../models/Zone'
 import Role from '../models/Role'
+import Track from '../models/Track'
+import Project from '../models/Project'
+import Journal from '../models/Journal'
+import Country from '../models/Country'
 // Relation
 import UserRole from '../models/UserRole'
+import UserTrack from '../models/UserTrack'
 
 const database = new Database()
 
@@ -12,7 +17,12 @@ database.register(User)
 database.register(Session)
 database.register(Zone)
 database.register(Role)
+database.register(Track)
+database.register(Project)
+database.register(Journal)
+database.register(Country)
 //
 database.register(UserRole)
+database.register(UserTrack)
 
 export default database

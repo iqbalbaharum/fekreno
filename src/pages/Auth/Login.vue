@@ -2,7 +2,7 @@
   <div>
     <div class="fullscreen column bg-blue text-white">
       <div class="col-2 q-pa-lg flex flex-center">
-        BALJS
+        KrenoLMS
       </div>
       <div class="col item-centers text-center q-pa-md flex flex-center">
         <div>

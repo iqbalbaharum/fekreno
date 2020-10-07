@@ -5,7 +5,7 @@
         header
         class="text-grey-8"
       >
-        Essential Links
+        Navigation To
       </q-item-label>
       <EssentialLink
         v-for="link in menus"

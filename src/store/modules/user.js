@@ -1,12 +1,15 @@
 import { getToken, setToken, removeToken } from './../../datasources/localstorage.storage'
 import User from './../../models/User'
 import UserRole from './../../models/UserRole'
+import Journal from './../../models/Journal'
+import UserTrack from './../../models/UserTrack'
 
 const user = {
   state: {
     token: getToken(process.env.MAIN_BE_TOKEN),
     roles: [],
     session: '',
+    userId: '',
   },
 
   mutations: {
@@ -26,6 +29,10 @@ const user = {
 
     SET_SESSION: (state, session) => {
       state.session = session
+    },
+
+    SET_USER: (state, userId) => {
+      state.userId = userId
     }
   },
 
@@ -53,6 +60,7 @@ const user = {
             const data = res.data
             commit('SET_ROLES', data.roles)
             commit('SET_SESSION', data.session)
+            commit('SET_USER', data.user)
             resolve(data)
           })
           .catch(err => {
@@ -67,6 +75,7 @@ const user = {
         this.$repository.user.logout()
         commit('SET_ROLES', [])
         commit('SET_SESSION', '')
+        commit('SET_USER', '')
         commit('LOGOUT')
         resolve()
       })
@@ -129,6 +138,40 @@ const user = {
       }
 
       return res.data
+    },
+
+    async GetUserJournal({ commit, rootState }) {
+      return new Promise((resolve, reject) => {
+        this.$repository.user.getUserJournal(rootState.user.userId)
+          .then(res => {
+            // clear table
+            Journal.deleteAll()
+            // insert
+            Journal.insert({ data: res.data })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
+
+    async GetUserTrack({ commit, rootState }) {
+      return new Promise((resolve, reject) => {
+        this.$repository.user.getUserTrack(rootState.user.userId)
+          .then(res => {
+            // clear table
+            UserTrack.deleteAll()
+            // insert
+            UserTrack.insert({ data: res.data })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+      })
     },
 
     async AssignUserRole({ commit }, data) {

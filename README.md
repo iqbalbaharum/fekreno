@@ -1,6 +1,6 @@
 # BalAdmin App (baladmin)
 
-BalAdmin for BalJS
+BalAdmin for KrenoLMS
 
 ## Install the dependencies
 ```bash

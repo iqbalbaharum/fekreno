@@ -24,6 +24,31 @@ export default async ({ app, router, store, Vue }) => {
 
           try {
             await store.dispatch('GetInfo')
+            let links = []
+
+            const routes = router.options.routes.filter(element => element.path === '/')
+
+            if(routes.length === 1) {
+              routes[0].children.forEach(route => {
+                if(route.meta.sidebar) {
+
+                  if(store.getters.roles.includes('master')) {
+                    links.push(route)
+                  } else {
+                    if(route.meta.roles.length) {
+                      if(route.meta.roles.some(element => store.getters.roles.includes(element))) {
+                        links.push(route)
+                      }
+                    } else {
+                      links.push(route)
+                    }
+                  }
+                }
+              })
+            }
+
+            store.dispatch('SetMenu', links)
+
             next({ ...to, replace: true })
           } catch(err) {
             console.log(err)

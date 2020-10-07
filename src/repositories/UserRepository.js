@@ -88,4 +88,18 @@ export default class UserRepository extends Repository {
       }
     })
   }
+
+  async getUserJournal(id) {
+    return datasource({
+      method: 'get',
+      url: `users/${id}/journals`,
+    })
+  }
+
+  async getUserTrack(id) {
+    return datasource({
+      method: 'get',
+      url: `users/${id}/tracks`,
+    })
+  }
 }

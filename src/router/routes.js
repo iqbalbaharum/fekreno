@@ -5,6 +5,26 @@ const routes = [
     path: '/',
     component: MainLayout,
     children: [
+      // user
+      {
+        path: '/track',
+        meta: {
+          title: 'Tracks',
+          sidebar: true,
+          icon: 'school',
+          roles: ['user']
+        },
+        component: () => import('pages/Track.vue')
+      },
+      {
+        path: '/track/:id',
+        meta: {
+          sidebar: false,
+          roles: ['user']
+        },
+        component: () => import('pages/User/Track.vue')
+      },
+      // admin
       {
         path: '',
         meta: {
@@ -13,34 +33,57 @@ const routes = [
         component: () => import('pages/Index.vue')
       },
       {
-        path: 'session',
+        path: '/session',
         meta: {
           title: 'Session Management',
           roles: [],
           sidebar: true,
-          icon: 'school'
+          icon: 'school',
+          roles: ['admin']
         },
         component: () => import('pages/Session.vue')
       },
       {
-        path: 'user',
+        path: '/user',
         meta: {
           title: 'User Management',
           roles: [],
           sidebar: true,
-          icon: 'school'
+          icon: 'school',
+          roles: ['admin']
         },
         component: () => import('pages/User.vue')
       },
       {
-        path: 'asset',
+        path: '/asset',
         meta: {
           title: 'Asset Management',
           roles: [],
           sidebar: true,
-          icon: 'school'
+          icon: 'school',
+          roles: ['admin']
         },
         component: () => import('pages/Assets.vue')
+      },
+      {
+        path: '/learning',
+        meta: {
+          title: 'Learning Management',
+          roles: [],
+          sidebar: true,
+          icon: 'school'
+        },
+        component: () => import('pages/Learning.vue')
+      },
+      {
+        path: '/journal',
+        meta: {
+          title: 'TSA Journal',
+          roles: [],
+          sidebar: true,
+          icon: 'school'
+        },
+        component: () => import('pages/Journal.vue')
       }
 
     ]

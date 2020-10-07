@@ -9,6 +9,10 @@ import app from './modules/app'
 import session from './modules/session'
 import zone from './modules/zone'
 import role from './modules/role'
+import track from './modules/track'
+import project from './modules/project'
+import journal from './modules/journal'
+import country from './modules/country'
 
 Vue.use(Vuex)
 
@@ -28,7 +32,11 @@ export default function (/* { ssrContext } */) {
       app,
       session,
       zone,
-      role
+      role,
+      track,
+      project,
+      journal,
+      country
     },
     getters,
     plugins: [VuexORM.install(database)],
