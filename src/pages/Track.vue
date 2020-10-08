@@ -6,22 +6,40 @@
         <q-breadcrumbs-el label="Track" />
       </q-breadcrumbs>
     </div>
-    <div class="q-pa-lg row justify-center q-gutter-sm">
-      <div class="col-md-4" v-for="(track, index) in alltracks" :key="index">
-        <q-card flat bordered class="track-card" @click="goToSingleTrack(track.id)">
-          <q-card-section horizontal>
-            <q-card-section>
-              <q-avatar color="accent" text-color="white" />   
-            </q-card-section>
-            <q-card-section>
-              <div class="text-h4 q-mb-xs">{{ track.title }}</div>
-              <q-badge color="grey">
-                {{ track.totalProjects }} Projects
-              </q-badge>
-            </q-card-section>       
+    <div class="q-pa-lg row item-start q-gutter-md">
+      <q-card @click="goToSingleTrack(track.id)" class="track-card" v-for="(track, index) in alltracks" :key="index">
+        <q-img :src="track.icon" style="max-width: 200px; height: 200px;" />
+
+        <q-card-section>
+          <div class="row no-wrap items-center">
+            <div class="col text-h6 ellipsis">
+              {{ track.title }}
+            </div>
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <!-- <div class="text-subtitle1">
+            NodeJS, Javascript
+          </div> -->
+          <div class="text-caption text-grey" style="min-height: 20px;">
+            {{ track.description }}
+          </div>
+        </q-card-section>
+      </q-card>
+      <!-- <q-card flat bordered class="track-card" @click="goToSingleTrack(track.id)">
+        <q-card-section horizontal>
+          <q-card-section>
+            <q-avatar color="accent" text-color="white" />   
           </q-card-section>
-        </q-card>
-      </div>
+          <q-card-section>
+            <div class="text-h4 q-mb-xs">{{ track.title }}</div>
+            <q-badge color="grey">
+              {{ track.totalProjects }} Projects
+            </q-badge>
+          </q-card-section>       
+        </q-card-section>
+      </q-card> -->
     </div>
 
   </q-page>
@@ -54,8 +72,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .track-card {
-  width: 
+  width: 100%;
+  max-width: 250px;
+  cursor: pointer;
 }
+
 </style>

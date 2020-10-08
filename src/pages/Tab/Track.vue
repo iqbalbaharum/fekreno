@@ -60,7 +60,7 @@ export default {
         { name: 'title', align: 'left', label: 'Title', field: 'title', sortable: true },
         { name: 'description', align: 'left', label: 'Description', field: 'description', sortable: true },
         { name: 'active', align: 'left', label: 'Active', field: 'active', sortable: true },
-        { name: 'icon', align: 'left', label: 'Icon', field: 'icon', sortable: true },
+        // { name: 'icon', align: 'left', label: 'Icon', field: 'icon', sortable: true },
         { name: 'createdAt', align: 'left', label: 'Created At', field: 'createdAt', sortable: true },
         { name: 'action', align: 'center', label: 'Action' }
       ],

@@ -12,7 +12,7 @@
       <div class="q-mt-sm">{{ track.description }}</div>
       <div class="q-mt-md row justify-end">
         <q-btn color="accent" :loading="joinLoading" @click="onClickJoin">
-          Join the {{ track.title }} Track
+          Join Track
           <template v-slot:loading>
             <q-spinner-hourglass class="on-left" />
             Loading...

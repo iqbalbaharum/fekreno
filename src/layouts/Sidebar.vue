@@ -24,12 +24,6 @@
 
       <q-separator spaced inset />
 
-      <q-item-label
-        header
-        class="text-grey-8"
-      >
-        Navigation To
-      </q-item-label>
       <EssentialLink
         v-for="link in menus"
         :key="link.meta.title"

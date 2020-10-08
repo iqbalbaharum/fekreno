@@ -5,6 +5,16 @@ const routes = [
     path: '/',
     component: MainLayout,
     children: [
+      {
+        path: '/',
+        meta: {
+          title: 'My Account',
+          sidebar: true,
+          icon: 'fas fa-user-circle',
+          roles: ['user']
+        },
+        component: () => import('pages/Index.vue')
+      },
       // user
       {
         path: '/track',
@@ -24,19 +34,11 @@ const routes = [
         },
         component: () => import('pages/User/Track.vue')
       },
-      // admin
-      {
-        path: '',
-        meta: {
-          sidebar: false
-        },
-        component: () => import('pages/Index.vue')
-      },
       {
         path: '/session',
         meta: {
           title: 'Session Management',
-          roles: [],
+          roles: ['admin', 'master'],
           sidebar: true,
           icon: 'school',
           roles: ['admin']
@@ -47,7 +49,7 @@ const routes = [
         path: '/user',
         meta: {
           title: 'User Management',
-          roles: [],
+          roles: ['admin', 'master'],
           sidebar: true,
           icon: 'school',
           roles: ['admin']
@@ -58,7 +60,7 @@ const routes = [
         path: '/asset',
         meta: {
           title: 'Asset Management',
-          roles: [],
+          roles: ['admin', 'master'],
           sidebar: true,
           icon: 'school',
           roles: ['admin']
@@ -69,7 +71,7 @@ const routes = [
         path: '/learning',
         meta: {
           title: 'Learning Management',
-          roles: [],
+          roles: ['admin', 'master'],
           sidebar: true,
           icon: 'school'
         },
@@ -79,7 +81,7 @@ const routes = [
         path: '/journal',
         meta: {
           title: 'TSA Journal',
-          roles: [],
+          roles: ['admin', 'master'],
           sidebar: true,
           icon: 'school'
         },
