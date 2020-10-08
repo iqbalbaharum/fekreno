@@ -131,6 +131,18 @@ const user = {
       })
     },
 
+    RegisterIndividual({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        this.$repository.user.register(data)
+          .then(res => {
+            resolve(res.data)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
+
     DeleteUser({ commit }, id) {
       return new Promise((resolve, reject) => {
         this.$repository.user.delete(id)

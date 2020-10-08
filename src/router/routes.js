@@ -100,14 +100,24 @@ const routes = [
   },
 
 
+  // {
+  //   path: '/first-time-registration',
+  //   meta: {
+  //     title: 'First Time Registration',
+  //     roles: [],
+  //     sidebar: false
+  //   },
+  //   component: () => import('pages/Auth/FirstTimeRegister.vue')
+  // },
+
   {
-    path: '/first-time-registration',
+    path: '/register',
     meta: {
-      title: 'First Time Registration',
-      roles: [],
+      title: 'Registration',
+      roles: ['user'],
       sidebar: false
     },
-    component: () => import('pages/Auth/FirstTimeRegister.vue')
+    component: () => import('pages/Auth/Register.vue')
   },
 
   // Always leave this as last one,
