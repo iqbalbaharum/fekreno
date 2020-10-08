@@ -29,7 +29,7 @@ export default class Journal extends Model {
   static mutators () {
     return {
       category (value) {
-        return value.toUpperCase()
+        return value.charAt(0).toUpperCase() + value.slice(1)
       }
     }
   }

@@ -103,6 +103,9 @@
 
 <script>
 import Country from './../../models/Country'
+import UserProfile from './../../models/UserProfile'
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
@@ -118,6 +121,16 @@ export default {
   },
 
   computed: {
+    ...mapGetters([
+      'name',
+      'mobile'
+    ]),
+
+    userprofile() {
+      let profile = UserProfile.find(this.$route.params.id)
+      Object.assign(this.form, profile)
+      return profile
+    },
     countries() {
       let countries = Country.all()
       let countryOptions = countries.map(country => {
@@ -134,6 +147,7 @@ export default {
 
   created() {
     this.$store.dispatch('GetAllCountries')
+    this.$store.dispatch('GetUserProfile')
   },
 }
 </script>

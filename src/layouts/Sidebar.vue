@@ -1,6 +1,29 @@
 <template>
   <div>
     <q-list>
+      <q-separator spaced inset />
+
+      <q-item>
+        <q-item-section side top>
+          <q-avatar color="primary" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label><span class="text-weight-medium">@iqbalbaharum</span></q-item-label>
+          <q-item-label lines="2"><span class="text-primary">Student</span></q-item-label>
+        </q-item-section>
+      </q-item>
+
+      <q-separator spaced inset />
+
+      <q-item clickable v-rippple>
+        <q-item-section>New Messages</q-item-section>
+        <q-item-section side>
+          <q-badge color="warning">0</q-badge>
+        </q-item-section>
+      </q-item>
+
+      <q-separator spaced inset />
+
       <q-item-label
         header
         class="text-grey-8"
@@ -32,7 +55,8 @@ export default {
 
   computed: {
     ...mapGetters([
-      'menus'
+      'menus',
+      'name'
     ])
   },
 

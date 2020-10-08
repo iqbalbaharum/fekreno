@@ -7,9 +7,11 @@ import Track from '../models/Track'
 import Project from '../models/Project'
 import Journal from '../models/Journal'
 import Country from '../models/Country'
+
 // Relation
 import UserRole from '../models/UserRole'
 import UserTrack from '../models/UserTrack'
+import UserProfile from '../models/UserProfile'
 
 const database = new Database()
 
@@ -24,5 +26,6 @@ database.register(Country)
 //
 database.register(UserRole)
 database.register(UserTrack)
+database.register(UserProfile)
 
 export default database

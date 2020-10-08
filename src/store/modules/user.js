@@ -3,6 +3,7 @@ import User from './../../models/User'
 import UserRole from './../../models/UserRole'
 import Journal from './../../models/Journal'
 import UserTrack from './../../models/UserTrack'
+import UserProfile from './../../models/UserProfile'
 
 const user = {
   state: {
@@ -10,6 +11,9 @@ const user = {
     roles: [],
     session: '',
     userId: '',
+    email: '',
+    mobile: '',
+    name: ''
   },
 
   mutations: {
@@ -33,6 +37,18 @@ const user = {
 
     SET_USER: (state, userId) => {
       state.userId = userId
+    },
+
+    SET_EMAIL: (state, data) => {
+      state.email = data
+    },
+
+    SET_MOBILE: (state, data) => {
+      state.mobile = data
+    },
+
+    SET_NAME: (state, data) => {
+      state.name = data
     }
   },
 
@@ -61,6 +77,9 @@ const user = {
             commit('SET_ROLES', data.roles)
             commit('SET_SESSION', data.session)
             commit('SET_USER', data.user)
+            commit('SET_NAME', data.name)
+            commit('SET_EMAIL', data.email)
+            commit('SET_MOBILE', data.mobile)
             resolve(data)
           })
           .catch(err => {
@@ -76,6 +95,9 @@ const user = {
         commit('SET_ROLES', [])
         commit('SET_SESSION', '')
         commit('SET_USER', '')
+        commit('SET_NAME', '')
+        commit('SET_EMAIL', '')
+        commit('SET_MOBILE', '')
         commit('LOGOUT')
         resolve()
       })
@@ -165,6 +187,20 @@ const user = {
             UserTrack.deleteAll()
             // insert
             UserTrack.insert({ data: res.data })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
+
+    async GetUserProfile({ commit, rootState }) {
+      return new Promise((resolve, reject) => {
+        this.$repository.user.getUserProfile(rootState.user.userId)
+          .then(res => {
+            UserProfile.insert({ data: res.data })
             resolve(res.data)
           })
           .catch(err => {

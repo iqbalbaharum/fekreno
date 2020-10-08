@@ -2,21 +2,22 @@
   <div>
     <q-list separator>
       <q-item clickable :to="`/track/${track.id}`" v-for="(track) in tracks" :key="track.id">
-        <q-item-section avatar top>
-          <q-icon name="account_tree" color="black" size="34px" />
+        <q-item-section avatar>
+          <q-icon name="account_tree" color="warning" />
         </q-item-section>
 
-        <q-item-section top class="col-2 gt-sm">
-          <q-item-label class="q-mt-sm">{{ track.title }}</q-item-label>
+        <q-item-section class="col-4">
+          <q-item-label>{{ track.title }}</q-item-label>
         </q-item-section>
 
-        <q-item-section top>
-          <q-item-label lines="1">
-            <span>{{ track.description }}</span>
+        <q-item-section>
+          <q-item-label caption>
+            Joined {{ date.formatDate(track.createdAt, 'DD MMM YYYY HH:MM A') }}
           </q-item-label>
-          <q-item-label caption lines="1">
-            {{ track.createdAt }}
-          </q-item-label>
+        </q-item-section>
+
+        <q-item-section side>
+          <q-item-label class="text-subtitles">0/12</q-item-label>
         </q-item-section>
       </q-item>
     </q-list>
@@ -26,10 +27,12 @@
 
 <script>
 import UserTrack from './../../models/UserTrack'
+import { date } from 'quasar'
 
 export default {
   data() {
     return {
+      date: date,
       form: {
         type: ''
       },

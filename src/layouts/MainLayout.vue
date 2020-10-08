@@ -15,7 +15,9 @@
           
         </q-toolbar-title>
 
-        <div>v0.01</div>
+        <div>
+          <q-btn flat class="text-warning" @click="onClickLogout">Logout</q-btn>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -91,6 +93,13 @@ export default {
       leftDrawerOpen: false,
       essentialLinks: linksData
     }
-  }
+  },
+
+  methods: {
+    onClickLogout() {
+      this.$store.dispatch('Logout')
+      this.$router.push('/login')
+    }
+  },
 }
 </script>

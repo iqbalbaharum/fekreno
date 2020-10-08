@@ -4,12 +4,14 @@
       <q-btn color="primary" label="Add Journal" @click="onClickAddJournal" />
     </div>
 
-    <q-separator class="q-mb-sm q-mt-sm" />
+    <q-separator class="q-mt-sm" />
 
     <q-list separator>
       <q-item clickable v-for="(journal) in journals" :key="journal.id">
-        <q-item-section avatar top>
-          <q-icon name="account_tree" color="black" size="34px" />
+        <q-item-section avatar>
+          <q-icon v-if="journal.category === 'Personal'" name="fas fa-user" color="accent" />
+          <q-icon v-if="journal.category === 'Wishlist'" name="fas fa-star" color="warning" />
+          <q-icon v-if="journal.category === 'Project'" name="fas fa-folder-open" color="positive" />
         </q-item-section>
 
         <q-item-section top class="col-2 gt-sm">
@@ -21,7 +23,7 @@
             <span>{{ journal.detail }}</span>
           </q-item-label>
           <q-item-label caption lines="1">
-            {{ journal.createdAt }}
+            {{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:MM A') }}
           </q-item-label>
         </q-item-section>
       </q-item>
@@ -66,10 +68,12 @@
 
 <script>
 import Journal from './../../models/Journal'
+import { date } from 'quasar'
 
 export default {
   data() {
     return {
+      date: date,
       form: {
         type: ''
       },
