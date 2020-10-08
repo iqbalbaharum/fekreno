@@ -1,15 +1,20 @@
 <template>
-  <div>
-    <div class="fullscreen column bg-blue text-white">
-      <div class="col-2 q-pa-lg flex flex-center">
-        KrenoLMS
-      </div>
-      <div class="col item-centers text-center q-pa-md flex flex-center">
-        <div>
-          <form class="q-col-gutter-y-md">
-           <q-input
-            dark
-            outlined
+  <div class="fullscreen row">
+    <div class="col">
+    </div>
+    <div class="col bg-primary">
+    </div>
+    <div class="fullscreen flex flex-center">
+      <q-card class="q-pa-md" style="width:400px;">
+        <div class="text-weight-bold text-center q-pb-lg q-gutter-sm">
+          <q-img class="q-mb-md" src="~assets/krenovator.png"/>
+          <div class="text-h4 text-primary">Hello!</div>
+          <div class="text-caption">Sign In to your account</div>
+        </div>
+
+        <div class="q-gutter-sm">
+          <q-input
+            filled
             standout
             label="Email"
             color="text-white"
@@ -20,8 +25,7 @@
           />
 
           <q-input
-            dark
-            outlined
+            filled
             standout
             label="Password"
             color="text-white"
@@ -39,38 +43,35 @@
 
           </q-input>
 
-          <div class="q-gutter-sm">
+          <div class="q-gutter-sm flex flex-center">
             <q-btn
-              color="white"
-              text-color="blue"
+              color="primary"
+              text-color="white"
               label="Sign In"
               no-caps
               @click="login"
             />
             <q-btn
-              color="white"
-              text-color="white"
+              color="primary"
+              text-color="primary"
               outline
               unelevated
               to="/register"
               label="Create Account"
               no-caps
             />
-          </div>
-          <div class="q-mt-sm">
+
             <q-btn
-              color="white"
-              text-color="white"
+              color="primary"
+              text-color="primary"
               flat
               to="/forget"
               label="I forgot my password"
               no-caps />
           </div>
-
-          </form>
         </div>
-      </div>
 
+      </q-card>
     </div>
   </div>
 </template>

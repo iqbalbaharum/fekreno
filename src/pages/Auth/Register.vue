@@ -8,6 +8,7 @@
       <q-card class="q-pa-md" style="width:400px;">
         
         <div class="text-weight-bold text-center q-pb-lg q-gutter-sm">
+          <q-img class="q-mb-md" src="~assets/krenovator.png"/>
           <div class="text-h4 text-primary">Create Account</div>
           <div class="text-caption">Dont have an account? Create your account quickly</div>
         </div>
@@ -60,7 +61,7 @@
 
           <div class="q-mt-md q-gutter-sm text-center">
             <q-btn
-              color="blue"
+              color="primary"
               text-color="white"
               label="Register"
               no-caps
