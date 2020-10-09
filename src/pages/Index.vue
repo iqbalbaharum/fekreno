@@ -11,7 +11,6 @@
             align="start"
           >
             <q-tab name="overview" label="Overview" />
-            <q-tab name="journal" label="Journal" />
             <q-tab name="progress" label="Progress" />
             <q-tab name="profile" label="Profile" />
           </q-tabs>
@@ -26,10 +25,6 @@
 
             <q-tab-panel name="profile">
               <profile-tab />
-            </q-tab-panel>
-
-            <q-tab-panel name="journal">
-              <journal-tab />
             </q-tab-panel>
 
             <q-tab-panel name="progress">
@@ -49,7 +44,6 @@
 <script>
 import OverviewTab from './User/Overview'
 import ProfileTab from './User/Profile'
-import JournalTab from './User/Journal'
 import TrackTab from './User/UserTrack'
 
 export default {
@@ -63,7 +57,6 @@ export default {
   components: {
     OverviewTab,
     ProfileTab,
-    JournalTab,
     TrackTab
   }
 }

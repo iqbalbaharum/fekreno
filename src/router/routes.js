@@ -21,7 +21,7 @@ const routes = [
           title: 'Journals',
           roles: ['user'],
           sidebar: true,
-          icon: 'school'
+          icon: 'fas fa-book'
         },
         component: () => import('pages/User/Journal.vue')
       },
@@ -31,7 +31,7 @@ const routes = [
         meta: {
           title: 'Tracks',
           sidebar: true,
-          icon: 'school',
+          icon: 'fas fa-folder-open',
           roles: ['user']
         },
         component: () => import('pages/Track.vue')
