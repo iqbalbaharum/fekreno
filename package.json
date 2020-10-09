@@ -1,8 +1,8 @@
 {
   "name": "baladmin",
   "version": "0.0.1",
-  "description": "BalAdmin for KrenoLMS",
-  "productName": "BalAdmin App",
+  "description": "Krenovator Learning Management System",
+  "productName": "Krenovator",
   "author": "iqbal <balainkk@gmail.com>",
   "private": true,
   "scripts": {
