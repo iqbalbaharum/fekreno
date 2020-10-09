@@ -28,7 +28,6 @@ const journal = {
         this.$repository.journal.listing(filter)
           .then(res => {
             Journal.insert({ data: res.data })
-
             resolve(res.data)
           })
           .catch(err => {

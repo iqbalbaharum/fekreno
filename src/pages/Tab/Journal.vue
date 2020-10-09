@@ -6,6 +6,7 @@
 			:editablescol="[]"
 			:rows="journals"
       :columns="columns"
+      rowkey="uuid"
 		>
 
 		</databox>
@@ -16,16 +17,22 @@
 <script>
 import Databox from '../../components/Databox'
 import Journal from './../../models/Journal'
+import { date } from 'quasar'
 
 export default {
   data() {
     return {
       columns: [
-        { name: 'id', align: 'left', label: 'ID', field: 'id' },
-        { name: 'user', align: 'left', label: 'User', field: 'userId', sortable: true },
+        { name: 'user', align: 'left', label: 'User', field: row => row.user ? row.user.name : '', sortable: true },
         { name: 'project', align: 'left', label: 'Project', field: 'projectId', sortable: true },
-        { name: 'details', align: 'left', label: 'Detail', field: 'detail', sortable: true },
-        { name: 'createdAt', align: 'left', label: 'Created At', field: 'createdAt', sortable: true },
+        { name: 'detail', required: true, label: 'Detail', align: 'left', field: 'detail', sortable: true },
+        { name: 'createdAt', 
+          required: true, 
+          align: 'left', 
+          label: 'Created At', 
+          field: 'createdAt', 
+          sortable: true, format: (val) => date.formatDate(val, 'DD MMM YYYY HH:MM A'),
+          style: 'width: 100px', },
       ]
     }
   },

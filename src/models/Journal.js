@@ -20,7 +20,7 @@ export default class Journal extends Model {
       category: this.attr(''),
 
       // relation
-      user: this.belongsTo(User, 'uuid'),
+      user: this.belongsTo(User, 'userId'),
       project: this.belongsTo(Project, 'id')
     }
 

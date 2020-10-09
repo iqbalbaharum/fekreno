@@ -20,7 +20,7 @@
 
       <q-separator spaced inset />
 
-      <q-item clickable v-rippple>
+      <q-item clickable v-ripple>
         <q-item-section>New Messages</q-item-section>
         <q-item-section side>
           <q-badge color="warning">0</q-badge>

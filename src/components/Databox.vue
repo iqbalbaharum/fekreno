@@ -5,6 +5,10 @@
       <q-table
         :data="rows"
         :columns="columns"
+        :row-key="rowkey"
+        rows-per-page-options="0"
+        wrap-cells="true"
+        grid
       >
 
         <template v-slot:top-left>
@@ -50,7 +54,7 @@
 
         </template>
         
-        <template v-slot:body="props">
+        <template v-slot:body="props" v-if="crud.includes(['delete', 'update'])">
           
           <q-tr :props="props">
             <q-td v-for="(col, index) in props.cols" :key="col.field">
@@ -128,6 +132,9 @@ export default {
     crud: {
       type: Array,
       default: () => ['read']
+    },
+    rowkey: {
+      type: String
     },
     rows: {
       type: Array,

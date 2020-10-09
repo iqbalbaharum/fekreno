@@ -45,8 +45,7 @@ export default {
   components: { Sidebar },
   data () {
     return {
-      leftDrawerOpen: false,
-      essentialLinks: linksData
+      leftDrawerOpen: false
     }
   },
 
