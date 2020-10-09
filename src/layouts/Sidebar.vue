@@ -7,9 +7,14 @@
         <q-item-section side top>
           <q-avatar color="primary" />
         </q-item-section>
-        <q-item-section>
-          <q-item-label><span class="text-weight-medium">@iqbalbaharum</span></q-item-label>
-          <q-item-label lines="2"><span class="text-primary">Student</span></q-item-label>
+        <q-item-section lines="2">
+          <q-item-label><span class="text-weight-medium">{{ name }}</span></q-item-label>
+          <q-item-label>
+            <q-chip square size="sm" v-for="role in roles" :key="role" color="primary" class="text-white text-capitalize">
+              <q-avatar icon="fas fa-check" color="green" text-color="white" />
+              {{ role }}
+            </q-chip>
+          </q-item-label>
         </q-item-section>
       </q-item>
 
@@ -50,7 +55,8 @@ export default {
   computed: {
     ...mapGetters([
       'menus',
-      'name'
+      'name',
+      'roles'
     ])
   },
 
