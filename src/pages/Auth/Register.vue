@@ -81,12 +81,33 @@
           </div>
         </div>
       </q-card>
+      
+      <prompt 
+        :show="dialog.success"
+        boxtype="success"
+        :buttons="['continue']"
+        icon="fas fa-check-circle"
+        title="Registration Successful"
+        body="Congratulations, your account has been succesfully created"
+        @continue="onClickContinue" />
+
+      <prompt 
+        :show="dialog.alert"
+        boxtype="alert"
+        :buttons="['ok']"
+        icon="fas fa-bomb"
+        title="Registration Error"
+        body="Oh no, please contact customer service"
+        @ok="onClickOk" />
+      
+
     </div>
   </div>
 </template>
 
 <script>
 import { minLength, required, email } from 'vuelidate/lib/validators'
+import Prompt from './../../components/Prompt'
 
 export default {
   data() {
@@ -97,8 +118,16 @@ export default {
         email: '',
         mobile: ''
       },
-      type: 'password'
+      type: 'password',
+      dialog: {
+        success: false,
+        alert: false,
+      }
     }
+  },
+
+  components: {
+    Prompt
   },
 
   validations: {
@@ -116,9 +145,9 @@ export default {
 
       try {
         let res = await this.$store.dispatch('RegisterIndividual', this.form)
-        this.$router.push('/login')
+        this.dialog.success = true
       } catch (err) {
-        
+        this.dialog.alert = true        
       }
     },
 
@@ -128,6 +157,14 @@ export default {
       } else {
         this.type = 'password'
       }
+    },
+
+    onClickOk() {
+      // this.$router.push('/login')
+    },
+
+    onClickContinue() {
+      this.$router.push('/login')
     }
   }
 }
