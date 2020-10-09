@@ -89,10 +89,13 @@ export default class UserRepository extends Repository {
     })
   }
 
-  async getUserJournal(id) {
+  async getUserJournal(id, filter) {
     return datasource({
       method: 'get',
       url: `users/${id}/journals`,
+      params: {
+        filter: filter
+      }
     })
   }
 

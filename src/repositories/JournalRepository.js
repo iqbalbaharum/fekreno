@@ -6,4 +6,8 @@ export default class JournalRepository extends Repository {
   constructor () {
     super(Journal, datasource)
   }
+
+  async createComment(id, data) {
+    return await this.datasource.post(`${Journal.entity}/${id}/comments`, data)
+  }
 }

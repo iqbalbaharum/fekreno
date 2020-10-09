@@ -117,6 +117,20 @@ const user = {
       })
     },
 
+    GetUserByID({ commit }, id) {
+      return new Promise((resolve, reject) => {
+        this.$repository.user.getById(id)
+          .then(res => {
+            User.insert({ data: res.data })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
+
     RegisterUser({ commit }, data) {
       return new Promise((resolve, reject) => {
         this.$repository.user.register(data)
@@ -176,7 +190,18 @@ const user = {
 
     async GetUserJournal({ commit, rootState }) {
       return new Promise((resolve, reject) => {
-        this.$repository.user.getUserJournal(rootState.user.userId)
+
+        let filter = {
+          order: ["createdAt DESC"],
+          include: [
+            {
+              relation: "comments",
+              include: [{ relation: "user" }]
+            }
+          ]
+        }
+
+        this.$repository.user.getUserJournal(rootState.user.userId, filter)
           .then(res => {
             // clear table
             Journal.deleteAll()

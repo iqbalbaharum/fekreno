@@ -7,6 +7,7 @@ import Track from '../models/Track'
 import Project from '../models/Project'
 import Journal from '../models/Journal'
 import Country from '../models/Country'
+import Comment from '../models/Comment'
 
 // Relation
 import UserRole from '../models/UserRole'
@@ -23,6 +24,7 @@ database.register(Track)
 database.register(Project)
 database.register(Journal)
 database.register(Country)
+database.register(Comment)
 //
 database.register(UserRole)
 database.register(UserTrack)

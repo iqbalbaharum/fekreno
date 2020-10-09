@@ -1,33 +1,23 @@
 <template>
   <div>
-    <div class="q-pa-sm flex justify-end">
-      <q-btn color="primary" label="Add Journal" @click="onClickAddJournal" />
+    <div class="q-pa-md q-gutter-sm">
+      <q-breadcrumbs>
+        <q-breadcrumbs-el label="Home" to="/" />
+        <q-breadcrumbs-el label="Journal" />
+      </q-breadcrumbs>
     </div>
 
-    <q-separator class="q-mt-sm" />
-
-    <q-list separator>
-      <q-item clickable v-for="(journal) in journals" :key="journal.id">
-        <q-item-section avatar>
-          <q-icon v-if="journal.category === 'Personal'" name="fas fa-user" color="accent" />
-          <q-icon v-if="journal.category === 'Wishlist'" name="fas fa-star" color="warning" />
-          <q-icon v-if="journal.category === 'Project'" name="fas fa-folder-open" color="positive" />
-        </q-item-section>
-
-        <q-item-section top class="col-2 gt-sm">
-          <q-item-label class="q-mt-sm">{{ journal.category }}</q-item-label>
-        </q-item-section>
-
-        <q-item-section top>
-          <q-item-label lines="1">
-            <span>{{ journal.detail }}</span>
-          </q-item-label>
-          <q-item-label caption lines="1">
-            {{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:MM A') }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>
+    <div class="q-pa-md row justify-end">
+      <q-btn @click="onClickAddJournal" color="primary" icon="fas fa-plus" label="Add Journal" />
+    </div>
+    
+    <div class="q-pa-md">
+      <q-list class="q-gutter-sm">
+        <q-item v-for="(journal) in journals" :key="journal.id">
+          <journal-item :journal="journal" />
+        </q-item>
+      </q-list>
+    </div>
 
     <!-- DIALOG -->
     <q-dialog v-model="dialog.show" position="bottom">
@@ -49,10 +39,15 @@
         <q-space />
 
         <div class="col-12">
-          <q-input
+          <!-- <q-input
             v-model="form.detail"
             type="textarea"
             label="Details"
+          /> -->
+          <q-editor 
+            v-model="form.detail"
+            min-height="5rem"
+            :toolbar="[]"
           />
         </div>
         </q-card-section>
@@ -67,6 +62,7 @@
 </template>
 
 <script>
+import JournalItem from './../../components/JournalItem'
 import Journal from './../../models/Journal'
 import { date } from 'quasar'
 
@@ -75,7 +71,8 @@ export default {
     return {
       date: date,
       form: {
-        type: ''
+        type: '',
+        detail: ''
       },
 
       options: [
@@ -93,6 +90,10 @@ export default {
         show: false
       }
     }
+  },
+
+  components: {
+    JournalItem
   },
 
   computed: {

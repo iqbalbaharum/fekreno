@@ -15,6 +15,16 @@ const routes = [
         },
         component: () => import('pages/Index.vue')
       },
+      {
+        path: '/journal',
+        meta: {
+          title: 'Journals',
+          roles: ['user'],
+          sidebar: true,
+          icon: 'school'
+        },
+        component: () => import('pages/User/Journal.vue')
+      },
       // user
       {
         path: '/track',
@@ -34,6 +44,8 @@ const routes = [
         },
         component: () => import('pages/User/Track.vue')
       },
+
+      //admin
       {
         path: '/session',
         meta: {
@@ -78,7 +90,7 @@ const routes = [
         component: () => import('pages/Learning.vue')
       },
       {
-        path: '/journal',
+        path: '/admin/journal',
         meta: {
           title: 'TSA Journal',
           roles: ['admin', 'master'],

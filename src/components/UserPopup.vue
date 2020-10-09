@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-btn round flat size="xs" icon="fas fa-user" color="grey">
+    <q-btn round flat size="xs" icon="fas fa-user" color="grey" v-if="popup">
       <q-menu>
         <div class="bg-primary text-white row no-wrap q-pa-md">
           <div class="column">
@@ -10,7 +10,7 @@
           </div>
         </div>
       </q-menu>
-    </q-btn> {{ username }}
+    </q-btn> {{ user.name }}
   </div>
 </template>
 
@@ -30,12 +30,16 @@ export default {
     }
   },
 
+  mounted() {
+    this.$store.dispatch('GetUserByID', this.id)
+  },
+
   props: {
     id: {
       type: String
     },
-    username: {
-      type: String
+    popup: {
+      type: Boolean
     }
   }
 }

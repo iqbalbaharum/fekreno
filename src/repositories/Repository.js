@@ -38,4 +38,8 @@ export default class Repository {
   async delete(id) {
     return await this.datasource.delete(`${this.model.entity}/${id}`)
   }
+
+  async updateById(id, data) {
+    return await this.datasource.patch(`${this.model.entity}/${id}`, data)
+  }
 }
