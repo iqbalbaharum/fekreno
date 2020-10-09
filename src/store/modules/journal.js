@@ -1,6 +1,4 @@
 import Journal from './../../models/Journal'
-import User from './../../models/User'
-import Project from './../../models/Project'
 
 const journal = {
 	state: {
@@ -15,6 +13,7 @@ const journal = {
 		GetAllJournals() {
       return new Promise((resolve, reject) => {
         let filter = {
+          order: ["createdAt DESC"],
           include: [
             {
               relation: "project"

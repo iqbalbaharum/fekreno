@@ -1,39 +1,51 @@
 <template>
-  <div>
-    <databox 
-			title="Journal" 
-			:crud="['read']" 
-			:editablescol="[]"
-			:rows="journals"
-      :columns="columns"
-      rowkey="uuid"
-		>
+  <div class="q-pa-md">
+    <q-list class="q-gutter-sm">
+      <q-item v-for="(journal) in journals" :key="journal.id">
+        <q-card style="min-width: 100%">
+          <q-item>
+            <q-item-section avatar class="q-py-sm">
+              <q-icon v-if="journal.category === 'Personal'" name="fas fa-user" color="accent" />
+              <q-icon v-if="journal.category === 'Wishlist'" name="fas fa-star" color="warning" />
+              <q-icon v-if="journal.category === 'Project'" name="fas fa-folder-open" color="positive" />
+            </q-item-section>
 
-		</databox>
+            <q-item-section>
+              <q-item-label class="text-weight-bold"><user-popup :id="journal.userId" :username="journal.user ? journal.user.name : ''" /></q-item-label>
+              <q-item-label class="text-capitalize text-caption">{{ journal.category }}</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-separator />
+
+          <q-card-section horizontal>
+            <q-card-section>
+              {{ journal.detail }}
+            </q-card-section>
+          </q-card-section>
+
+          <q-card-section>
+            <q-item-label caption>
+              {{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:MM A') }}
+            </q-item-label>
+          </q-card-section>
+          
+        </q-card>
+      </q-item>
+    </q-list>
 
   </div>
 </template>
 
 <script>
-import Databox from '../../components/Databox'
 import Journal from './../../models/Journal'
 import { date } from 'quasar'
+import UserPopup from '../../components/UserPopup'
 
 export default {
   data() {
     return {
-      columns: [
-        { name: 'user', align: 'left', label: 'User', field: row => row.user ? row.user.name : '', sortable: true },
-        { name: 'project', align: 'left', label: 'Project', field: 'projectId', sortable: true },
-        { name: 'detail', required: true, label: 'Detail', align: 'left', field: 'detail', sortable: true },
-        { name: 'createdAt', 
-          required: true, 
-          align: 'left', 
-          label: 'Created At', 
-          field: 'createdAt', 
-          sortable: true, format: (val) => date.formatDate(val, 'DD MMM YYYY HH:MM A'),
-          style: 'width: 100px', },
-      ]
+      date: date
     }
   },
 
@@ -48,7 +60,7 @@ export default {
   },
 
   components: {
-    Databox
+    UserPopup
   },
 
   methods: {

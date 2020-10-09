@@ -50,7 +50,7 @@
                 </slot>
               </div>
             </q-td>
-          </q-tr>
+          </q-tr> 
 
         </template>
         
