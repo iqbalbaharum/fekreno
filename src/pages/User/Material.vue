@@ -31,6 +31,7 @@
                     <q-card-section>
                       <div class="text-h6 ellipsis text-capitalize">
                         <a target="_blank" :href="material.url">{{ material.title }}</a>
+                        <q-btn flat label="Edit" v-if="userId === material.userId" @click="onClickEdit(material)" />
                       </div>
                       <div class="q-mt-md">
                         <div class="text-grey overflow-auto">
@@ -44,7 +45,7 @@
                         name="fas fa-circle" 
                         :class="{ 
                           'text-primary': material.reviewStatus === 'pending', 
-                          'text-positive': material.reviewStatus === 'review',
+                          'text-positive': material.reviewStatus === 'good',
                           'text-negative': material.reviewStatus === 'bad',  
                         }" 
                       /> 
@@ -100,7 +101,7 @@
               v-model="form.type" 
               emit-value 
               :options="options"
-              label="Category" />
+              label="Type" />
           </div>
 
           <div class="col-12">
@@ -134,6 +135,7 @@
 <script>
 import Material from './../../models/Material'
 import { date } from 'quasar'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -143,7 +145,8 @@ export default {
         description: ''
       },
       dialog: {
-        show: false
+        show: false,
+        update: false,
       },
       options: [
         {
@@ -173,7 +176,10 @@ export default {
   computed: {
     materials() {
       return Material.query().withAll().get()
-    }
+    },
+    ...mapGetters([
+      'userId'
+    ])
   },
 
   created() {
@@ -189,13 +195,24 @@ export default {
         description: ''
       }
       this.dialog.show = true
+      this.dialog.update = false
     },
 
     onClickSubmit() {
-      this.$store.dispatch('AddMaterial', this.form)
+      
+      let func
+
+      if(this.dialog.update) {
+        func = 'UpdateMaterial'
+      } else {
+        func = 'AddMaterial'
+      }
+
+      this.$store.dispatch(func, this.form)
         .then(res => {
           this.form = {}
           this.dialog.show = false
+          this.dialog.update = false
         })
         .catch(err => {
           console.log(err)
@@ -204,6 +221,22 @@ export default {
 
     onClickCancel() {
       this.dialog.show = false
+    },
+
+    onClickEdit(material) {
+
+      this.form = {
+        materialId: material.id,
+        title: material.title,
+        type: material.type,
+        url: material.url,
+        description: material.description,
+        reviewStatus: 'pending',
+        remark: ''
+      }
+
+      this.dialog.show = true
+      this.dialog.update = true
     },
 
     timeDifference(previous) {
