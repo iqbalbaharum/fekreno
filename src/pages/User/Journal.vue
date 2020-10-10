@@ -8,7 +8,7 @@
     </div>
 
     <div class="q-pa-md row justify-end">
-      <q-btn @click="onClickAddJournal" color="primary" icon="fas fa-plus" label="Add Journal" />
+      <q-btn @click="onClickAddJournal" color="primary" icon="fas fa-plus" label="Journal" />
     </div>
     
     <div class="q-pa-md">

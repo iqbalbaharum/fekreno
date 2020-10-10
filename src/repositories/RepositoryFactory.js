@@ -8,6 +8,7 @@ import TrackRepository from './TrackRepository'
 import ProjectRepository from './ProjectRepository'
 import JournalRepository from './JournalRepository'
 import CountryRepository from './CountryRepository'
+import MaterialRepository from './MaterialRepository'
 
 export default {
   //userRepository: bind('userRepository', RepositoryInterface)
@@ -18,5 +19,6 @@ export default {
   track: new TrackRepository(),
   project: new ProjectRepository(),
   journal: new JournalRepository(),
-  country: new CountryRepository()
+  country: new CountryRepository(),
+  material: new MaterialRepository()
 }

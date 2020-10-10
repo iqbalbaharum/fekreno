@@ -10,9 +10,7 @@
 
 <script>
 import JournalItem from './../../components/JournalItem'
-
 import Journal from './../../models/Journal'
-import { date } from 'quasar'
 
 export default {
   data() {

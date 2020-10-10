@@ -13,6 +13,7 @@ import track from './modules/track'
 import project from './modules/project'
 import journal from './modules/journal'
 import country from './modules/country'
+import material from './modules/material'
 
 Vue.use(Vuex)
 
@@ -36,7 +37,8 @@ export default function (/* { ssrContext } */) {
       track,
       project,
       journal,
-      country
+      country,
+      material
     },
     getters,
     plugins: [VuexORM.install(database)],

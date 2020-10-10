@@ -148,6 +148,7 @@ export default {
       dt.journalId = this.journal.id
       dt.status = status
 
+      this.progress = true
       this.$store.dispatch('UpdateJournal', dt)
         .then(res => {
           this.progress = false

@@ -19,9 +19,6 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <!-- <div class="text-subtitle1">
-            NodeJS, Javascript
-          </div> -->
           <div class="text-caption text-grey" style="min-height: 20px;">
             {{ track.description }}
           </div>

@@ -25,6 +25,16 @@ const routes = [
         },
         component: () => import('pages/User/Journal.vue')
       },
+      {
+        path: '/material',
+        meta: {
+          title: 'Learning Materials',
+          roles: ['user'],
+          sidebar: true,
+          icon: 'fas fa-stream'
+        },
+        component: () => import('pages/User/Material.vue')
+      },
       // user
       {
         path: '/track',
@@ -98,6 +108,16 @@ const routes = [
           icon: 'school'
         },
         component: () => import('pages/Journal.vue')
+      },
+      {
+        path: '/admin/material',
+        meta: {
+          title: 'Material Management',
+          roles: ['admin', 'master'],
+          sidebar: true,
+          icon: 'school'
+        },
+        component: () => import('pages/Material.vue')
       }
 
     ]
