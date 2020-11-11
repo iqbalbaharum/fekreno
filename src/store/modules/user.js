@@ -255,6 +255,18 @@ const user = {
     async UnassignUserRole({ commit }, data) {
       let res = await this.$repository.user.unassignUserRoles(data.userId, data.roleId)
       return res.data
+    },
+
+    async UpdateUserProfile({ commit, rootState }, data) {
+      this.$repository.user.updateUserProfile(rootState.user.userId, data)
+        .then(res => {
+          UserProfile.update({ where: rootState.user.userId, data: data })
+          resolve(res.data)
+        })
+        .catch(err => {
+          console.log(err)
+          reject(err)
+        })
     }
   }
 }

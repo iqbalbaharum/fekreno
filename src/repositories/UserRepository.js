@@ -112,4 +112,8 @@ export default class UserRepository extends Repository {
       url: `users/${id}/profile`,
     })
   }
+
+  async updateUserProfile(id, data) {
+    return await datasource.patch(`users/${id}/profile`, data)
+  }
 }

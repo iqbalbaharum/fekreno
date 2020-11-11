@@ -8,7 +8,8 @@ export default class Country extends Model {
 
   static fields () {
     return {
-      alpha3code: this.attr(''),
+      alpha2Code: this.attr(''),
+      alpha3Code: this.attr(''),
       name: this.attr(''),
       flag: this.attr('')
     }
