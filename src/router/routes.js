@@ -16,6 +16,16 @@ const routes = [
         component: () => import('pages/Index.vue')
       },
       {
+        path: '/projects',
+        meta: {
+          title: 'Projects',
+          roles: ['user'],
+          sidebar: true,
+          icon: 'fas fa-book'
+        },
+        component: () => import('pages/User/Project.vue')
+      },
+      {
         path: '/journal',
         meta: {
           title: 'Journals',
