@@ -99,13 +99,6 @@ export default class UserRepository extends Repository {
     })
   }
 
-  async getUserTrack(id) {
-    return datasource({
-      method: 'get',
-      url: `users/${id}/tracks`,
-    })
-  }
-
   async getUserProfile(id) {
     return datasource({
       method: 'get',

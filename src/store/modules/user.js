@@ -2,7 +2,6 @@ import { getToken, setToken, removeToken } from './../../datasources/localstorag
 import User from './../../models/User'
 import UserRole from './../../models/UserRole'
 import Journal from './../../models/Journal'
-import UserTrack from './../../models/UserTrack'
 import UserProfile from './../../models/UserProfile'
 
 const user = {
@@ -207,23 +206,6 @@ const user = {
             Journal.deleteAll()
             // insert
             Journal.insert({ data: res.data })
-            resolve(res.data)
-          })
-          .catch(err => {
-            console.log(err)
-            reject(err)
-          })
-      })
-    },
-
-    async GetUserTrack({ commit, rootState }) {
-      return new Promise((resolve, reject) => {
-        this.$repository.user.getUserTrack(rootState.user.userId)
-          .then(res => {
-            // clear table
-            UserTrack.deleteAll()
-            // insert
-            UserTrack.insert({ data: res.data })
             resolve(res.data)
           })
           .catch(err => {

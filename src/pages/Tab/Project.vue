@@ -1,100 +1,92 @@
 <template>
   <div>
-    <databox 
-			title="Project" 
-			:crud="['create', 'update', 'delete', 'read']" 
-			:editablescol="[]"
-			:rows="projects" 
-			:columns="columns"
-			@onAdd="onAdd"
-		>
-			<template v-slot:create-dialog-body>
-				<div class="q-gutter-sm">
-          <div class="row">
-            <div class="col-12">
-              <q-input outlined v-model="form.title" label="Title" />
-            </div>
+    <div class="row">
+      <div class="col-8 q-pa-lg">
+        <div class="q-mb-md">
+          <div class="row justify-end q-py-md">
+            <q-btn no-caps label="New Project" color="black" icon="add" @click="onClickAddProject" />
           </div>
-          <div class="row">
-            <div class="col-12">
-              <q-input type="textarea" outlined v-model="form.description" label="Description" />
-            </div>
-          </div>
+        </div>
 
-          <div class="row">
-            <div class="col-8">
-              <q-input outlined v-model="form.icon" label="Icon URL" />
-            </div>
+        <project-list />
+      </div>
+    </div>
+
+    <q-dialog v-model="dialog.isShow" position="bottom">
+      <q-card style="width: 500px">
+        <q-item-section class="q-pa-md bg-primary text-white">
+          <q-item-label>New Project</q-item-label>
+        </q-item-section>
+
+        <q-card-section class="row q-gutter-sm justify-center">
+          <div class="col-12">
+            <q-input filled v-model="form.title" label="Title" />
           </div>
 
-          <div class="row">
-            <div class="col-12">
-              <q-toggle
-                v-model="form.active"
-                color="primary"
-                label="Active"
-                checked-icon="check"
-                unchecked-icon="clear"
-                left-label
-              />
-            </div>
+          <div class="col-12">
+            <q-input type="textarea" filled v-model="form.description" placeholder="Description" />
           </div>
-          
-				</div>
-			</template>
 
-		</databox>
+          <div class="col-12">
+            <q-editor v-model="form.requirements" min-height="10rem" :toolbar="[]" placeholder="Requirements" />
+          </div>
 
+          <div class="col-12">
+            <q-input filled v-model="form.icon" label="Icon URL" />
+          </div>
+        </q-card-section>
+
+        <q-card-section class="row q-gutter-md justify-between">
+          <q-btn color="primary" label="Submit" @click="onClickSubmit" />
+          <q-btn flat color="negative" label="Cancel" @click="onClickCancel" />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
-import Databox from '../../components/Databox'
-import Project from './../../models/Project'
+import ProjectList from "./../../components/ProjectList";
 
 export default {
   data() {
     return {
-      columns: [
-        { name: 'id', align: 'left', label: 'ID', field: 'id' },
-        { name: 'title', align: 'left', label: 'Title', field: 'title', sortable: true },
-        { name: 'description', align: 'left', label: 'Description', field: 'description', sortable: true },
-        { name: 'active', align: 'left', label: 'Active', field: 'active', sortable: true },
-        { name: 'icon', align: 'left', label: 'Icon', field: 'icon', sortable: true },
-        { name: 'createdAt', align: 'left', label: 'Created At', field: 'createdAt', sortable: true },
-        { name: 'action', align: 'center', label: 'Action' }
-      ],
       form: {
-        title: '',
-        description: '',
+        title: "",
+        description: "",
+        requirements: "",
         active: false,
-        icon: '',
-      }
-    }
-  },
-
-  computed: {
-    projects() {
-      return Project.all()
-    }
-  },
-
-  created() {
-    this.$store.dispatch('GetAllProjects')
+        icon: "",
+      },
+      dialog: {
+        isShow: false,
+      },
+    };
   },
 
   components: {
-    Databox
+    ProjectList,
+  },
+
+  created() {
+    this.$store.dispatch("GetAllProjects");
   },
 
   methods: {
-    onDelete(id) {
-      this.$store.dispatch('DeleteProject', id)
+    onClickAddProject() {
+      this.dialog.isShow = true;
     },
-    onAdd() {
-			this.$store.dispatch('AddProject', this.form)
+    async onClickSubmit() {
+      try {
+        await this.$store.dispatch("AddProject", this.form);
+        this.dialog.isShow = false;
+      } catch (e) {
+        console.log(e);
+      }
     },
-
-  }
-}
+    onClickCancel() {
+      this.dialog.isShow = false;
+    },
+  },
+};
 </script>

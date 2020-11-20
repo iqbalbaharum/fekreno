@@ -9,11 +9,13 @@ import app from './modules/app'
 import session from './modules/session'
 import zone from './modules/zone'
 import role from './modules/role'
-import track from './modules/track'
 import project from './modules/project'
 import journal from './modules/journal'
 import country from './modules/country'
 import material from './modules/material'
+import devenvironment from './modules/devenvironment'
+import repository from './modules/repository'
+import position from './modules/position'
 
 Vue.use(Vuex)
 
@@ -34,11 +36,13 @@ export default function (/* { ssrContext } */) {
       session,
       zone,
       role,
-      track,
       project,
       journal,
       country,
-      material
+      material,
+      devenvironment,
+      repository,
+      position
     },
     getters,
     plugins: [VuexORM.install(database)],

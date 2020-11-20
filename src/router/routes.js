@@ -23,6 +23,16 @@ const routes = [
           sidebar: true,
           icon: 'fas fa-book'
         },
+        component: () => import('pages/User/Projects.vue')
+      },
+      {
+        path: '/project/:id',
+        meta: {
+          title: 'Project',
+          roles: ['user'],
+          sidebar: false,
+          icon: 'fas fa-book'
+        },
         component: () => import('pages/User/Project.vue')
       },
       {
@@ -44,25 +54,6 @@ const routes = [
           icon: 'fas fa-stream'
         },
         component: () => import('pages/User/Material.vue')
-      },
-      // user
-      {
-        path: '/track',
-        meta: {
-          title: 'Tracks',
-          sidebar: true,
-          icon: 'fas fa-folder-open',
-          roles: ['user']
-        },
-        component: () => import('pages/Track.vue')
-      },
-      {
-        path: '/track/:id',
-        meta: {
-          sidebar: false,
-          roles: ['user']
-        },
-        component: () => import('pages/User/Track.vue')
       },
 
       //admin
@@ -89,45 +80,34 @@ const routes = [
         component: () => import('pages/User.vue')
       },
       {
-        path: '/asset',
+        path: '/admin/environment',
         meta: {
-          title: 'Asset Management',
-          roles: ['admin', 'master'],
-          sidebar: true,
-          icon: 'school',
-          roles: ['admin']
-        },
-        component: () => import('pages/Assets.vue')
-      },
-      {
-        path: '/learning',
-        meta: {
-          title: 'Learning Management',
+          title: 'Environment Management',
           roles: ['admin', 'master'],
           sidebar: true,
           icon: 'school'
         },
-        component: () => import('pages/Learning.vue')
+        component: () => import('pages/Environment.vue')
       },
       {
-        path: '/admin/journal',
+        path: '/admin/project',
         meta: {
-          title: 'TSA Journal',
+          title: 'Project Management',
           roles: ['admin', 'master'],
           sidebar: true,
           icon: 'school'
         },
-        component: () => import('pages/Journal.vue')
+        component: () => import('pages/Project.vue')
       },
       {
-        path: '/admin/material',
+        path: '/admin/position',
         meta: {
-          title: 'Material Management',
+          title: 'Position Management',
           roles: ['admin', 'master'],
           sidebar: true,
           icon: 'school'
         },
-        component: () => import('pages/Material.vue')
+        component: () => import('pages/Position.vue')
       }
 
     ]

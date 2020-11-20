@@ -1,16 +1,7 @@
 <template>
   <div>
-
     <div class="q-pa-md">
-      <q-table
-        :data="rows"
-        :columns="columns"
-        :row-key="rowkey"
-        rows-per-page-options="0"
-        wrap-cells="true"
-        grid
-      >
-
+      <q-table :data="rows" :columns="columns" :row-key="rowkey" grid>
         <template v-slot:top-left>
           <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
             <template v-slot:append>
@@ -21,22 +12,15 @@
 
         <template v-slot:top-right>
           <div class="flex flex-center" v-if="crud.includes('create')">
-            <q-btn
-              color="primary"
-              text-color="white"
-              :label="`New ${title}`"
-              @click="isCreateDialogOpened = true"
-            />
+            <q-btn color="primary" text-color="white" :label="`New ${title}`" @click="isCreateDialogOpened = true" />
           </div>
         </template>
 
         <template v-slot:top-row>
           <q-tr>
-            <q-td class="rounded-borders shadow-3" v-if="isCreateDialogOpened" colspan="100%">
+            <q-td class="rounded-borders shadow-3" colspan="100%">
               <slot name="create-dialog-header">
-                <div class="text-h6 q-mb-md q-pa-sm">
-                  Create New {{ title }}
-                </div>
+                <div class="text-h6 q-mb-md q-pa-sm">Create New {{ title }}</div>
               </slot>
 
               <div class="q-pa-md q-gutter-sm">
@@ -50,20 +34,15 @@
                 </slot>
               </div>
             </q-td>
-          </q-tr> 
-
+          </q-tr>
         </template>
-        
+
         <template v-slot:body="props" v-if="crud.includes(['delete', 'update'])">
-          
           <q-tr :props="props">
             <q-td v-for="(col, index) in props.cols" :key="col.field">
-              <template v-if="index == (props.cols.length - 1) && crud.includes('delete')">
+              <template v-if="index == props.cols.length - 1 && crud.includes('delete')">
                 <q-btn flat round icon="more_vert">
-                  <q-menu
-                    anchor="center middle"
-                    self="center middle"
-                  >
+                  <q-menu anchor="center middle" self="center middle">
                     <q-list style="min-width: 100px">
                       <q-item clickable v-close-popup v-if="crud.includes('delete')">
                         <q-item-section @click="onClickConfirmation(props.row['$id'])">Delete</q-item-section>
@@ -75,21 +54,17 @@
                     </q-list>
                   </q-menu>
                 </q-btn>
-
               </template>
-              
+
               <template v-else>
                 {{ props.row[col.field] }}
                 <q-popup-edit v-if="crud.includes('update') && editablescol.includes(col.field)" v-model="props.row[col.field]">
                   <q-input v-model="props.row[col.field]" dense autofocus />
                 </q-popup-edit>
               </template>
-
             </q-td>
           </q-tr>
-
         </template>
-
       </q-table>
     </div>
 
@@ -99,13 +74,13 @@
           <div class="text-h6">Are you sure?</div>
         </q-card-section>
 
-        <q-card-section class="row items-center">          
+        <q-card-section class="row items-center">
           <span class="q-ml-sm">Do you really want to delete these record? This process cannot be undone</span>
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-dark">
           <q-btn flat label="Cancel" @click="onClickCancel" />
-          <q-btn flat label="Delete" color="negative" @click="onClickDelete"/>
+          <q-btn flat label="Delete" color="negative" @click="onClickDelete" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -118,60 +93,60 @@ export default {
     return {
       isCreateDialogOpened: false,
       dialog: {
-        id: '',
-        confirm: false
+        id: "",
+        confirm: false,
       },
-      filter: ''
-    }
+      filter: "",
+    };
   },
 
   props: {
     title: {
-      type: String
+      type: String,
     },
     crud: {
       type: Array,
-      default: () => ['read']
+      default: () => ["read"],
     },
     rowkey: {
-      type: String
+      type: String,
     },
     rows: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     columns: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     editablescol: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     menus: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
 
   methods: {
     onClickDelete() {
-      this.$emit('delete', this.dialog.id)
-      this.dialog.id = ''
-      this.dialog.confirm = false
+      this.$emit("delete", this.dialog.id);
+      this.dialog.id = "";
+      this.dialog.confirm = false;
     },
     onClickCancel() {
-      this.dialog.id = ''
-      this.dialog.confirm = false
+      this.dialog.id = "";
+      this.dialog.confirm = false;
     },
     onClickSubmit() {
-      this.isCreateDialogOpened = false
-      this.$emit('onAdd')
+      this.isCreateDialogOpened = false;
+      this.$emit("onAdd");
     },
     onClickConfirmation(id) {
-      this.dialog.id = id
-      this.dialog.confirm = true
-    }
-  }
-}
+      this.dialog.id = id;
+      this.dialog.confirm = true;
+    },
+  },
+};
 </script>
