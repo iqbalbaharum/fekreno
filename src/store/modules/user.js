@@ -2,6 +2,7 @@ import { getToken, setToken, removeToken } from './../../datasources/localstorag
 import User from './../../models/User'
 import UserRole from './../../models/UserRole'
 import Journal from './../../models/Journal'
+import Repository from './../../models/Repository'
 import UserProfile from './../../models/UserProfile'
 
 const user = {
@@ -206,6 +207,36 @@ const user = {
             Journal.deleteAll()
             // insert
             Journal.insert({ data: res.data })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
+
+    async GetUserRepositories({ commit, rootState }) {
+      return new Promise((resolve, reject) => {
+        let filter = {
+          order: ["createdAt DESC"],
+          include: [
+            {
+              relation: "project",
+            },
+            {
+              relation: "devEnvironment",
+            },
+            {
+              relation: "position",
+            }
+          ]
+        }
+
+        this.$repository.user.getUserRepositories(rootState.user.userId, filter)
+          .then(res => {
+            // insert
+            Repository.insert({ data: res.data })
             resolve(res.data)
           })
           .catch(err => {

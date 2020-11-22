@@ -99,6 +99,16 @@ export default class UserRepository extends Repository {
     })
   }
 
+  async getUserRepositories(id, filter) {
+    return datasource({
+      method: 'get',
+      url: `users/${id}/repositories`,
+      params: {
+        filter: filter
+      }
+    })
+  }
+
   async getUserProfile(id) {
     return datasource({
       method: 'get',

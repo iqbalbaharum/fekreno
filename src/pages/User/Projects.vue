@@ -6,8 +6,8 @@
         <q-breadcrumbs-el label="Projects" />
       </q-breadcrumbs>
     </div>
-    <div class="row">
-      <div class="col-8 q-pa-lg">
+    <div class="row q-pa-xl">
+      <div class="col-8">
         <div class="q-mb-xl">
           <p class="text-h3">Projects</p>
           <div>

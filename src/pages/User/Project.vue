@@ -34,7 +34,7 @@
             <q-list bordered>
               <q-item-label header>Repositories</q-item-label>
 
-              <div v-for="repository in repositories" :key="repository.id">
+              <div v-for="(repository, index) in repositories" :key="repository.id">
                 <q-item>
                   <q-item-section avatar top>
                     <q-avatar>
@@ -57,7 +57,7 @@
                   </q-item-section>
                 </q-item>
 
-                <q-separator />
+                <q-separator v-if="index !== repositories.length - 1" />
               </div>
             </q-list>
           </q-tab-panel>
@@ -68,6 +68,10 @@
                 Make a submission for <span class="text-weight-bold text-primary">@{{ name }}</span>
               </q-item>
               <q-item class="column q-gutter-y-md">
+                <div class="col q-gutter-y-md">
+                  <div class="text-h6">Step 1: Whats roles your take for this solution?</div>
+                  <q-select filled v-model="form.positionId" :options="positions" label="Development Role" emit-value />
+                </div>
                 <div class="col q-gutter-y-md">
                   <div class="text-h6">Step 1: Upload Submission</div>
                   <q-input filled v-model="form.giturl" placeholder="Project URL" />

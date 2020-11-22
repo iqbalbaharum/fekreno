@@ -1,6 +1,7 @@
 import { Model } from '@vuex-orm/core'
 import User from './User'
 import Project from './Project'
+import Position from './Position'
 import DevEnvironment from './DevEnvironment'
 
 export default class Repository extends Model {
@@ -21,11 +22,13 @@ export default class Repository extends Model {
       userId: this.attr(''),
       projectId: this.attr(''),
       devEnvironmentId: this.attr(''),
+      positionId: this.attr(''),
       
       // relation
       user: this.belongsTo(User, 'userId'),
       project: this.belongsTo(Project, 'projectId'),
-      devenvironment: this.belongsTo(DevEnvironment, 'devEnvironmentId')
+      position: this.belongsTo(Position, 'positionId'),
+      devEnvironment: this.belongsTo(DevEnvironment, 'devEnvironmentId')
     }
   }
 

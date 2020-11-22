@@ -35,26 +35,26 @@ const routes = [
         },
         component: () => import('pages/User/Project.vue')
       },
-      {
-        path: '/journal',
-        meta: {
-          title: 'Journals',
-          roles: ['user'],
-          sidebar: true,
-          icon: 'fas fa-book'
-        },
-        component: () => import('pages/User/Journal.vue')
-      },
-      {
-        path: '/material',
-        meta: {
-          title: 'Learning Materials',
-          roles: ['user'],
-          sidebar: true,
-          icon: 'fas fa-stream'
-        },
-        component: () => import('pages/User/Material.vue')
-      },
+      // {
+      //   path: '/journal',
+      //   meta: {
+      //     title: 'Journals',
+      //     roles: ['user'],
+      //     sidebar: true,
+      //     icon: 'fas fa-book'
+      //   },
+      //   component: () => import('pages/User/Journal.vue')
+      // },
+      // {
+      //   path: '/material',
+      //   meta: {
+      //     title: 'Learning Materials',
+      //     roles: ['user'],
+      //     sidebar: true,
+      //     icon: 'fas fa-stream'
+      //   },
+      //   component: () => import('pages/User/Material.vue')
+      // },
 
       //admin
       {

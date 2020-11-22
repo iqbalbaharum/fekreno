@@ -1,36 +1,17 @@
 <template>
-  <div class="q-pa-md">
-    <q-form
-      class="q-gutter-md"
-    >
-      <div class="text-h6">Personal Information</div>
-      <q-input
-        filled
-        v-model="form.name"
-        label="Full Name"
-      />
+  <q-list bordered class="q-py-md" v-if="userprofile">
+    <q-item class="text-grey-5"> Account ID #{{ userId }} </q-item>
+    <q-separator />
+    <q-form class="q-pa-md q-gutter-md">
+      <q-input filled v-model="form.fullname" label="Full Name" />
 
-      <q-input
-        filled
-        v-model="form.about"
-        label="About"
-        hint="Tell us anything about you"
-        type="textarea"
-      />
+      <q-input filled v-model="form.about" label="About" hint="Tell us anything about you" type="textarea" />
 
-      <q-input
-        filled
-        v-model="form.birthday"
-        type="date"
-        hint="Birthday"
-      />
+      <q-input filled v-model="form.birthday" type="date" hint="Birthday" />
 
       <q-select filled emit-value label="Country" v-model="form.country" :options="countries">
         <template v-slot:option="scope">
-          <q-item
-            v-bind="scope.itemProps"
-            v-on="scope.itemEvents"
-          >
+          <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
             <q-item-section avatar>
               <q-img :src="scope.opt.flag" />
             </q-item-section>
@@ -42,34 +23,22 @@
       </q-select>
 
       <q-separator class="q-my-md" />
-      <div class="text-h6">Contact Detail</div>
+    </q-form>
 
-      <q-input
-        filled
-        v-model="form.email"
-        label="E-mail"
-        disable
-      />
+    <q-separator spaced />
 
-      <q-input
-        filled
-        v-model="form.mobile"
-        label="Mobile"
-      />
+    <q-item> Contact Detail </q-item>
 
-      <q-input
-        filled
-        v-model="form.github"
-        label="Github"
-        hint="Register and account https://www.github.com"
-      />
+    <q-separator />
 
-      <q-input
-        filled
-        v-model="form.linkedin"
-        label="LinkedIn"
-        hint="Register and account https://www.linkedin.com"
-      />
+    <q-form class="q-pa-md q-gutter-md">
+      <q-input filled v-model="fixed.email" label="E-mail" disable />
+
+      <q-input filled v-model="fixed.mobile" label="Mobile" disable />
+
+      <q-input filled v-model="form.github" label="Github" hint="Register an account https://www.github.com" />
+
+      <q-input filled v-model="form.linkedin" label="LinkedIn" hint="Register an account https://www.linkedin.com" />
 
       <!-- <q-separator class="q-my-md" />
       <div class="q-gutter-md">
@@ -94,60 +63,87 @@
       <q-separator class="q-my-md" />
 
       <div>
-        <q-btn label="Save" type="submit" color="primary"/>
+        <q-btn label="Save" type="submit" color="primary" @click="onClickSubmit" />
       </div>
     </q-form>
-
-  </div>
+  </q-list>
 </template>
 
 <script>
-import Country from './../../models/Country'
-import UserProfile from './../../models/UserProfile'
-import { mapGetters } from 'vuex'
+import Country from "./../../models/Country";
+import UserProfile from "./../../models/UserProfile";
+import { mapGetters } from "vuex";
+import { date } from "quasar";
 
 export default {
   data() {
     return {
       form: {
-        about: '',
-        country: ''
+        birthday: "",
       },
-
+      fixed: {
+        mobile: "",
+        email: "",
+      },
       options: {
-        countries: this.countries
-      }
-    }
+        countries: this.countries,
+      },
+    };
   },
 
   computed: {
-    ...mapGetters([
-      'name',
-      'mobile'
-    ]),
+    ...mapGetters(["userId", "name", "mobile", "email"]),
 
     userprofile() {
-      let profile = UserProfile.find(this.$route.params.id)
-      Object.assign(this.form, profile)
-      return profile
+      let profile = UserProfile.query().where("userId", this.userId).first();
+      return profile;
     },
     countries() {
-      let countries = Country.all()
-      let countryOptions = countries.map(country => {
-        const container = []
+      let countries = Country.all();
+      let countryOptions = countries.map((country) => {
+        const container = [];
 
-        container.label = country.name
-        container.value = country.alpha3code
+        container.label = country.name;
+        container.value = country.alpha3Code;
+        container.flag = country.flag;
+        return container;
+      });
 
-        return container
-      })
-      return countries
-    }
+      return countryOptions;
+    },
   },
 
   created() {
-    this.$store.dispatch('GetAllCountries')
-    this.$store.dispatch('GetUserProfile')
+    this.$store.dispatch("GetAllCountries");
+    this.$store.dispatch("GetUserProfile").then((res) => {
+      this.form = Object.create(this.userprofile);
+      this.form = {
+        fullname: this.userprofile.fullname,
+        about: this.userprofile.about,
+        birthday: date.formatDate(this.userprofile.birthday, "DD/MM/YYYY"),
+        country: this.userprofile.country,
+        github: this.userprofile.github ? this.userprofile.github : "",
+        linkedin: this.userprofile.linkedin ? this.userprofile.linkedin : "",
+      };
+    });
+
+    this.fixed.email = this.email;
+    this.fixed.mobile = this.mobile;
   },
-}
+
+  methods: {
+    onClickSubmit() {
+      this.form.birthday = date.formatDate(this.form.birthday, "YYYY-MM-DDTHH:mm:ss.SSSZ");
+      this.$store
+        .dispatch("UpdateUserProfile", this.form)
+        .then((res) => {
+          this.form = {};
+          this.dialog.show = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+};
 </script>
