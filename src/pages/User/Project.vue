@@ -11,6 +11,9 @@
       <div class="col-8 q-pa-xl">
         <q-card class="bg-black text-white full-width">
           <q-card-section>
+            <div class="text-caption text-right">Project</div>
+          </q-card-section>
+          <q-card-section>
             <div class="q-py-sm">
               <div class="text-h5">{{ project.title }}</div>
               <div class="text-caption">{{ project.description }}</div>

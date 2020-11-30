@@ -35,6 +35,26 @@ const routes = [
         },
         component: () => import('pages/User/Project.vue')
       },
+      {
+        path: '/applications',
+        meta: {
+          title: 'Applications',
+          roles: ['user'],
+          sidebar: true,
+          icon: 'fas fa-book'
+        },
+        component: () => import('pages/User/Applications.vue')
+      },
+      {
+        path: '/application/:id',
+        meta: {
+          title: 'Application',
+          roles: ['user'],
+          sidebar: false,
+          icon: 'fas fa-book'
+        },
+        component: () => import('pages/User/Application.vue')
+      },
       // {
       //   path: '/journal',
       //   meta: {
@@ -98,6 +118,16 @@ const routes = [
           icon: 'school'
         },
         component: () => import('pages/Project.vue')
+      },
+      {
+        path: '/admin/application',
+        meta: {
+          title: 'Application Management',
+          roles: ['admin', 'master'],
+          sidebar: true,
+          icon: 'school'
+        },
+        component: () => import('pages/Application.vue')
       },
       {
         path: '/admin/position',

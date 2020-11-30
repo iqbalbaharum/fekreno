@@ -11,10 +11,12 @@ import Material from '../models/Material'
 import Repository from '../models/Repository'
 import DevEnvironment from '../models/DevEnvironment'
 import Position from '../models/Position'
+import Application from '../models/Application'
 
 // Relation
 import UserRole from '../models/UserRole'
 import UserProfile from '../models/UserProfile'
+import UserApplication from '../models/UserApplication'
 
 const database = new Database()
 
@@ -30,8 +32,10 @@ database.register(Material)
 database.register(Repository)
 database.register(DevEnvironment)
 database.register(Position)
+database.register(Application)
 //
 database.register(UserRole)
 database.register(UserProfile)
+database.register(UserApplication)
 
 export default database

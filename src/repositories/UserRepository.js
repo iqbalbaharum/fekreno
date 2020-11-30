@@ -69,6 +69,13 @@ export default class UserRepository extends Repository {
     })
   }
 
+  async getUserApplications(id) {
+    return datasource({
+      method: 'get',
+      url: `users/${id}/applications`,
+    })
+  }
+
   async assignUserRoles(userId, rid) {
     return datasource({
       method: 'post',
@@ -85,6 +92,26 @@ export default class UserRepository extends Repository {
       url: `users/${userId}/roles/unassign`,
       data: {
         roleId: rid
+      }
+    })
+  }
+
+  async applyUserApplication(userId, applicationId) {
+    return datasource({
+      method: 'post',
+      url: `users/${userId}/applications/apply`,
+      data: {
+        applicationId: applicationId
+      }
+    })
+  }
+
+  async unapplyUserApplication(userId, applicationId) {
+    return datasource({
+      method: 'post',
+      url: `users/${userId}/applications/unapply`,
+      data: {
+        applicationId: applicationId
       }
     })
   }

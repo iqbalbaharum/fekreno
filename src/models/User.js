@@ -1,7 +1,9 @@
 import { Model } from '@vuex-orm/core'
 import Role from './Role'
 import Repository from './Repository'
+import Application from './Application'
 import UserRole from './UserRole'
+import UserApplication from './UserApplication'
 
 export default class User extends Model {
 
@@ -19,6 +21,7 @@ export default class User extends Model {
       createdAt: this.attr(''),
       
       roles: this.belongsToMany(Role, UserRole, 'userId', 'roleId'),
+      applications: this.belongsToMany(Application, UserApplication, 'userId', 'applicationId'),
       repositories: this.hasMany(Repository, 'userId')
     }
 

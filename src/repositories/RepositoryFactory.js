@@ -11,6 +11,8 @@ import MaterialRepository from './MaterialRepository'
 import DevEnvironmentRepository from './DevEnvironmentRepository'
 import RepositoryRepository from './RepositoryRepository'
 import PositionRepository from './PositionRepository'
+import ApplicationRepository from './ApplicationRepository'
+import UserApplicationRepository from './UserApplicationRepository'
 
 export default {
   //userRepository: bind('userRepository', RepositoryInterface)
@@ -24,5 +26,7 @@ export default {
   material: new MaterialRepository(),
   devenvironment: new DevEnvironmentRepository(),
   repository: new RepositoryRepository(),
-  position: new PositionRepository()
+  position: new PositionRepository(),
+  application: new ApplicationRepository(),
+  userapplication: new UserApplicationRepository()
 }

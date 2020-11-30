@@ -4,6 +4,7 @@ import UserRole from './../../models/UserRole'
 import Journal from './../../models/Journal'
 import Repository from './../../models/Repository'
 import UserProfile from './../../models/UserProfile'
+import UserApplication from './../../models/UserApplication'
 
 const user = {
   state: {
@@ -188,6 +189,14 @@ const user = {
       return res.data
     },
 
+    async GetUserApplications({ commit, rootState }) {
+      let res = await this.$repository.user.getUserApplications(rootState.user.userId)
+      const data = res.data
+      UserApplication.insert({ data: res.data })
+
+      return res.data
+    },
+
     async GetUserJournal({ commit, rootState }) {
       return new Promise((resolve, reject) => {
 
@@ -267,6 +276,16 @@ const user = {
 
     async UnassignUserRole({ commit }, data) {
       let res = await this.$repository.user.unassignUserRoles(data.userId, data.roleId)
+      return res.data
+    },
+    
+    async ApplyUserApplication({ commit, rootState }, data) {
+      let res = await this.$repository.user.applyUserApplication(rootState.user.userId, data.applicationId)
+      return res.data
+    },
+
+    async UnapplyUserApplication({ commit, rootState }, data) {
+      let res = await this.$repository.user.unapplyUserApplication(rootState.user.userId, data.applicationId)
       return res.data
     },
 

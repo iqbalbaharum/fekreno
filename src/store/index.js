@@ -16,6 +16,8 @@ import material from './modules/material'
 import devenvironment from './modules/devenvironment'
 import repository from './modules/repository'
 import position from './modules/position'
+import applicaton from './modules/application'
+import userapplication from './modules/userapplication'
 
 Vue.use(Vuex)
 
@@ -42,7 +44,9 @@ export default function (/* { ssrContext } */) {
       material,
       devenvironment,
       repository,
-      position
+      position,
+      applicaton,
+      userapplication
     },
     getters,
     plugins: [VuexORM.install(database)],

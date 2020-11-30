@@ -29,7 +29,10 @@
           <q-tabs v-model="tab" class="bg-blue-grey-1" active-color="primary" indicator-color="primary" align="left" flat>
             <q-tab name="overview" label="Overview" />
             <q-tab name="repository" label="Repositories" />
-            <q-tab name="profile" label="Edit Profile" class="bg-primary text-white" />
+            <q-tab name="application" label="Applications" />
+            <div class="row justify-end full-width">
+              <q-tab name="profile" label="Edit Profile" class="bg-primary text-white" />
+            </div>
           </q-tabs>
         </q-card>
 
@@ -39,6 +42,9 @@
           </q-tab-panel>
           <q-tab-panel name="repository" class="q-pa-none">
             <repository-tab />
+          </q-tab-panel>
+          <q-tab-panel name="application" class="q-pa-none">
+            <application-tab />
           </q-tab-panel>
           <q-tab-panel name="profile" class="q-pa-none">
             <profile-tab />
@@ -50,9 +56,10 @@
 </template>
 
 <script>
-import OverviewTab from "./User/Overview";
-import ProfileTab from "./User/Profile";
-import RepositoryTab from "./User/Repository";
+import OverviewTab from "./Dashboard/Overview";
+import ProfileTab from "./Dashboard/Profile";
+import RepositoryTab from "./Dashboard/Repository";
+import ApplicationTab from "./Dashboard/Application";
 import UserProfile from "./../models/UserProfile";
 import { mapGetters } from "vuex";
 import { date } from "quasar";
@@ -112,6 +119,7 @@ export default {
     OverviewTab,
     ProfileTab,
     RepositoryTab,
+    ApplicationTab,
   },
 
   methods: {},
