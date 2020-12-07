@@ -30,7 +30,8 @@
             <q-tab name="question" label="Questions" v-if="userapplication && application.getQuestionsJsonObject.length > 0" />
             <q-tab name="status" label="Application Status" v-if="userapplication" />
             <div class="row justify-end full-width q-pr-md">
-              <q-btn label="Submit Application" color="accent" @click="onClickApply" v-if="userapplication" />
+              <div class="text-weight-bold text-accent" v-if="userapplication && userapplication.status === 'submitted'">Submitted</div>
+              <q-btn label="Submit Application" color="accent" @click="onClickApply" v-if="userapplication && userapplication.status === 'joined'" />
               <q-btn label="Participate" color="black" @click="onClickParticipate" v-if="!userapplication" />
             </div>
           </q-tabs>
@@ -81,14 +82,14 @@
               <q-item class="column q-gutter-y-md" v-for="(question, index) in application.getQuestionsJsonObject" :key="index">
                 <div class="col q-gutter-y-md">
                   <div class="text-h6"><span v-html="question.text" /></div>
-                  <q-input filled v-model="form[index]" />
+                  <q-input filled v-model="form[index]" :disable="userapplication.status === 'joined'" />
                 </div>
 
                 <q-separator />
               </q-item>
 
               <q-item class="q-pa-md row justify-center">
-                <q-btn label="Save Answer" color="primary" @click="onClickSaveAnswer" />
+                <q-btn label="Save Answer" color="primary" @click="onClickSaveAnswer" v-if="userapplication.status !== 'joined'" />
               </q-item>
             </q-list>
           </q-tab-panel>
@@ -167,7 +168,10 @@ export default {
       });
     },
     onClickApply() {
-      this.$store.dispatch("ApplyUserApplication", this.$route.params.id);
+      this.$store.dispatch("SubmitUserApplication", {
+        id: this.userapplication.id,
+      });
+      this.$router.go(-1);
     },
   },
 };

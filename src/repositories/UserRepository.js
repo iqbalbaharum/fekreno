@@ -96,12 +96,23 @@ export default class UserRepository extends Repository {
     })
   }
 
-  async applyUserApplication(userId, applicationId) {
+  async applyUserApplication(userId, applicationId, status) {
     return datasource({
       method: 'post',
       url: `users/${userId}/applications/apply`,
       data: {
         applicationId: applicationId
+      }
+    })
+  }
+
+  async changeUserApplicationStatus(userId, applicationId, status) {
+    return datasource({
+      method: 'post',
+      url: `users/${userId}/applications/apply`,
+      data: {
+        applicationId: applicationId,
+        status: status
       }
     })
   }

@@ -283,6 +283,7 @@ const user = {
       let res = await this.$repository.user.applyUserApplication(rootState.user.userId, data.applicationId)
       return res.data
     },
+    
 
     async UnapplyUserApplication({ commit, rootState }, data) {
       let res = await this.$repository.user.unapplyUserApplication(rootState.user.userId, data.applicationId)

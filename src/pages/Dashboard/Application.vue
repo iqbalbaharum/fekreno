@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import Repository from "./../../models/Repository";
+import Application from "./../../models/Application";
 import { mapGetters } from "vuex";
 import { date } from "quasar";
 
@@ -37,8 +37,8 @@ export default {
   computed: {
     ...mapGetters(["userId"]),
 
-    repositories() {
-      let profile = Repository.query().where("userId", this.userId).withAll().get();
+    applications() {
+      let profile = Application.query().where("userId", this.userId).withAll().get();
       return profile;
     },
   },

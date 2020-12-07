@@ -41,6 +41,25 @@ const userapp = {
             reject(err)
           })
       })
+    },
+
+    SubmitUserApplication({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        let id = data.id
+        delete data.id
+
+        data.status = 'submitted'
+  
+        this.$repository.userapplication.updateById(id, data)
+          .then(res => {
+            UserApplication.update({ where: id, data: data })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+      })
     }
 
   }
