@@ -33,6 +33,10 @@ export default class Application extends Model {
   }
 
   get getQuestionsJsonObject() {
+    if(this.questions.length <= 0) {
+      return []
+    }
+
     return JSON.parse(this.questions)
   }
 

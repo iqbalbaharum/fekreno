@@ -37,9 +37,9 @@
             <q-tab
               name="requirement"
               label="Checklist"
-              v-if="userapplication.status !== 'joined'"
+              v-if="userapplication && userapplication.status !== 'joined'"
             />
-            <q-tab name="requirement" label="Checklist" v-else />
+            <q-tab name="requirement" label="Requirements" v-else />
             <q-tab
               name="question"
               label="Questions"
@@ -60,10 +60,7 @@
             <div class="row justify-end full-width q-pr-md">
               <div
                 class="text-weight-bold text-accent"
-                v-if="
-                  userapplication !== null &&
-                  userapplication.status === 'submitted'
-                "
+                v-if="userapplication && userapplication.status === 'submitted'"
               >
                 Submitted
               </div>
@@ -71,10 +68,7 @@
                 label="Submit Application"
                 color="accent"
                 @click="onClickApply"
-                v-if="
-                  userapplication !== null &&
-                  userapplication.status === 'joined'
-                "
+                v-if="userapplication && userapplication.status === 'joined'"
               />
               <q-btn
                 label="Fill In Form"
@@ -120,7 +114,7 @@
                   </div>
                 </q-item-section>
 
-                <q-item-section side>
+                <q-item-section side v-if="userapplication">
                   <q-icon name="fas fa-check-circle" class="text-teal" />
                 </q-item-section>
               </q-item>
@@ -139,7 +133,7 @@
                   <div>Required</div>
                 </q-item-section>
 
-                <q-item-section side>
+                <q-item-section side v-if="userapplication">
                   <q-icon
                     name="fas fa-times-circle"
                     class="text-red"
@@ -164,7 +158,7 @@
                   <div>Required</div>
                 </q-item-section>
 
-                <q-item-section side>
+                <q-item-section side v-if="userapplication">
                   <q-icon
                     name="fas fa-check-circle"
                     class="text-teal"
@@ -313,10 +307,12 @@ export default {
   computed: {
     ...mapGetters(['name', 'userId']),
     application() {
-      return Application.query()
+      let app = Application.query()
         .whereId(this.$route.params.id)
         .withAll()
         .first();
+
+      return app;
     },
     userapplication() {
       let uapp = UserApplication.query()
@@ -365,9 +361,11 @@ export default {
       }
     },
     onClickParticipate() {
-      this.$store.dispatch('ApplyUserApplication', {
-        applicationId: this.$route.params.id,
-      });
+      this.$store
+        .dispatch('ApplyUserApplication', {
+          applicationId: this.$route.params.id,
+        })
+        .then((res) => {});
     },
     onClickApply() {
       this.$store.dispatch('SubmitUserApplication', {

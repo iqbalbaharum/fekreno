@@ -22,9 +22,8 @@
 
       <q-separator v-if="index !== repositories.length - 1" />
     </div>
-    <div class="flex flex-center q-gutter-sm" v-if="repositories.length <= 0">
-      <q-icon name="watch_later" class="text-grey" style="font-size: 64px" />
-      <span class="text-h1">No Repositories</span>
+    <div class="flex flex-center q-pa-md" v-if="repositories.length <= 0">
+      <span class="">No repositories</span>
     </div>
   </q-list>
 </template>
