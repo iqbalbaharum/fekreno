@@ -1,18 +1,13 @@
 <template>
-  <q-item
-    clickable
-    tag="a"
-    :to="{ path: link }"
-  >
-    <q-item-section
-      v-if="icon"
-      avatar
-    >
-      <q-icon :name="icon" />
+  <q-item clickable tag="a" :to="{ path: link }">
+    <q-item-section v-if="icon" avatar>
+      <q-icon :name="icon" :class="color" />
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
+      <q-item-label
+        ><span class="text-weight-medium">{{ title }}</span></q-item-label
+      >
       <q-item-label caption>
         {{ caption }}
       </q-item-label>
@@ -26,23 +21,28 @@ export default {
   props: {
     title: {
       type: String,
-      required: true
+      required: true,
     },
 
     caption: {
       type: String,
-      default: ''
+      default: '',
     },
 
     link: {
       type: String,
-      default: '#'
+      default: '#',
     },
 
     icon: {
       type: String,
-      default: ''
-    }
-  }
-}
+      default: '',
+    },
+
+    color: {
+      type: String,
+      default: '',
+    },
+  },
+};
 </script>

@@ -1,175 +1,312 @@
 <template>
-  <div>
-    <div class="row">
-      <div class="col-8 q-pa-lg">
-        <div class="q-mb-md">
-          <div class="row justify-end q-py-md">
-            <q-btn no-caps label="New Application" color="black" icon="add" @click="onClickAddApplication" />
-          </div>
-        </div>
+  <q-page v-if="this.form">
+    <div class="q-pa-md q-gutter-sm">
+      <q-breadcrumbs>
+        <q-breadcrumbs-el label="Home" to="/" />
+        <q-breadcrumbs-el label="Applications" to="admin/applications" />
+        <q-breadcrumbs-el :label="`Editing ${form.title} (${form.type})`" />
+      </q-breadcrumbs>
+    </div>
+    <div class="row q-pa-xl">
+      <div class="col-8">
+        <q-card class="bg-primary text-white full-width">
+          <q-card-section top avatar>
+            <q-img contain src="~assets/krenovator.png" />
+          </q-card-section>
+          <q-card-section>
+            <div class="q-py-sm q-gutter-y-md">
+              <div class="text-h5">
+                <q-input
+                  dark
+                  color="white"
+                  v-model="form.title"
+                  autofocus
+                  filled
+                  label="Title"
+                />
+              </div>
+              <div class="text-caption">
+                <q-input
+                  dark
+                  color="white"
+                  v-model="form.description"
+                  type="textarea"
+                  label="Description"
+                  filled
+                >
+                </q-input>
+              </div>
 
-        <application-list />
+              <q-select
+                filled
+                :options="opts.method"
+                v-model="form.method"
+                label="Attending Method"
+                emit-value
+                map-options
+                dark
+              />
+
+              <q-select
+                filled
+                :options="opts.type"
+                v-model="form.type"
+                label="Type"
+                emit-value
+                map-options
+                dark
+              />
+            </div>
+          </q-card-section>
+          <q-tabs
+            v-model="tabs"
+            class="bg-white text-black"
+            active-color="primary"
+            indicator-color="primary"
+            align="left"
+            flat
+            inline-label
+          >
+            <q-tab name="about" label="About" />
+            <q-tab name="question" label="Questions" />
+            <q-tab name="project" label="Project" />
+            <div class="row justify-end full-width q-pr-md">
+              <q-btn
+                label="Save Application"
+                color="accent"
+                @click="onClickSave"
+              />
+            </div>
+          </q-tabs>
+        </q-card>
+
+        <q-tab-panels v-model="tabs" animated class="q-mt-xl q-pa-none">
+          <q-tab-panel name="about" class="q-pa-md">
+            <div class="col-12 q-py-sm">
+              <div class="text-weight-bold">About</div>
+              <div class="text-caption">What is this application is about?</div>
+            </div>
+
+            <q-editor
+              v-model="form.about"
+              min-height="50rem"
+              placeholder="About"
+            />
+          </q-tab-panel>
+          <q-tab-panel name="question">
+            <div class="col-12 q-py-sm">
+              <div class="text-weight-bold">Questions</div>
+              <div class="text-caption">
+                What do you want to ask the applicants?
+              </div>
+            </div>
+
+            <q-separator class="q-my-md" />
+
+            <div class="col-12 q-gutter-y-md">
+              <div
+                v-for="(question, index) in questions"
+                :key="index"
+                class="q-pa-md bg-light-blue-1"
+              >
+                <div
+                  class="row text-weight-bold text-primary q-my-sm justify-between items-center"
+                >
+                  Question {{ index + 1 }}
+                  <q-btn
+                    dense
+                    flat
+                    label="Delete"
+                    text-color="red"
+                    @click="onClickDeleteQuestion(index)"
+                  />
+                </div>
+                <q-editor filled v-model="questions[index].text" />
+              </div>
+            </div>
+
+            <div class="col-12 row justify-end q-py-sm">
+              <q-btn
+                flat
+                @click="onAddNewQuestion"
+                label="Add Question"
+                color="primary"
+              />
+            </div>
+          </q-tab-panel>
+          <q-tab-panel name="project">
+            <div class="col-12 q-py-sm">
+              <div class="text-weight-bold">Projects</div>
+              <div class="text-caption">
+                Project applicants need to complete to proceed with this
+                application
+              </div>
+            </div>
+
+            <q-separator class="q-my-md" />
+
+            <q-list>
+              <div v-for="(project, index) in projects" :key="project.id">
+                <q-item>
+                  <q-item-section>
+                    <q-select
+                      filled
+                      label="Project"
+                      :options="projectsOpt"
+                      v-model="projects[index].id"
+                      emit-value
+                      map-options
+                      stack-label
+                    />
+                  </q-item-section>
+
+                  <q-item-section side>
+                    <q-btn
+                      flat
+                      icon="delete"
+                      @click="onClickDeleteProject(index)"
+                    />
+                  </q-item-section>
+                </q-item>
+              </div>
+            </q-list>
+
+            <div class="col-12 row justify-end q-py-sm">
+              <q-btn
+                flat
+                @click="onAddProject"
+                label="Add Project"
+                color="primary"
+              />
+            </div>
+          </q-tab-panel>
+        </q-tab-panels>
       </div>
     </div>
-
-    <q-dialog v-model="dialog.isShow" position="bottom" full-width>
-      <q-card>
-        <q-item-section class="q-pa-md bg-primary text-white">
-          <q-item-label>New Application</q-item-label>
-        </q-item-section>
-
-        <q-card-section class="row q-gutter-sm">
-          <div class="col-12 q-py-sm">
-            <div class="text-weight-bold">Information</div>
-            <div class="text-caption">Minimum required by participant to join</div>
-          </div>
-
-          <div class="col-12">
-            <q-input filled v-model="form.title" label="Title" />
-          </div>
-
-          <div class="col-12">
-            <q-input type="textarea" filled v-model="form.description" placeholder="Description" />
-          </div>
-
-          <div class="col-12">
-            <q-select filled :options="opts.type" v-model="form.type" label="Type" emit-value map-options />
-          </div>
-
-          <div class="col-12">
-            <q-editor v-model="form.about" min-height="10rem" :toolbar="[]" placeholder="About" />
-          </div>
-
-          <div class="col-12">
-            <q-select filled :options="opts.method" v-model="form.method" label="Attending Method" emit-value map-options />
-          </div>
-
-          <q-separator class="q-my-md" />
-
-          <div class="col-12 q-py-sm">
-            <div class="text-weight-bold">Requirements</div>
-            <div class="text-caption">Minimum required by participant to join</div>
-          </div>
-
-          <div class="col-3">
-            <q-input filled v-model.number="form.minProject" type="number" label="Min Project Completed" />
-          </div>
-
-          <div class="col-3">
-            <q-input filled v-model.number="form.maxApplied" type="number" label="How many application user can send?" />
-          </div>
-
-          <q-separator class="q-my-md" />
-
-          <div class="col-12 q-py-sm">
-            <div class="text-weight-bold">Questions</div>
-            <div class="text-caption">What do you want to ask the applicants?</div>
-          </div>
-
-          <div class="col-12 q-gutter-y-md">
-            <div v-for="(question, index) in form.questions" :key="index">
-              <div class="text-weight-bold text-primary q-my-sm">Question {{ index + 1 }} <q-btn dense flat label="Delete" text-color="red" @click="onClickDeleteQuestion(index)" /></div>
-              <q-editor filled v-model="form.questions[index].text" />
-            </div>
-          </div>
-
-          <div class="col-12 row justify-end q-py-sm">
-            <q-btn flat @click="onAddNewQuestion" label="Add Question" color="primary" />
-          </div>
-        </q-card-section>
-
-        <q-separator />
-
-        <q-card-section class="row q-gutter-md justify-between">
-          <q-btn color="primary" label="Submit" @click="onClickSubmit" />
-          <q-btn flat color="negative" label="Cancel" @click="onClickCancel" />
-        </q-card-section>
-      </q-card>
-    </q-dialog>
-  </div>
+  </q-page>
 </template>
 
 <script>
-import ApplicationList from "./../../components/ApplicationList";
+import { mapGetters } from 'vuex';
+import { date } from 'quasar';
+import Application from './../../models/Application';
+import Project from './../../models/Project';
 
 export default {
   data() {
     return {
-      form: {
-        title: "",
-        description: "",
-        about: "",
-        minProject: 0,
-        maxApplied: 1,
-        icon: "",
-        // questions: [
-        //   {
-        //     text: 'Complete the problem-solving test at <a href="">https://www.mindtools.com/pages/article/newTMC_72.htm</a>. And enter your score below',
-        //   },
-        //   {
-        //     text: "Complete the simple algebra test at https://www.tests.com/practice/algebra-practice-test. And enter your score below.",
-        //   },
-        // ],
-        questions: [],
+      date: date,
+      tabs: 'about',
+      questions: [],
+      addDialog: {
+        projectId: '',
       },
-      dialog: {
-        isShow: false,
-      },
+      form: {},
+      projects: [],
+      currentProjects: [],
       opts: {
         type: [
           {
-            label: "Program",
-            value: "program",
+            label: 'Program',
+            value: 'program',
           },
           {
-            label: "Job Vacancy",
-            value: "job",
+            label: 'Job Vacancy',
+            value: 'job',
           },
         ],
         method: [
           {
-            label: "Online",
-            value: "online",
+            label: 'Online',
+            value: 'online',
           },
           {
-            label: "Offline",
-            value: "offline",
+            label: 'Offline',
+            value: 'offline',
           },
         ],
       },
     };
   },
 
-  components: {
-    ApplicationList,
+  computed: {
+    ...mapGetters(['name', 'userId']),
+    projectsOpt() {
+      let projects = Project.all();
+      const opts = projects.map((project) => {
+        const container = [];
+        container.label =
+          project.title.charAt(0).toUpperCase() + project.title.slice(1);
+        container.value = project.id;
+        return container;
+      });
+      return opts;
+    },
   },
 
-  created() {
-    this.$store.dispatch("GetAllApplications");
+  mounted() {
+    this.loadApplication();
+    this.$store.dispatch('GetAllProjects');
+    this.$store.dispatch('GetApplicationProject', this.$route.params.id);
   },
 
   methods: {
-    onClickAddApplication() {
-      this.dialog.isShow = true;
-    },
-    async onClickSubmit() {
-      try {
-        await this.$store.dispatch("AddApplication", this.form);
-        this.dialog.isShow = false;
-      } catch (e) {
-        console.log(e);
+    async loadApplication() {
+      this.form = await Application.query()
+        .withAll()
+        .where('id', this.$route.params.id)
+        .first();
+      if (!this.form) {
+        this.$router.go(-1);
       }
+
+      this.projects = this.form.projects;
+      this.questions = this.form.getQuestionsJsonObject;
     },
+
     onClickDeleteQuestion(index) {
       this.form.questions.splice(index, 1);
     },
+
     onAddNewQuestion() {
-      this.form.questions.push({
-        text: "",
+      this.questions.push({
+        text: '',
       });
     },
-    onClickCancel() {
-      this.dialog.isShow = false;
+
+    onAddProject() {
+      this.projects.push({
+        id: '',
+      });
+    },
+    async onClickDeleteProject(index) {
+      this.projects.splice(index, 1);
+    },
+
+    async onClickSave() {
+      if (this.questions.length > 0) {
+        this.form.questions = JSON.stringify(this.questions);
+      }
+
+      if (this.projects.length > 0) {
+        let unlinkedProjects = this.form.projects.filter(
+          (x) => !this.projects.includes(x)
+        );
+
+        for (const upro of unlinkedProjects) {
+          await this.$store.dispatch('RemoveProjectToApplication', {
+            id: this.$route.params.id,
+            projectId: upro.id,
+          });
+        }
+
+        for (const project of this.projects) {
+          await this.$store.dispatch('AddProjectToApplication', {
+            id: this.$route.params.id,
+            projectId: project.id,
+          });
+        }
+      }
     },
   },
 };

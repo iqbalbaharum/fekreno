@@ -1,5 +1,7 @@
 import { Model } from '@vuex-orm/core'
 import User from './User'
+import Project from './Project'
+import ApplicationProject from './ApplicationProject'
 
 export default class Application extends Model {
 
@@ -25,6 +27,7 @@ export default class Application extends Model {
       createdby: this.attr(''),
       // relation
       createdby: this.belongsTo(User, 'createdby'),
+      projects: this.belongsToMany(Project, ApplicationProject, 'applicationId', 'projectId'),
     }
   }
 

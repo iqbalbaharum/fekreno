@@ -1,4 +1,6 @@
 import Application from './../../models/Application'
+import Project from './../../models/Project'
+import ApplicationProject from './../../models/ApplicationProject'
 
 const application = {
 	state: {
@@ -16,9 +18,8 @@ const application = {
         let filter = {
           order: ["createdAt DESC"],
           include: [
-            {
-              relation: "user"
-            }
+            { relation: "user" },
+            { relation: "projects" }
           ]
         }
         
@@ -79,6 +80,40 @@ const application = {
           })
       })
     },
+
+    async GetApplicationProject({ commit }, id) {
+      return new Promise((resolve, reject) => {
+        
+        this.$repository.application.getApplicationProjects(id)
+          .then(res => {
+            
+            for (let project of res.data) {
+              ApplicationProject.insert({
+                data: {
+                  applicationId: id,
+                  projectId: project.id
+                }
+              })
+            }
+            Project.insert({ data: res.data })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
+
+    async AddProjectToApplication({ commit, rootState }, data) {
+      let res = await this.$repository.application.linkApplicationProject(data.id, data.projectId)
+      return res.data
+    },
+
+    async RemoveProjectToApplication({ commit, rootState }, data) {
+      let res = await this.$repository.application.unlinkApplicationProject(data.id, data.projectId)
+      return res.data
+    }
 	}
 }
 

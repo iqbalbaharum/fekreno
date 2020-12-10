@@ -12,6 +12,7 @@ import Repository from '../models/Repository'
 import DevEnvironment from '../models/DevEnvironment'
 import Position from '../models/Position'
 import Application from '../models/Application'
+import ApplicationProject from '../models/ApplicationProject'
 
 // Relation
 import UserRole from '../models/UserRole'
@@ -33,6 +34,7 @@ database.register(Repository)
 database.register(DevEnvironment)
 database.register(Position)
 database.register(Application)
+database.register(ApplicationProject)
 //
 database.register(UserRole)
 database.register(UserProfile)

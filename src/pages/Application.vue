@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import ApplicationBox from "./Tab/Application";
+import ApplicationBox from "./Tab/Applications";
 
 export default {
   components: {

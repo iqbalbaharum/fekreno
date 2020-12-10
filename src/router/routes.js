@@ -11,7 +11,8 @@ const routes = [
           title: 'My Account',
           sidebar: true,
           icon: 'fas fa-user-circle',
-          roles: ['user']
+          roles: ['user'],
+          color: 'text-grey-5'
         },
         component: () => import('pages/Index.vue')
       },
@@ -21,7 +22,8 @@ const routes = [
           title: 'Projects',
           roles: ['user'],
           sidebar: true,
-          icon: 'fas fa-book'
+          icon: 'fas fa-code',
+          color: 'text-grey-5'
         },
         component: () => import('pages/User/Projects.vue')
       },
@@ -31,7 +33,8 @@ const routes = [
           title: 'Project',
           roles: ['user'],
           sidebar: false,
-          icon: 'fas fa-book'
+          icon: 'fas fa-code',
+          color: 'text-grey-5'
         },
         component: () => import('pages/User/Project.vue')
       },
@@ -40,7 +43,7 @@ const routes = [
         meta: {
           title: 'Applications',
           roles: ['user'],
-          sidebar: true,
+          sidebar: false,
           icon: 'fas fa-book'
         },
         component: () => import('pages/User/Applications.vue')
@@ -52,6 +55,17 @@ const routes = [
           roles: ['user'],
           sidebar: false,
           icon: 'fas fa-book'
+        },
+        component: () => import('pages/User/Application.vue')
+      },
+      {
+        path: `/application/${process.env.FEATURED_APP_ID}`,
+        meta: {
+          title: 'TSA Entry Test',
+          roles: ['user'],
+          sidebar: true,
+          icon: 'fas fa-star',
+          color: 'text-amber-12'
         },
         component: () => import('pages/User/Application.vue')
       },
@@ -128,6 +142,16 @@ const routes = [
           icon: 'school'
         },
         component: () => import('pages/Application.vue')
+      },
+      {
+        path: '/admin/application/:id',
+        meta: {
+          title: 'Application',
+          roles: ['admin', 'master'],
+          sidebar: false,
+          icon: 'school'
+        },
+        component: () => import('pages/Tab/Application.vue')
       },
       {
         path: '/admin/position',
