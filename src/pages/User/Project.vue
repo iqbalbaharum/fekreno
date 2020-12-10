@@ -18,10 +18,17 @@
               <div class="text-h5">{{ project.title }}</div>
               <div class="text-caption">{{ project.description }}</div>
 
-              <div class="q-mt-sm">5 repositories &#8226; 2 months ago</div>
+              <div class="q-mt-sm">{{ repositories.length }} repositories</div>
             </div>
           </q-card-section>
-          <q-tabs v-model="tabs" class="bg-white text-black" active-color="primary" indicator-color="primary" align="left" flat>
+          <q-tabs
+            v-model="tabs"
+            class="bg-white text-black"
+            active-color="primary"
+            indicator-color="primary"
+            align="left"
+            flat
+          >
             <q-tab name="requirement" label="Requirement" />
             <q-tab name="repository" label="Repositories" />
             <q-tab name="submission" label="Submission" />
@@ -37,7 +44,10 @@
             <q-list bordered>
               <q-item-label header>Repositories</q-item-label>
 
-              <div v-for="(repository, index) in repositories" :key="repository.id">
+              <div
+                v-for="(repository, index) in repositories"
+                :key="repository.id"
+              >
                 <q-item>
                   <q-item-section avatar top>
                     <q-avatar>
@@ -47,16 +57,16 @@
 
                   <q-item-section top>
                     <q-item-label lines="2" class="text-weight-bold">
-                      <a target="_blank" :href="repository.giturl">{{ repository.giturl }}</a>
+                      <a target="_blank" :href="repository.giturl">{{
+                        repository.giturl
+                      }}</a>
                     </q-item-label>
                     <q-item-label lines="3" class="text-caption">
                       {{ repository.timeAgo }} &#8226;
-                      <span class="text-caption">Posted by @{{ repository.user.name }}</span>
+                      <span class="text-caption"
+                        >Posted by @{{ repository.user.name }}</span
+                      >
                     </q-item-label>
-                  </q-item-section>
-
-                  <q-item-section side>
-                    <q-btn outline color="grey-5" label="5" icon="chat" />
                   </q-item-section>
                 </q-item>
 
@@ -68,29 +78,60 @@
           <q-tab-panel name="submission">
             <q-list bordered class="q-py-md">
               <q-item>
-                Make a submission for <span class="text-weight-bold text-primary">@{{ name }}</span>
+                Make a submission for
+                <span class="text-weight-bold text-primary">@{{ name }}</span>
               </q-item>
               <q-item class="column q-gutter-y-md">
-                <div class="col q-gutter-y-md">
-                  <div class="text-h6">Step 1: Whats roles your take for this solution?</div>
-                  <q-select filled v-model="form.positionId" :options="positions" label="Development Role" emit-value />
+                <div class="col q-gutter-y-sm">
+                  <div class="text-h6">
+                    Step 1: Whats role do you take for this submission?
+                  </div>
+                  <div class="text-grey-5">
+                    For this submission, what role do you take.
+                  </div>
+                  <q-select
+                    filled
+                    v-model="form.positionId"
+                    :options="positions"
+                    label="Development Role"
+                    emit-value
+                    map-options
+                    stack-label
+                  />
                 </div>
-                <div class="col q-gutter-y-md">
-                  <div class="text-h6">Step 1: Upload Submission</div>
-                  <q-input filled v-model="form.giturl" placeholder="Project URL" />
+                <div class="col q-gutter-y-sm">
+                  <div class="text-h6">Step 2: Submission Link</div>
+                  <div class="text-grey-5">
+                    Paste your git repository link below
+                  </div>
+                  <q-input
+                    filled
+                    v-model="form.giturl"
+                    placeholder="Project URL"
+                  />
                 </div>
-                <div class="col q-gutter-y-md">
-                  <div class="text-h6">Step 2: Describe submission</div>
-                  <q-select filled v-model="form.devEnvironmentId" :options="environments" label="Development Language" emit-value />
-                  <q-input filled v-model="form.framework" placeholder="Framework" />
+                <div class="col q-gutter-y-sm">
+                  <div class="text-h6">Step 3: Describe submission</div>
+                  <div class="text-grey-5">
+                    Put in what tools you use to complete this submission. Or
+                    your any of reference links in assisting this solution.
+                  </div>
                   <div class="col-12">
-                    <q-editor v-model="form.description" min-height="10rem" placeholder="Briefly describe your submission" />
+                    <q-editor
+                      v-model="form.description"
+                      min-height="10rem"
+                      placeholder="Briefly describe your submission"
+                    />
                   </div>
                 </div>
               </q-item>
 
               <q-item class="q-pa-md row justify-center">
-                <q-btn label="Make Submission" color="primary" @click="onClickSubmit" />
+                <q-btn
+                  label="Make Submission"
+                  color="primary"
+                  @click="onClickSubmit"
+                />
               </q-item>
             </q-list>
           </q-tab-panel>
@@ -101,15 +142,15 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import Project from "./../../models/Project";
-import Environment from "./../../models/DevEnvironment";
-import Position from "./../../models/Position";
-import Repository from "./../../models/Repository";
+import { mapGetters } from 'vuex';
+import Project from './../../models/Project';
+import Environment from './../../models/DevEnvironment';
+import Position from './../../models/Position';
+import Repository from './../../models/Repository';
 
 export default {
   computed: {
-    ...mapGetters(["name"]),
+    ...mapGetters(['name']),
     project() {
       return Project.find(this.$route.params.id);
     },
@@ -142,27 +183,27 @@ export default {
 
   data() {
     return {
-      tabs: "requirement",
+      tabs: 'requirement',
       form: {
-        giturl: "",
-        description: "",
+        giturl: '',
+        description: '',
         projectId: this.$route.params.id,
-        devEnvironmentId: "",
+        devEnvironmentId: '',
       },
     };
   },
 
   created() {
-    this.$store.dispatch("GetAllRepositories");
-    this.$store.dispatch("GetAllEnvironments");
-    this.$store.dispatch("GetAllPositions");
+    this.$store.dispatch('GetAllRepositories');
+    this.$store.dispatch('GetAllEnvironments');
+    this.$store.dispatch('GetAllPositions');
   },
 
   methods: {
     async onClickSubmit() {
       try {
-        await this.$store.dispatch("AddRepository", this.form);
-        this.$router.push({ path: "/projects" });
+        await this.$store.dispatch('AddRepository', this.form);
+        this.$router.push({ path: '/projects' });
       } catch (e) {
         console.log(e);
       }

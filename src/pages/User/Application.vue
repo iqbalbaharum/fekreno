@@ -45,7 +45,11 @@
                 userapplication && application.getQuestionsJsonObject.length > 0
               "
             />
-            <q-tab name="project" label="Project" />
+            <q-tab
+              name="project"
+              label="Project"
+              v-if="userapplication && application.projects.length > 0"
+            />
             <q-tab
               name="status"
               label="Application Status"
@@ -145,10 +149,7 @@
 
               <q-separator inset />
 
-              <q-item
-                class="q-pa-md"
-                v-if="application.getQuestionsJsonObject.length > 0"
-              >
+              <q-item class="q-pa-md" v-if="application.projects.length > 0">
                 <q-item-section>
                   <div class="text-grey-6">
                     Completed at least one of the listed projects
@@ -157,8 +158,12 @@
                 </q-item-section>
 
                 <q-item-section side>
-                  <q-icon name="fas fa-times-circle" class="text-red" />
-                  <q-icon name="fas fa-check-circle" class="text-teal" />
+                  <q-icon
+                    name="fas fa-check-circle"
+                    class="text-teal"
+                    v-if="userrepositories.length > 0"
+                  />
+                  <q-icon name="fas fa-times-circle" class="text-red" v-else />
                 </q-item-section>
               </q-item>
             </q-list>
@@ -259,7 +264,15 @@
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-icon name="fas fa-times-circle" color="green" />
+                    <q-icon
+                      name="fas fa-check-circle"
+                      color="green"
+                      v-if="
+                        userrepositories.find(
+                          (el) => el.projectId === project.id
+                        )
+                      "
+                    />
                   </q-item-section>
                 </q-item>
 
@@ -281,6 +294,7 @@ import { mapGetters } from 'vuex';
 import { date } from 'quasar';
 import Application from './../../models/Application';
 import UserApplication from './../../models/UserApplication';
+import Repository from './../../models/Repository';
 
 export default {
   data() {
@@ -306,11 +320,22 @@ export default {
         .first();
       return uapp;
     },
+    userrepositories() {
+      return (
+        Repository.query()
+          .where('userId', this.userId)
+          // .whereIdIn(this.application.projects.map((val) => val.id))
+          .where('projectId', '117c85c5-71dc-4c07-ad9b-ea1a88c23582')
+          .get()
+      );
+    },
   },
 
   mounted() {
     this.$store.dispatch('GetAllApplications');
     this.$store.dispatch('GetAllProjects');
+    this.$store.dispatch('GetAllRepositories');
+    this.$store.dispatch('GetUserApplications');
     this.$store.dispatch('GetApplicationProject', this.$route.params.id);
 
     if (this.userapplication && this.userapplication.getAnswersJsonObject) {
