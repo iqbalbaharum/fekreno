@@ -12,18 +12,43 @@ const routes = [
           sidebar: true,
           icon: 'fas fa-user-circle',
           roles: ['user'],
-          color: 'text-grey-5'
+          color: 'text-grey-5',
+          subtitle: ''
         },
         component: () => import('pages/Index.vue')
+      },
+      {
+        path: '/application/:id',
+        meta: {
+          title: 'Application',
+          roles: ['user'],
+          sidebar: false,
+          icon: 'fas fa-book',
+          subtitle: ''
+        },
+        component: () => import('pages/User/Application.vue')
+      },
+      {
+        path: `/application/${process.env.FEATURED_APP_ID}`,
+        meta: {
+          title: 'TSA Application',
+          roles: ['user'],
+          sidebar: true,
+          icon: 'fas fa-star',
+          color: 'text-amber-12',
+          subtitle: 'Opening for cohort 3'
+        },
+        component: () => import('pages/User/Application.vue')
       },
       {
         path: '/projects',
         meta: {
           title: 'Projects',
           roles: ['user'],
-          sidebar: true,
+          sidebar: false,
           icon: 'fas fa-code',
-          color: 'text-grey-5'
+          color: 'text-grey-5',
+          subtitle: ''
         },
         component: () => import('pages/User/Projects.vue')
       },
@@ -34,7 +59,8 @@ const routes = [
           roles: ['user'],
           sidebar: false,
           icon: 'fas fa-code',
-          color: 'text-grey-5'
+          color: 'text-grey-5',
+          subtitle: ''
         },
         component: () => import('pages/User/Project.vue')
       },
@@ -44,30 +70,10 @@ const routes = [
           title: 'Applications',
           roles: ['user'],
           sidebar: false,
-          icon: 'fas fa-book'
+          icon: 'fas fa-book',
+          subtitle: ''
         },
         component: () => import('pages/User/Applications.vue')
-      },
-      {
-        path: '/application/:id',
-        meta: {
-          title: 'Application',
-          roles: ['user'],
-          sidebar: false,
-          icon: 'fas fa-book'
-        },
-        component: () => import('pages/User/Application.vue')
-      },
-      {
-        path: `/application/${process.env.FEATURED_APP_ID}`,
-        meta: {
-          title: 'TSA Entry Test',
-          roles: ['user'],
-          sidebar: true,
-          icon: 'fas fa-star',
-          color: 'text-amber-12'
-        },
-        component: () => import('pages/User/Application.vue')
       },
       // {
       //   path: '/journal',

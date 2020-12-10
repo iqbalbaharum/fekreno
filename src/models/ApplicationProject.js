@@ -5,7 +5,7 @@ export default class ApplicationProject extends Model {
 
   static entity = 'application_project'
 
-  static primaryKey = 'id'
+  static primaryKey = ['projectId', 'applicationId']
 
   static fields () {
     return {

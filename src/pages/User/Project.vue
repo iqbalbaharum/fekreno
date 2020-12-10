@@ -29,7 +29,7 @@
             align="left"
             flat
           >
-            <q-tab name="requirement" label="Requirement" />
+            <q-tab name="requirement" label="Requirements" />
             <q-tab name="repository" label="Repositories" />
             <q-tab name="submission" label="Submission" />
           </q-tabs>

@@ -18,9 +18,6 @@
               <span class="text-capitalize">{{ application.type }}</span>
             </div>
           </q-card-section>
-          <q-card-section top avatar>
-            <q-img contain src="~assets/krenovator.png" />
-          </q-card-section>
           <q-card-section>
             <div class="q-py-sm">
               <div class="text-h5">{{ application.title }}</div>
@@ -37,7 +34,12 @@
             inline-label
           >
             <q-tab name="about" label="About" />
-            <q-tab name="requirement" label="Requirements" />
+            <q-tab
+              name="requirement"
+              label="Checklist"
+              v-if="userapplication.status !== 'joined'"
+            />
+            <q-tab name="requirement" label="Checklist" v-else />
             <q-tab
               name="question"
               label="Questions"
@@ -75,7 +77,7 @@
                 "
               />
               <q-btn
-                label="Participate"
+                label="Fill In Form"
                 color="black"
                 @click="onClickParticipate"
                 v-if="!userapplication"
@@ -152,7 +154,12 @@
               <q-item class="q-pa-md" v-if="application.projects.length > 0">
                 <q-item-section>
                   <div class="text-grey-6">
-                    Completed at least one of the listed projects
+                    Completed at least one of the listed
+                    <span
+                      class="text-primary cursor-pointer"
+                      @click="tabs = 'project'"
+                      >projects</span
+                    >
                   </div>
                   <div>Required</div>
                 </q-item-section>
@@ -194,7 +201,7 @@
                   label="Save Answer"
                   color="primary"
                   @click="onClickSaveAnswer"
-                  v-if="userapplication && userapplication.status !== 'joined'"
+                  v-if="userapplication && userapplication.status === 'joined'"
                 />
               </q-item>
             </q-list>
@@ -204,7 +211,7 @@
               <q-item>
                 <q-timeline color="primary">
                   <q-timeline-entry
-                    title="Applied"
+                    :title="userapplication.status.toUpperCase()"
                     :subtitle="
                       date.formatDate(
                         userapplication.createdAt,
@@ -212,11 +219,8 @@
                       )
                     "
                   >
-                    <div>
-                      Application submitted under
-                      <span class="text-weight-bold text-primary"
-                        >@{{ name }}</span
-                      >
+                    <div v-if="userapplication.status === 'joined'">
+                      Applying for this program
                     </div>
                   </q-timeline-entry>
                   <!-- <q-timeline-entry title="In Review" :subtitle="userapplication.createdAt" icon="eyes"> </q-timeline-entry>
@@ -231,10 +235,12 @@
             </q-list>
           </q-tab-panel>
           <q-tab-panel name="project">
-            <q-list bordered class="q-py-md">
-              <q-item>
-                Any one of the projects listed below must be submitted in order
-                to proceed on your application
+            <q-list bordered class="q-ma-md">
+              <q-item class="bg-grey-4 text-grey-14 q-py-md">
+                <div>
+                  Any one of the projects listed below must be submitted in
+                  order to proceed on your application
+                </div>
               </q-item>
 
               <div
@@ -245,7 +251,6 @@
                   clickable
                   v-ripple
                   class="q-pa-md"
-                  :class="{ 'bg-grey-2': index % 2 == 0 }"
                   :to="`/project/${project.id}`"
                 >
                   <q-item-section top avatar>
@@ -321,13 +326,13 @@ export default {
       return uapp;
     },
     userrepositories() {
-      return (
-        Repository.query()
-          .where('userId', this.userId)
-          // .whereIdIn(this.application.projects.map((val) => val.id))
-          .where('projectId', '117c85c5-71dc-4c07-ad9b-ea1a88c23582')
-          .get()
-      );
+      return Repository.query()
+        .where('userId', this.userId)
+        .where(
+          'projectId',
+          this.application.projects.map((val) => val.id)
+        )
+        .get();
     },
   },
 
@@ -336,6 +341,7 @@ export default {
     this.$store.dispatch('GetAllProjects');
     this.$store.dispatch('GetAllRepositories');
     this.$store.dispatch('GetUserApplications');
+    this.$store.dispatch('GetUserRepositories');
     this.$store.dispatch('GetApplicationProject', this.$route.params.id);
 
     if (this.userapplication && this.userapplication.getAnswersJsonObject) {

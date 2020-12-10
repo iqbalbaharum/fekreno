@@ -1,39 +1,15 @@
 <template>
   <div>
     <q-list>
-      <q-separator spaced inset />
-
-      <q-item>
-        <!-- <q-item-section side top>
-          <q-avatar color="primary" />
-        </q-item-section> -->
-        <q-item-section lines="2">
-          <q-item-label
-            ><span class="text-weight-medium">{{ name }}</span></q-item-label
-          >
-          <q-item-label>
-            <q-chip
-              square
-              size="sm"
-              v-for="role in roles"
-              :key="role"
-              color="primary"
-              class="text-white text-capitalize"
-            >
-              <q-avatar icon="fas fa-check" color="green" text-color="white" />
-              {{ role }}
-            </q-chip>
-          </q-item-label>
-        </q-item-section>
+      <q-item class="q-py-lg">
+        <q-img src="~assets/krenovator.png" width="240px" height="40px" />
       </q-item>
-
-      <q-separator spaced inset />
 
       <EssentialLink
         v-for="link in menus"
         :key="link.meta.title"
         :title="link.meta.title"
-        :caption="link.meta.title"
+        :caption="link.meta.subtitle"
         :link="link.path"
         :icon="link.meta.icon"
         :color="link.meta.color"
@@ -52,7 +28,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['menus', 'name', 'roles']),
+    ...mapGetters(['menus']),
   },
 
   components: {

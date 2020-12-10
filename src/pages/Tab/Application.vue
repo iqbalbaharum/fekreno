@@ -203,7 +203,7 @@ export default {
       },
       form: {},
       projects: [],
-      currentProjects: [],
+      app: {},
       opts: {
         type: [
           {
@@ -252,16 +252,32 @@ export default {
 
   methods: {
     async loadApplication() {
-      this.form = await Application.query()
+      this.app = await Application.query()
         .withAll()
         .where('id', this.$route.params.id)
         .first();
+
+      this.form = {
+        id: this.app.id,
+        about: this.app.about,
+        createdBy: this.app.createdBy,
+        description: this.app.description,
+        featured: this.app.featured,
+        icon: this.app.icon,
+        maxApplied: this.app.maxApplied,
+        method: this.app.method,
+        minProject: this.app.minProject,
+        questions: this.app.questions,
+        title: this.app.title,
+        type: this.app.type,
+      };
+
       if (!this.form) {
         this.$router.go(-1);
       }
 
-      this.projects = this.form.projects;
-      this.questions = this.form.getQuestionsJsonObject;
+      this.projects = this.app.projects;
+      this.questions = this.app.getQuestionsJsonObject;
     },
 
     onClickDeleteQuestion(index) {
@@ -289,7 +305,7 @@ export default {
       }
 
       if (this.projects.length > 0) {
-        let unlinkedProjects = this.form.projects.filter(
+        let unlinkedProjects = this.app.projects.filter(
           (x) => !this.projects.includes(x)
         );
 
@@ -307,6 +323,10 @@ export default {
           });
         }
       }
+
+      this.$store.dispatch('UpdateApplication', this.form).then((res) => {
+        this.$router.push({ path: '/admin/application' });
+      });
     },
   },
 };

@@ -189,8 +189,11 @@ const user = {
       return res.data
     },
 
-    async GetUserApplications({ commit, rootState }) {
-      let res = await this.$repository.user.getUserApplications(rootState.user.userId)
+    async GetUserApplications({ commit }) {
+      let filter = {
+        include: { relation: 'application' }
+      }
+      let res = await this.$repository.user.getUserApplications(filter)
       const data = res.data
       UserApplication.insert({ data: res.data })
 

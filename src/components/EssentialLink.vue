@@ -6,7 +6,9 @@
 
     <q-item-section>
       <q-item-label
-        ><span class="text-weight-medium">{{ title }}</span></q-item-label
+        ><span class="text-subtitle1 text-weight-medium">{{
+          title
+        }}</span></q-item-label
       >
       <q-item-label caption>
         {{ caption }}

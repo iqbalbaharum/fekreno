@@ -18,6 +18,7 @@ export default class Profile extends Model {
       about: this.attr(''),
       birthday: this.attr(''),
       userId: this.attr(''),
+      telegram: this.attr(''),
 
       // relation
       user: this.belongsTo(User, 'uuid'),
