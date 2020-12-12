@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="q-pa-md">
-      <q-table :data="rows" :columns="columns" :row-key="rowkey" grid>
+      <q-table :data="rows" :columns="columns" :row-key="rowkey">
         <template v-slot:top-left>
           <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
             <template v-slot:append>

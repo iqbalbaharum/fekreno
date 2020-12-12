@@ -282,9 +282,18 @@ const user = {
       return res.data
     },
     
-    async ApplyUserApplication({ commit }, data) {
-      let res = await this.$repository.user.applyUserApplication(data.applicationId)
-      return res.data
+    ApplyUserApplication({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        this.$repository.user.applyUserApplication(data.applicationId)
+          .then(res => {
+            UserApplication.insert({ data: res.data })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+      })
     },
     
 

@@ -1,16 +1,15 @@
 <template>
   <div class="fullscreen row">
-    <div class="col bg-primary">
-    </div>
-    <div class="col">
-    </div>
+    <div class="col bg-primary"></div>
+    <div class="col"></div>
     <div class="fullscreen flex flex-center">
-      <q-card class="q-pa-md" style="width:400px;">
-        
+      <q-card class="q-pa-md" style="width: 400px">
         <div class="text-weight-bold text-center q-pb-lg q-gutter-sm">
-          <q-img class="q-mb-md" src="~assets/krenovator.png"/>
+          <q-img class="q-mb-md" src="~assets/krenovator.png" />
           <div class="text-h4 text-primary">Create Account</div>
-          <div class="text-caption">Dont have an account? Create your account quickly</div>
+          <div class="text-caption">
+            Dont have an account? Create your account quickly
+          </div>
         </div>
 
         <div class="q-gutter-sm">
@@ -31,7 +30,7 @@
             :error="$v.form.email.$error"
             error-message="Enter a valid email"
           />
-        
+
           <q-input
             filled
             v-model.trim="form.mobile"
@@ -51,12 +50,20 @@
             error-message="Password can't be empty"
           >
             <template v-slot:append>
-              <q-btn round flat icon="remove_red_eye" @click="onClickShowPassword" />
+              <q-btn
+                round
+                flat
+                icon="remove_red_eye"
+                @click="onClickShowPassword"
+              />
             </template>
           </q-input>
 
           <div>
-            <div class="text-caption">By clicking Register, you have agreed with our Term of Conditions of usage and using cookies.</div>
+            <div class="text-caption">
+              By clicking Register, you have agreed with our Term of Conditions
+              of usage and using cookies.
+            </div>
           </div>
 
           <div class="q-mt-md q-gutter-sm text-center">
@@ -77,57 +84,56 @@
               label="Back to Login"
               no-caps
             />
-
           </div>
         </div>
       </q-card>
-      
-      <prompt 
+
+      <prompt
         :show="dialog.success"
         boxtype="success"
         :buttons="['continue']"
         icon="fas fa-check-circle"
         title="Registration Successful"
         body="Congratulations, your account has been succesfully created"
-        @continue="onClickContinue" />
+        @continue="onClickContinue"
+      />
 
-      <prompt 
+      <prompt
         :show="dialog.alert"
         boxtype="alert"
         :buttons="['ok']"
         icon="fas fa-bomb"
         title="Registration Error"
         body="Oh no, please contact customer service"
-        @ok="onClickOk" />
-      
-
+        @ok="onClickOk"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { minLength, required, email } from 'vuelidate/lib/validators'
-import Prompt from './../../components/Prompt'
+import { minLength, required, email } from 'vuelidate/lib/validators';
+import Prompt from './../../components/Prompt';
 
 export default {
   data() {
     return {
-      form : {
+      form: {
         name: '',
         password: '',
         email: '',
-        mobile: ''
+        mobile: '',
       },
       type: 'password',
       dialog: {
         success: false,
         alert: false,
-      }
-    }
+      },
+    };
   },
 
   components: {
-    Prompt
+    Prompt,
   },
 
   validations: {
@@ -135,27 +141,29 @@ export default {
       name: { required },
       email: { required, email },
       password: { required },
-      mobile: { required }
-    }
+      mobile: { required },
+    },
   },
 
   methods: {
     async onClickRegister() {
-      this.$v.form.$touch()
+      this.$v.form.$touch();
 
       try {
-        let res = await this.$store.dispatch('RegisterIndividual', this.form)
-        this.dialog.success = true
+        let res = await this.$store.dispatch('RegisterIndividual', this.form);
+        this.dialog.success = true;
       } catch (err) {
-        this.dialog.alert = true        
+        if (err) {
+          this.dialog.alert = true;
+        }
       }
     },
 
     onClickShowPassword() {
       if (this.type === 'password') {
-        this.type = 'text'
+        this.type = 'text';
       } else {
-        this.type = 'password'
+        this.type = 'password';
       }
     },
 
@@ -164,8 +172,8 @@ export default {
     },
 
     onClickContinue() {
-      this.$router.push('/login')
-    }
-  }
-}
+      this.$router.push('/login');
+    },
+  },
+};
 </script>
