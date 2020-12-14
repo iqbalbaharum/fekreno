@@ -272,6 +272,20 @@ const user = {
       })
     },
 
+    async GetUserProfileById({ commit }, id) {
+      return new Promise((resolve, reject) => {
+        this.$repository.user.getUserProfile(id)
+          .then(res => {
+            UserProfile.insert({ data: res.data })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
+
     async AssignUserRole({ commit }, data) {
       let res = await this.$repository.user.assignUserRoles(data.userId, data.roleId)
       return res.data

@@ -18,6 +18,7 @@ export default class UserApplication extends Model {
       createdAt: this.attr(''),
       updatedAt: this.attr(''),
 
+      user: this.belongsTo(User, 'userId'),
       application: this.belongsTo(Application, 'applicationId')
     }
 

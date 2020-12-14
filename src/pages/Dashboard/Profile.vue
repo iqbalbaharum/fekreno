@@ -1,5 +1,5 @@
 <template>
-  <q-list bordered class="q-pa-md" v-if="userprofile">
+  <q-list bordered class="q-pa-md" v-if="user.profile">
     <div
       class="text-weight-bold text-uppercase text-grey-4 items-center q-py-md"
     >
@@ -79,6 +79,7 @@
 
 <script>
 import Country from './../../models/Country';
+import User from './../../models/User';
 import UserProfile from './../../models/UserProfile';
 import { mapGetters } from 'vuex';
 import { date } from 'quasar';
@@ -102,9 +103,8 @@ export default {
   computed: {
     ...mapGetters(['userId', 'name', 'mobile', 'email']),
 
-    userprofile() {
-      let profile = UserProfile.query().where('userId', this.userId).first();
-      return profile;
+    user() {
+      return User.query().with('profile').where('uuid', this.userId).first();
     },
     countries() {
       let countries = Country.all();
@@ -123,34 +123,41 @@ export default {
 
   created() {
     this.$store.dispatch('GetAllCountries');
-    this.$store.dispatch('GetUserProfile').then((res) => {
-      this.form = Object.create(this.userprofile);
-      this.form = {
-        fullname: this.userprofile.fullname,
-        about: this.userprofile.about,
-        birthday: date.formatDate(this.userprofile.birthday, 'DD/MM/YYYY'),
-        country: this.userprofile.country,
-        github: this.userprofile.github ? this.userprofile.github : '',
-        linkedin: this.userprofile.linkedin ? this.userprofile.linkedin : '',
-        telegram: this.userprofile.telegram ? this.userprofile.telegram : '',
-      };
-    });
+    this.loadUserProfile();
 
     this.fixed.email = this.email;
     this.fixed.mobile = this.mobile;
   },
 
   methods: {
+    loadUserProfile() {
+      this.$store.dispatch('GetUserProfile').then((res) => {
+        this.form = Object.create(this.user.profile);
+        this.form = {
+          fullname: this.user.profile.fullname,
+          about: this.user.profile.about,
+          birthday: date.formatDate(this.user.profile.birthday, 'DD/MM/YYYY'),
+          country: this.user.profile.country,
+          github: this.user.profile.github ? this.user.profile.github : '',
+          linkedin: this.user.profile.linkedin
+            ? this.user.profile.linkedin
+            : '',
+          telegram: this.user.profile.telegram
+            ? this.user.profile.telegram
+            : '',
+        };
+      });
+    },
     onClickSubmit() {
       this.form.birthday = date.formatDate(
         this.form.birthday,
         'YYYY-MM-DDTHH:mm:ss.SSSZ'
       );
+
       this.$store
         .dispatch('UpdateUserProfile', this.form)
         .then((res) => {
-          this.form = {};
-          this.dialog.show = false;
+          this.loadUserProfile();
         })
         .catch((err) => {
           console.log(err);

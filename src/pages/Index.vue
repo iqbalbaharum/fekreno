@@ -85,6 +85,7 @@ import ProfileTab from './Dashboard/Profile';
 import RepositoryTab from './Dashboard/Repository';
 import ApplicationTab from './Dashboard/Application';
 import UserProfile from './../models/UserProfile';
+import User from './../models/User';
 import { mapGetters } from 'vuex';
 import { date } from 'quasar';
 
@@ -114,6 +115,9 @@ export default {
   computed: {
     ...mapGetters(['name', 'email', 'mobile', 'userId']),
 
+    user() {
+      return User.query().where('$id', this.userId).with('profile').first();
+    },
     userprofile() {
       let profile = UserProfile.query()
         .withAll()
@@ -126,22 +130,10 @@ export default {
   created() {
     this.$store.dispatch('GetAllCountries');
     this.$store.dispatch('GetAllApplications');
+    this.$store.dispatch('GetUserByID', this.userId);
+    this.$store.dispatch('GetUserProfile');
     this.$store.dispatch('GetUserRepositories');
     this.$store.dispatch('GetUserApplications');
-    this.$store.dispatch('GetUserProfile').then((res) => {
-      this.form = Object.create(this.userprofile);
-      this.form = {
-        fullname: this.userprofile.fullname,
-        about: this.userprofile.about,
-        birthday: date.formatDate(this.userprofile.birthday, 'DD/MM/YYYY'),
-        country: this.userprofile.country,
-        github: this.userprofile.github ? this.userprofile.github : '',
-        linkedin: this.userprofile.linkedin ? this.userprofile.linkedin : '',
-      };
-    });
-
-    this.fixed.email = this.email;
-    this.fixed.mobile = this.mobile;
   },
 
   components: {

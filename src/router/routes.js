@@ -168,8 +168,15 @@ const routes = [
           icon: 'school'
         },
         component: () => import('pages/Position.vue')
-      }
-
+      },
+      {
+        path: `admin/participants/:id`,
+        meta: {
+          roles: ['admin'],
+          sidebar: false,
+        },
+        component: () => import('pages/Tab/Participants.vue')
+      },
     ]
   },
 

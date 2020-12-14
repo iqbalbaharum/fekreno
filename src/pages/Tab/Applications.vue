@@ -60,6 +60,15 @@
                   class="full-width"
                   align="right"
                 />
+                <q-btn
+                  flat
+                  color="black"
+                  label="Participants"
+                  icon="people"
+                  class="full-width"
+                  align="right"
+                  :to="`participants/${application.id}`"
+                />
               </q-item-section>
             </q-item>
 

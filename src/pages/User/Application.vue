@@ -67,8 +67,9 @@
               <q-btn
                 label="Submit Application"
                 color="accent"
-                @click="onClickApply"
+                @click="onClickSubmission"
                 v-if="userapplication && userapplication.status === 'joined'"
+                :disabled="!isCanSubmit"
               />
               <q-btn
                 label="Fill In Form"
@@ -135,11 +136,13 @@
 
                 <q-item-section side v-if="userapplication">
                   <q-icon
-                    name="fas fa-times-circle"
-                    class="text-red"
-                    v-if="application.getQuestionsJsonObject.length <= 0"
+                    name="fas fa-check-circle"
+                    class="text-teal"
+                    v-if="
+                      userapplication && userapplication.getAnswersJsonObject
+                    "
                   />
-                  <q-icon name="fas fa-check-circle" class="text-teal" v-else />
+                  <q-icon name="fas fa-times-circle" class="text-red" v-else />
                 </q-item-section>
               </q-item>
 
@@ -285,6 +288,25 @@
         </q-tab-panels>
       </div>
     </div>
+
+    <prompt
+      :show.sync="dialog.notification"
+      boxtype="warning"
+      :buttons="['continue', 'cancel']"
+      icon="fas fa-check-circle"
+      title="Submit Application"
+      body="You are submitting your application. Proceed?"
+      @continue="onClickApply"
+    />
+
+    <prompt
+      :show.sync="dialog.info"
+      boxtype="warning"
+      :buttons="['ok']"
+      icon="fas fa-check-circle"
+      :title="`You are applying for ${application.title}`"
+      body="Complete your application by following checklist given and click Submit Application. Fail to do so, may result in your application void."
+    />
   </q-page>
 </template>
 
@@ -295,13 +317,24 @@ import Application from './../../models/Application';
 import UserApplication from './../../models/UserApplication';
 import Repository from './../../models/Repository';
 
+import Prompt from './../../components/Prompt';
+
 export default {
   data() {
     return {
       date: date,
       tabs: 'about',
       form: [],
+      isCanSubmit: false,
+      dialog: {
+        notification: false,
+        info: false,
+      },
     };
+  },
+
+  components: {
+    Prompt,
   },
 
   computed: {
@@ -345,6 +378,8 @@ export default {
     } else {
       this.form = [];
     }
+
+    this.checkCanSubmit();
   },
 
   methods: {
@@ -356,6 +391,7 @@ export default {
         });
 
         this.tabs = 'requirement';
+        this.checkCanSubmit();
       } catch (e) {
         console.log(e);
       }
@@ -365,13 +401,27 @@ export default {
         .dispatch('ApplyUserApplication', {
           applicationId: this.$route.params.id,
         })
-        .then((res) => {});
+        .then((res) => {
+          this.dialog.info = true;
+          this.$store.dispatch('GetUserApplications');
+        });
+    },
+    onClickSubmission() {
+      this.dialog.notification = true;
     },
     onClickApply() {
       this.$store.dispatch('SubmitUserApplication', {
         id: this.userapplication.id,
       });
       this.$router.go(-1);
+    },
+    checkCanSubmit() {
+      this.isCanSubmit =
+        this.userapplication &&
+        this.userapplication.status === 'joined' &&
+        this.userapplication.getAnswersJsonObject &&
+        this.userapplication.getAnswersJsonObject.length > 0 &&
+        this.userrepositories.length > 0;
     },
   },
 };

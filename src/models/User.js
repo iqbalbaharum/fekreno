@@ -4,6 +4,7 @@ import Repository from './Repository'
 import Application from './Application'
 import UserRole from './UserRole'
 import UserApplication from './UserApplication'
+import Profile from './UserProfile'
 
 export default class User extends Model {
 
@@ -22,7 +23,8 @@ export default class User extends Model {
       
       roles: this.belongsToMany(Role, UserRole, 'userId', 'roleId'),
       applications: this.belongsToMany(Application, UserApplication, 'userId', 'applicationId'),
-      repositories: this.hasMany(Repository, 'userId')
+      repositories: this.hasMany(Repository, 'userId'),
+      profile: this.hasOne(Profile, 'userId')
     }
 
   }
