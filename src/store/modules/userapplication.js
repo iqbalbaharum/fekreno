@@ -27,7 +27,7 @@ const userapp = {
     GetApplicationAllPartipants({ commit }, applicationId) {
 
       let filter = {
-        where: {applicationId: applicationId},
+        where: {applicationId: applicationId} ,
         include: [
           {
             relation: 'user'

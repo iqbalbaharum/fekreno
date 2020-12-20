@@ -197,6 +197,7 @@
                   </div>
                   <div
                     v-if="
+                      dialog.userapplication && 
                       dialog.userapplication.answers &&
                       dialog.userapplication.answers.length > 0 &&
                       dialog.userapplication.getAnswersJsonObject &&
@@ -271,6 +272,7 @@ export default {
     this.$store.dispatch('GetAllApplications');
     this.$store.dispatch('GetAllProjects');
     this.$store.dispatch('GetAllRepositories');
+    this.$store.dispatch('GetAllPositions');
     this.$store.dispatch('GetUserApplications');
     this.$store.dispatch('GetUserRepositories');
     this.$store.dispatch('GetApplicationProject', this.$route.params.id);
