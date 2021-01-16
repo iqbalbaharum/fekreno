@@ -11,9 +11,13 @@
         <div class="q-mb-xl">
           <p class="text-h3">Applications</p>
           <div>
-            Participate in any programs or apply to work on any job vancancy <br />
+            Participate in any programs or apply to work on any job vancancy
+            <br />
             from our partners
           </div>
+        </div>
+        <div class="q-py-md">
+          <div class="text-h6">Applications</div>
         </div>
         <application-list />
       </div>
@@ -22,7 +26,8 @@
 </template>
 
 <script>
-import ApplicationList from "./../../components/ApplicationList";
+import ApplicationList from './../../components/ApplicationList';
+import UserApplication from './../../models/UserApplication';
 
 export default {
   data() {
@@ -33,9 +38,15 @@ export default {
     ApplicationList,
   },
 
+  computed: {
+    userapplications() {
+      let uapp = UserApplication.query().withAll().get();
+      return uapp;
+    },
+  },
+
   created() {
-    this.$store.dispatch("GetAllApplications");
-    this.$store.dispatch("GetUserApplications");
+    this.$store.dispatch('GetAllApplications');
   },
 };
 </script>

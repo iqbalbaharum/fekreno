@@ -26,6 +26,7 @@ export default class Application extends Model {
       location: this.attr(''),
       updatedAt: this.attr(''),
       createdby: this.attr(''),
+      status: this.attr('active'),
       // relation
       createdby: this.belongsTo(User, 'createdby'),
       projects: this.belongsToMany(Project, ApplicationProject, 'applicationId', 'projectId'),

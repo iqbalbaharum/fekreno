@@ -13,6 +13,7 @@ export default class UserApplication extends Model {
       id: this.attr(''),
       userId: this.attr(''),
       applicationId: this.attr(''),
+      state: this.attr(''),
       status: this.attr(''),
       answers: this.attr(''),
       createdAt: this.attr(''),

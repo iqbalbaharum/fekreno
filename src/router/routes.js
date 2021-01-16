@@ -28,24 +28,24 @@ const routes = [
         },
         component: () => import('pages/User/Application.vue')
       },
-      {
-        path: `/application/${process.env.FEATURED_APP_ID}`,
-        meta: {
-          title: 'TSA Application',
-          roles: ['user'],
-          sidebar: true,
-          icon: 'fas fa-star',
-          color: 'text-amber-12',
-          subtitle: 'Opening for cohort 3'
-        },
-        component: () => import('pages/User/Application.vue')
-      },
+      // {
+      //   path: `/application/${process.env.FEATURED_APP_ID}`,
+      //   meta: {
+      //     title: 'TSA Application',
+      //     roles: ['user'],
+      //     sidebar: true,
+      //     icon: 'fas fa-star',
+      //     color: 'text-amber-12',
+      //     subtitle: 'Opening for cohort 3'
+      //   },
+      //   component: () => import('pages/User/Application.vue')
+      // },
       {
         path: '/projects',
         meta: {
           title: 'Projects',
           roles: ['user'],
-          sidebar: false,
+          sidebar: true,
           icon: 'fas fa-code',
           color: 'text-grey-5',
           subtitle: ''
@@ -69,32 +69,32 @@ const routes = [
         meta: {
           title: 'Applications',
           roles: ['user'],
-          sidebar: false,
+          sidebar: true,
           icon: 'fas fa-book',
           subtitle: ''
         },
         component: () => import('pages/User/Applications.vue')
       },
-      // {
-      //   path: '/journal',
-      //   meta: {
-      //     title: 'Journals',
-      //     roles: ['user'],
-      //     sidebar: true,
-      //     icon: 'fas fa-book'
-      //   },
-      //   component: () => import('pages/User/Journal.vue')
-      // },
-      // {
-      //   path: '/material',
-      //   meta: {
-      //     title: 'Learning Materials',
-      //     roles: ['user'],
-      //     sidebar: true,
-      //     icon: 'fas fa-stream'
-      //   },
-      //   component: () => import('pages/User/Material.vue')
-      // },
+      {
+        path: '/journal',
+        meta: {
+          title: 'Journals',
+          roles: ['cohort'],
+          sidebar: true,
+          icon: 'fas fa-book'
+        },
+        component: () => import('pages/User/Journal.vue')
+      },
+      {
+        path: '/material',
+        meta: {
+          title: 'Learning Materials',
+          roles: ['cohort'],
+          sidebar: true,
+          icon: 'fas fa-stream'
+        },
+        component: () => import('pages/User/Material.vue')
+      },
 
       //admin
       {

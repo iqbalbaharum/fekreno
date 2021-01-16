@@ -52,23 +52,26 @@
               label="Project"
               v-if="userapplication && application.projects.length > 0"
             />
-            <q-tab
-              name="status"
-              label="Application Status"
-              v-if="userapplication"
-            />
             <div class="row justify-end full-width q-pr-md">
               <div
                 class="text-weight-bold text-accent"
-                v-if="userapplication && userapplication.status === 'submitted'"
+                v-if="userapplication && userapplication.state === 'submit'"
               >
-                Submitted
+                <div class="text-caption">
+                  {{
+                    date.formatDate(
+                      userapplication.updatedAt,
+                      'DD MMM YYYY hh:mm A'
+                    )
+                  }}
+                </div>
+                {{ userapplication.status.toUpperCase() }}
               </div>
               <q-btn
                 label="Submit Application"
                 color="accent"
                 @click="onClickSubmission"
-                v-if="userapplication && userapplication.status === 'joined'"
+                v-if="userapplication && userapplication.state === 'draft'"
                 :disabled="!isCanSubmit"
               />
               <q-btn
@@ -185,7 +188,7 @@
                     filled
                     v-model="form[index]"
                     :disable="
-                      userapplication && userapplication.status !== 'joined'
+                      userapplication && userapplication.state !== 'draft'
                     "
                   />
                 </div>
@@ -198,36 +201,8 @@
                   label="Save Answer"
                   color="primary"
                   @click="onClickSaveAnswer"
-                  v-if="userapplication && userapplication.status === 'joined'"
+                  v-if="userapplication && userapplication.state === 'draft'"
                 />
-              </q-item>
-            </q-list>
-          </q-tab-panel>
-          <q-tab-panel name="status" v-if="userapplication">
-            <q-list bordered class="q-py-md">
-              <q-item>
-                <q-timeline color="primary">
-                  <q-timeline-entry
-                    :title="userapplication.status.toUpperCase()"
-                    :subtitle="
-                      date.formatDate(
-                        userapplication.createdAt,
-                        'DD-MM-YYYY HH:mm'
-                      )
-                    "
-                  >
-                    <div v-if="userapplication.status === 'joined'">
-                      Applying for this program
-                    </div>
-                  </q-timeline-entry>
-                  <!-- <q-timeline-entry title="In Review" :subtitle="userapplication.createdAt" icon="eyes"> </q-timeline-entry>
-                  <q-timeline-entry title="Shortlisted" :subtitle="userapplication.createdAt" icon="edit">
-                    <div>Your application has been shortlisted</div>
-                  </q-timeline-entry>
-                  <q-timeline-entry :title="userapplication.status" :subtitle="userapplication.createdAt" icon="close" color="red">
-                    <div>{{ userapplication.reason }}</div>
-                  </q-timeline-entry> -->
-                </q-timeline>
               </q-item>
             </q-list>
           </q-tab-panel>
@@ -416,12 +391,32 @@ export default {
       this.$router.go(-1);
     },
     checkCanSubmit() {
-      this.isCanSubmit =
-        this.userapplication &&
-        this.userapplication.status === 'joined' &&
-        this.userapplication.getAnswersJsonObject &&
-        this.userapplication.getAnswersJsonObject.length > 0 &&
-        this.userrepositories.length > 0;
+      let submit = true;
+
+      if (this.userapplication && this.userapplication.state !== 'draft') {
+        submit = false;
+      }
+
+      if (submit && this.application.projects.length > 0) {
+        if (this.userrepositories.length <= 0) {
+          submit = false;
+        }
+      }
+
+      if (
+        submit &&
+        this.application.questions &&
+        JSON.parse(this.application.questions).length > 0
+      ) {
+        if (
+          this.userapplication.getAnswersJsonObject &&
+          this.userapplication.getAnswersJsonObject.length < 0
+        ) {
+          submit = false;
+        }
+      }
+
+      this.isCanSubmit = submit;
     },
   },
 };

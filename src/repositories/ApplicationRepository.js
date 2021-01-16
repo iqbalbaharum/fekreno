@@ -33,4 +33,29 @@ export default class ApplicationRepository extends Repository {
       }
     })
   }
+
+  async activateApplication(id) {
+    return datasource({
+      method: 'post',
+      url: `/application/${id}/activate`
+    })
+  }
+
+  async deactivateApplication(id) {
+    return datasource({
+      method: 'post',
+      url: `/application/${id}/deactivated`
+    })
+  }
+
+  async closeApplication(id, acceptedIds) {
+    return datasource({
+      method: 'post',
+      url: `/application/close`,
+      data: {
+        applicationId: id,
+        acceptedUserApplicationIds: acceptedIds
+      }
+    })
+  }
 }

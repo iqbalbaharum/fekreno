@@ -50,7 +50,28 @@
                   icon="edit"
                   class="full-width"
                   align="right"
+                  v-if="application.status === 'draft'"
                   :to="`application/${application.id}`"
+                />
+                <q-btn
+                  flat
+                  color="positive"
+                  label="Go Live"
+                  icon="fas fa-check-circle"
+                  class="full-width"
+                  align="right"
+                  v-if="application.status === 'draft'"
+                  @click="onClickActivateDialog(application.id)"
+                />
+                <q-btn
+                  flat
+                  color="primary"
+                  label="Close Application"
+                  icon="fas fa-check-circle"
+                  class="full-width"
+                  align="right"
+                  v-if="application.status === 'active'"
+                  @click="onClickCloseDialog(application.id)"
                 />
                 <q-btn
                   flat
@@ -59,6 +80,8 @@
                   icon="warning"
                   class="full-width"
                   align="right"
+                  v-if="application.status === 'active'"
+                  @click="onClickDeactivate(application.id)"
                 />
                 <q-btn
                   flat
@@ -197,10 +220,93 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+
+    <q-dialog v-model="dialog.activate.show">
+      <q-card class="bg-primary text-white">
+        <q-card-section>
+          <div class="text-h6">Are you sure?</div>
+        </q-card-section>
+
+        <q-card-section class="row items-center">
+          <span>Make this application live and accessible by public</span>
+        </q-card-section>
+
+        <q-card-actions align="right" class="bg-white text-dark">
+          <q-btn flat label="Cancel" @click="onClickActivateCancel" />
+          <q-btn
+            flat
+            label="Go Live"
+            color="primary"
+            @click="onClickConfirmActivate"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="dialog.deactivate.show">
+      <q-card class="bg-warning text-black">
+        <q-card-section>
+          <div class="text-h6">Are you sure?</div>
+        </q-card-section>
+
+        <q-card-section class="row items-center">
+          <span
+            >Do you really want to deactivate this application? This process
+            cannot be undone</span
+          >
+        </q-card-section>
+
+        <q-card-actions align="right" class="bg-white text-dark">
+          <q-btn flat label="Cancel" @click="onClickDeactivateCancel" />
+          <q-btn
+            flat
+            label="Deactivate"
+            color="warning"
+            @click="onClickConfirmDeactivate"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog position="bottom" v-model="dialog.close.show" persistent>
+      <q-card style="width: 490px">
+        <q-card-section class="bg-primary text-white">
+          To close application, select successful candidates below.
+        </q-card-section>
+        <q-list bordered separator class="q-pa-md">
+          <div v-for="uapp in userapplications" :key="uapp.id">
+            <template v-if="uapp.user">
+              <q-item>
+                <q-item-section>
+                  <q-item-label>{{ uapp.user.name }}</q-item-label>
+                  <q-item-label caption>{{ uapp.user.email }}</q-item-label>
+                </q-item-section>
+                <q-item-section avatar>
+                  <q-checkbox
+                    v-model="dialog.close.acceptedIds"
+                    :val="uapp.id"
+                  />
+                </q-item-section>
+              </q-item>
+            </template>
+          </div>
+        </q-list>
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" @click="onClickCloseCancel" />
+          <q-btn
+            flat
+            label="Close Application"
+            color="positive"
+            @click="onClickConfirmClose"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
+import UserApplication from 'src/models/UserApplication';
 import Application from './../../models/Application';
 
 export default {
@@ -213,18 +319,23 @@ export default {
         minProject: 0,
         maxApplied: 1,
         icon: '',
-        // questions: [
-        //   {
-        //     text: 'Complete the problem-solving test at <a href="">https://www.mindtools.com/pages/article/newTMC_72.htm</a>. And enter your score below',
-        //   },
-        //   {
-        //     text: "Complete the simple algebra test at https://www.tests.com/practice/algebra-practice-test. And enter your score below.",
-        //   },
-        // ],
         questions: [],
       },
       dialog: {
         isShow: false,
+        activate: {
+          show: false,
+          id: '',
+        },
+        deactivate: {
+          show: false,
+          id: '',
+        },
+        close: {
+          show: false,
+          id: '',
+          acceptedIds: [],
+        },
       },
       opts: {
         type: [
@@ -255,11 +366,23 @@ export default {
 
   created() {
     this.$store.dispatch('GetAllApplications');
+    this.$store.dispatch('GetAllUserApplications');
   },
 
   computed: {
     applications() {
       return Application.query().withAll().get();
+    },
+    userapplications() {
+      if (!this.dialog.close.id) {
+        return [];
+      }
+
+      return UserApplication.query()
+        .where('applicationId', this.dialog.close.id)
+        .where('status', 'submitted')
+        .withAll()
+        .get();
     },
   },
 
@@ -277,6 +400,79 @@ export default {
     },
     onClickCancel() {
       this.dialog.isShow = false;
+    },
+
+    onClickActivateCancel() {
+      this.dialog.activate = {
+        id: '',
+        show: false,
+      };
+    },
+
+    onClickDeactivateCancel() {
+      this.dialog.deactivate = {
+        id: '',
+        show: false,
+      };
+    },
+
+    onClickActivateDialog(id) {
+      this.dialog.activate.id = id;
+      this.dialog.activate.show = true;
+    },
+
+    onClickDeactivate(id) {
+      this.dialog.deactivate.id = id;
+      this.dialog.deactivate.show = true;
+    },
+
+    onClickCloseDialog(id) {
+      this.dialog.close.id = id;
+      this.dialog.close.show = true;
+    },
+
+    onClickCloseCancel() {
+      this.dialog.close = {
+        id: '',
+        show: false,
+        acceptedIds: [],
+      };
+    },
+
+    async onClickConfirmActivate() {
+      let res = await this.$store.dispatch('ActivateApplication', {
+        id: this.dialog.activate.id,
+      });
+
+      if (res) {
+        this.dialog.activate = {
+          id: '',
+          show: false,
+        };
+      }
+    },
+
+    async onClickConfirmDeactivate() {
+      let res = await this.$store.dispatch('DeactivateApplication', {
+        id: this.dialog.deactivate.id,
+      });
+
+      if (res) {
+        this.dialog.deactivate = {
+          show: false,
+        };
+      }
+    },
+
+    async onClickConfirmClose() {
+      let res = await this.$store.dispatch('CloseApplication', {
+        id: this.dialog.close.id,
+        acceptedIds: this.dialog.close.acceptedIds,
+      });
+
+      if (res) {
+        this.onClickCloseCancel();
+      }
     },
   },
 };

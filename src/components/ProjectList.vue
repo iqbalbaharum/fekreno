@@ -1,6 +1,9 @@
 <template>
   <q-list bordered>
-    <div v-for="(project, index) in projects" :key="project.id">
+    <q-item v-if="projects.length <= 0" class="q-pa-md">
+      Currently no available projects
+    </q-item>
+    <div v-else v-for="(project, index) in projects" :key="project.id">
       <q-item
         clickable
         v-ripple
@@ -38,7 +41,7 @@
 </template>
 
 <script>
-import Project from "./../models/Project";
+import Project from './../models/Project';
 
 export default {
   data() {

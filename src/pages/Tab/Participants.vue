@@ -3,22 +3,19 @@
     <div class="q-pa-md q-gutter-sm">
       <q-breadcrumbs>
         <q-breadcrumbs-el label="Home" to="/" />
-        <q-breadcrumbs-el
-          label="Applications"
-          :to="`admin/applications/${this.$route.params.id}`"
-        />
-        <q-breadcrumbs-el label="Particpants" />
+        <q-breadcrumbs-el label="Applications" :to="`/admin/application`" />
+        <q-breadcrumbs-el label="Participants" />
       </q-breadcrumbs>
     </div>
     <div class="row">
       <div class="col-8 q-pa-lg q-gutter-y-md">
-        <div class="row q-gutter-md">
+        <div class="row q-gutter-x-md">
           <q-card class="col-3 text-center">
             <q-card-section>
               <div class="text-h2 text-primary text-center">
                 {{ userapplications.length }}
               </div>
-              <div caption>Total Applications</div>
+              <div caption>Applications</div>
             </q-card-section>
           </q-card>
 
@@ -26,22 +23,47 @@
             <q-card-section>
               <div class="text-h2 text-primary text-center">
                 {{
-                  userapplications.filter((x) => x.status === 'joined').length
+                  userapplications.filter((x) => x.state === 'submit').length
                 }}
               </div>
-              <div caption>Total Joined</div>
+              <div caption>Submitted</div>
             </q-card-section>
           </q-card>
 
           <q-card class="col-3 text-center">
             <q-card-section>
               <div class="text-h2 text-primary text-center">
+                {{ userapplications.filter((x) => x.state === 'draft').length }}
+              </div>
+              <div caption>Incomplete Form</div>
+            </q-card-section>
+          </q-card>
+        </div>
+
+        <div class="row q-gutter-x-md" v-if="application.status === 'closed'">
+          <q-card class="col-3 text-center bg-primary text-white">
+            <q-card-section>
+              <div class="text-h2 text-white text-center">
                 {{
-                  userapplications.filter((x) => x.status === 'submitted')
-                    .length
+                  userapplications.filter(
+                    (x) => x.state === 'submit' && x.status === 'accepted'
+                  ).length
                 }}
               </div>
-              <div caption>Total Submitted</div>
+              <div caption>Accepted</div>
+            </q-card-section>
+          </q-card>
+
+          <q-card class="col-3 text-center bg-negative text-white">
+            <q-card-section>
+              <div class="text-h2 text-center">
+                {{
+                  userapplications.filter(
+                    (x) => x.state === 'submit' && x.status === 'rejected'
+                  ).length
+                }}
+              </div>
+              <div caption>Rejected</div>
             </q-card-section>
           </q-card>
         </div>
@@ -197,7 +219,7 @@
                   </div>
                   <div
                     v-if="
-                      dialog.userapplication && 
+                      dialog.userapplication &&
                       dialog.userapplication.answers &&
                       dialog.userapplication.answers.length > 0 &&
                       dialog.userapplication.getAnswersJsonObject &&
@@ -244,7 +266,10 @@ export default {
 
   computed: {
     application() {
-      return Application.query().withAll().first();
+      return Application.query()
+        .whereId(this.$route.params.id)
+        .withAll()
+        .first();
     },
     userapplications() {
       return UserApplication.query()

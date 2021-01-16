@@ -27,7 +27,7 @@
               v-if="
                 userapplications.find(
                   (el) => el.applicationId === uapplication.application.id
-                ).status === 'joined'
+                ).state === 'draft'
               "
             >
               Incomplete form
@@ -36,12 +36,14 @@
         </q-item-section>
 
         <q-item-section side class="text-center">
-          <div class="text-capitalize text-weight-bold text-black">
-            {{
-              userapplications.find(
-                (el) => el.applicationId === uapplication.application.id
-              ).status
-            }}
+          <div
+            class="text-capitalize text-weight-bold text-black"
+            v-if="uapplication.state === 'submit'"
+          >
+            {{ uapplication.status }}
+          </div>
+          <div class="text-capitalize text-weight-bold text-black" v-else>
+            {{ uapplication.state }}
           </div>
         </q-item-section>
       </q-item>
@@ -72,7 +74,10 @@ export default {
     ...mapGetters(['userId']),
 
     userapplications() {
-      return UserApplication.query().withAll().get();
+      return UserApplication.query()
+        .where('userId', this.userId)
+        .withAll()
+        .get();
     },
   },
 
