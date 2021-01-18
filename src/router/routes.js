@@ -65,6 +65,18 @@ const routes = [
         component: () => import('pages/User/Project.vue')
       },
       {
+        path: '/repository/:id',
+        meta: {
+          title: 'Repository',
+          roles: ['user'],
+          sidebar: false,
+          icon: 'fas fa-code',
+          color: 'text-grey-5',
+          subtitle: ''
+        },
+        component: () => import('pages/User/Repository.vue')
+      },
+      {
         path: '/applications',
         meta: {
           title: 'Applications',

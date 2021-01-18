@@ -13,6 +13,8 @@ import DevEnvironment from '../models/DevEnvironment'
 import Position from '../models/Position'
 import Application from '../models/Application'
 import ApplicationProject from '../models/ApplicationProject'
+import Note from '../models/Note'
+import RepositoryNote from '../models/RepositoryNote'
 
 // Relation
 import UserRole from '../models/UserRole'
@@ -31,6 +33,7 @@ database.register(Country)
 database.register(Comment)
 database.register(Material)
 database.register(Repository)
+database.register(Note)
 database.register(DevEnvironment)
 database.register(Position)
 database.register(Application)
@@ -39,5 +42,6 @@ database.register(ApplicationProject)
 database.register(UserRole)
 database.register(UserProfile)
 database.register(UserApplication)
+database.register(RepositoryNote)
 
 export default database

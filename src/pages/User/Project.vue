@@ -42,13 +42,11 @@
 
           <q-tab-panel name="repository">
             <q-list bordered>
-              <q-item-label header>Repositories</q-item-label>
-
               <div
                 v-for="(repository, index) in repositories"
                 :key="repository.id"
               >
-                <q-item>
+                <q-item v-ripple :to="`/repository/${repository.id}`">
                   <!-- <q-item-section avatar top>
                     <q-avatar>
                       <img src="https://cdn.quasar.dev/img/avatar.png" />
@@ -68,11 +66,10 @@
                       >
                     </q-item-label>
                   </q-item-section>
-                  
+
                   <q-item-section side>
                     {{ repository.position.title }}
                   </q-item-section>
-
                 </q-item>
 
                 <q-separator v-if="index !== repositories.length - 1" />
@@ -160,7 +157,10 @@ export default {
       return Project.find(this.$route.params.id);
     },
     repositories() {
-      return Repository.query().where('projectId', this.$route.params.id).withAll().get();
+      return Repository.query()
+        .where('projectId', this.$route.params.id)
+        .withAll()
+        .get();
     },
     environments() {
       let environments = Environment.all();

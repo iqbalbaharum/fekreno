@@ -3,7 +3,8 @@ import User from './User'
 import Project from './Project'
 import Position from './Position'
 import DevEnvironment from './DevEnvironment'
-
+import RepositoryNote from './RepositoryNote'
+import Note from './Note'
 export default class Repository extends Model {
 
   static entity = 'repository'
@@ -28,7 +29,8 @@ export default class Repository extends Model {
       user: this.belongsTo(User, 'userId'),
       project: this.belongsTo(Project, 'projectId'),
       position: this.belongsTo(Position, 'positionId'),
-      devEnvironment: this.belongsTo(DevEnvironment, 'devEnvironmentId')
+      devEnvironment: this.belongsTo(DevEnvironment, 'devEnvironmentId'),
+      notes: this.belongsToMany(Note, RepositoryNote, 'repositoryId', 'noteId'),
     }
   }
 
