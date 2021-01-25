@@ -88,52 +88,53 @@
         </div>
       </q-card>
 
-      <prompt
-        :show="dialog.success"
-        boxtype="success"
-        :buttons="['continue']"
-        icon="fas fa-check-circle"
-        title="Registration Successful"
-        body="Congratulations, your account has been succesfully created"
-        @continue="onClickContinue"
-      />
-
-      <prompt
-        :show="dialog.alert"
-        boxtype="alert"
-        :buttons="['ok']"
-        icon="fas fa-bomb"
-        title="Registration Error"
-        body="Oh no, please contact customer service"
-        @ok="onClickOk"
-      />
+      <q-dialog v-model="dialog.success" persistent>
+        <prompt
+          boxtype="success"
+          :buttons="['continue']"
+          icon="fas fa-check-circle"
+          title="Registration Successful"
+          body="Congratulations, your account has been succesfully created"
+          @continue="onClickContinue"
+        />
+      </q-dialog>
+      <q-dialog v-model="dialog.alert" persistent>
+        <prompt
+          boxtype="alert"
+          :buttons="['ok']"
+          icon="fas fa-bomb"
+          title="Registration Error"
+          body="Oh no, please contact customer service"
+          @ok="onClickOk"
+        />
+      </q-dialog>
     </div>
   </div>
 </template>
 
 <script>
-import { minLength, required, email } from 'vuelidate/lib/validators';
-import Prompt from './../../components/Prompt';
+import { minLength, required, email } from "vuelidate/lib/validators";
+import Prompt from "./../../components/Prompt";
 
 export default {
   data() {
     return {
       form: {
-        name: '',
-        password: '',
-        email: '',
-        mobile: '',
+        name: "",
+        password: "",
+        email: "",
+        mobile: ""
       },
-      type: 'password',
+      type: "password",
       dialog: {
         success: false,
-        alert: false,
-      },
+        alert: false
+      }
     };
   },
 
   components: {
-    Prompt,
+    Prompt
   },
 
   validations: {
@@ -141,8 +142,8 @@ export default {
       name: { required },
       email: { required, email },
       password: { required },
-      mobile: { required },
-    },
+      mobile: { required }
+    }
   },
 
   methods: {
@@ -150,7 +151,7 @@ export default {
       this.$v.form.$touch();
 
       try {
-        let res = await this.$store.dispatch('RegisterIndividual', this.form);
+        let res = await this.$store.dispatch("RegisterIndividual", this.form);
         this.dialog.success = true;
       } catch (err) {
         if (err) {
@@ -160,20 +161,20 @@ export default {
     },
 
     onClickShowPassword() {
-      if (this.type === 'password') {
-        this.type = 'text';
+      if (this.type === "password") {
+        this.type = "text";
       } else {
-        this.type = 'password';
+        this.type = "password";
       }
     },
 
     onClickOk() {
-      // this.$router.push('/login')
+      this.dialog.alert = false;
     },
 
     onClickContinue() {
-      this.$router.push('/login');
-    },
-  },
+      this.$router.push("/login");
+    }
+  }
 };
 </script>
