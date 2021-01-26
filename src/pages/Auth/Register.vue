@@ -131,7 +131,6 @@ export default {
       },
     };
   },
-
   components: {
     Prompt,
   },
@@ -153,9 +152,7 @@ export default {
         let res = await this.$store.dispatch('RegisterIndividual', this.form);
         this.dialog.success = true;
       } catch (err) {
-        if (err) {
           this.dialog.alert = true;
-        }
       }
     },
 
@@ -168,7 +165,7 @@ export default {
     },
 
     onClickOk() {
-      // this.$router.push('/login')
+      this.dialog.alert = false;
     },
 
     onClickContinue() {
