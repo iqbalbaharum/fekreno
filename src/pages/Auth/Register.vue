@@ -113,22 +113,22 @@
 </template>
 
 <script>
-import { minLength, required, email } from "vuelidate/lib/validators";
-import Prompt from "./../../components/Prompt";
+import { minLength, required, email } from 'vuelidate/lib/validators';
+import Prompt from './../../components/Prompt';
 
 export default {
   data() {
     return {
       form: {
-        name: "",
-        password: "",
-        email: "",
-        mobile: ""
+        name: '',
+        password: '',
+        email: '',
+        mobile: ''
       },
-      type: "password",
+      type: 'password',
       dialog: {
         success: false,
-        alert: false
+        alert: false,
       }
     };
   },
@@ -150,8 +150,12 @@ export default {
     async onClickRegister() {
       this.$v.form.$touch();
 
+      if (this.$v.form.$invalid) {
+        return this.dialog.alert = true
+      }
+
       try {
-        let res = await this.$store.dispatch("RegisterIndividual", this.form);
+        let res = await this.$store.dispatch('RegisterIndividual', this.form);
         this.dialog.success = true;
       } catch (err) {
         if (err) {
@@ -161,10 +165,10 @@ export default {
     },
 
     onClickShowPassword() {
-      if (this.type === "password") {
-        this.type = "text";
+      if (this.type === 'password') {
+        this.type = 'text';
       } else {
-        this.type = "password";
+        this.type = 'password';
       }
     },
 
@@ -173,7 +177,7 @@ export default {
     },
 
     onClickContinue() {
-      this.$router.push("/login");
+      this.$router.push('/login');
     }
   }
 };

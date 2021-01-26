@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <q-dialog v-if="show" persistent> -->
     <q-card style="width: 350px; max-width: 80vw">
       <q-card-section
         class="text-center text-white"
@@ -50,7 +49,6 @@
         />
       </q-card-actions>
     </q-card>
-    <!-- </q-dialog> -->
   </div>
 </template>
 
@@ -60,22 +58,18 @@ export default {
     return {};
   },
   props: {
-    // show: {
-    //   type: Boolean,
-    //   default: false
-    // },
     icon: {
-      type: String
+      type: String,
     },
     boxtype: {
       type: String,
-      default: "success"
+      default: 'success'
     },
     title: {
-      type: String
+      type: String,
     },
     body: {
-      type: String
+      type: String,
     },
     buttons: {
       type: Array,
@@ -85,19 +79,19 @@ export default {
 
   methods: {
     onClickOK() {
-      this.$emit("ok");
+      this.$emit('ok');
     },
 
     onClickCancel() {
-      this.$emit("cancel");
+      this.$emit('cancel');
     },
 
     onClickDelete() {
-      this.$emit("delete");
+      this.$emit('delete');
     },
 
     onClickContinue() {
-      this.$emit("continue");
+      this.$emit('continue');
     }
   }
 };
