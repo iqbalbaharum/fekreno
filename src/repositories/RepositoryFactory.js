@@ -13,6 +13,7 @@ import RepositoryRepository from './RepositoryRepository'
 import PositionRepository from './PositionRepository'
 import ApplicationRepository from './ApplicationRepository'
 import UserApplicationRepository from './UserApplicationRepository'
+import TagRepository from './TagsRepository'
 
 export default {
   //userRepository: bind('userRepository', RepositoryInterface)
@@ -28,5 +29,6 @@ export default {
   repository: new RepositoryRepository(),
   position: new PositionRepository(),
   application: new ApplicationRepository(),
-  userapplication: new UserApplicationRepository()
+  userapplication: new UserApplicationRepository(),
+  tags: new TagRepository()
 }
