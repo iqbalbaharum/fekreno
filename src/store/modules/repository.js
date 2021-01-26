@@ -1,8 +1,10 @@
 import Note from 'src/models/Note'
+import Tags from 'src/models/Tag'
+import TagsRepo from 'src/models/TagsRepo'
 import Repository from './../../models/Repository'
 import RepositoryNote from './../../models/RepositoryNote'
 
-const repo = {
+const repository = {
 	state: {
 
 	},
@@ -108,8 +110,70 @@ const repo = {
             reject(err)
           })
       })
-    }
+    },
+
+    GetAllTagRepo() {
+      return new Promise((resolve, reject) => {
+        this.$repository.repository.listing()
+          .then(res => {
+            Tags.insert({ data: res.data })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+      })
+		},
+		
+		AddTagRepo({ rootState }, data) {
+      return new Promise((resolve, reject) => {
+        this.$repository.repository.assignTagsRepo(data.repoId, data.tagsId)
+          .then(res => {
+            TagsRepo.insert(res.data)
+            resolve(res.data)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
+
+    GetTagRepo({ commit }, id) {
+      return new Promise(async (resolve, reject) => {
+
+        this.$repository.repository.getTagsRepo(id)
+          .then(async res => {
+            let data = res.data
+            for (let tag of data) {
+              await TagsRepo.insert({
+                data: {
+                  repositoryId: id,
+                  tagsId: tag.id
+                }
+              })
+            }
+
+            resolve(res)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
+		DeleteTagRepo({ commit }, id) {
+			return new Promise(async (resolve, reject) => {
+        this.$repository.repository.delete(id)
+          .then(res => {
+            TagsRepo.delete(id)
+            resolve(res)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+		}
 	}
 }
 
-export default repo
+export default repository

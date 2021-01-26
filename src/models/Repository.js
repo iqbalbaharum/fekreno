@@ -5,6 +5,8 @@ import Position from './Position'
 import DevEnvironment from './DevEnvironment'
 import RepositoryNote from './RepositoryNote'
 import Note from './Note'
+import Tags from './Tag'
+import TagsRepo from './TagsRepo'
 export default class Repository extends Model {
 
   static entity = 'repository'
@@ -31,6 +33,7 @@ export default class Repository extends Model {
       position: this.belongsTo(Position, 'positionId'),
       devEnvironment: this.belongsTo(DevEnvironment, 'devEnvironmentId'),
       notes: this.belongsToMany(Note, RepositoryNote, 'repositoryId', 'noteId'),
+      tags: this.hasManyThrough(Tags, TagsRepo, 'repositoryId', 'tagsId')
     }
   }
 

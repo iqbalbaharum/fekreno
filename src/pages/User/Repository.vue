@@ -24,7 +24,10 @@
                   >
                 </q-item-label>
                 <q-item-label lines="4" caption>
-                  <q-icon name="fas fa-tag" />
+                  <q-icon name="fas fa-tag"/>
+                   <span class="text-caption" v-for="tag in repository.tag" :key="tag.id">
+                      {{ tag.title }}
+                   </span>
                 </q-item-label>
               </q-item-section>
 
@@ -100,6 +103,25 @@
                       </q-card>
                     </div>
                   </q-tab-panel>
+                  <q-tab-panel name="tag">
+                    <div class="bg-grey-2 border-3 q-pa-md q-my-md">
+                      <q-select
+                        filled
+                         v-model="form.tagId"
+                         map-options
+                         :options="tagged"
+                         use-chips
+                          stack-label
+                        label="Tag Selection" />
+                      <div class="row justify-end q-py-md">
+                      <q-btn
+                          color="accent"
+                          label="Post Tag"
+                          @click="onClickSubmit"
+                        />
+                      </div>
+                    </div>
+                  </q-tab-panel> 
                 </q-tab-panels>
               </template>
               <template v-slot:after>
@@ -111,6 +133,7 @@
                 >
                   <q-tab name="description" label="Description" />
                   <q-tab name="comment" label="Comment" />
+                  <q-tab name="tag" label="tagging" /> 
                 </q-tabs>
               </template>
             </q-splitter>
@@ -125,8 +148,10 @@
 import Repository from 'src/models/Repository';
 import RepositoryNote from 'src/models/RepositoryNote';
 import Note from '../../models/Note';
+import Tags from '../../models/Tag';
 
 import { date } from 'quasar';
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -135,12 +160,15 @@ export default {
       splitterModel: 80,
       form: {
         comment: '',
+        tagId: ''
       },
       tab: 'comment',
+      title: '',
     };
   },
 
   computed: {
+    ...mapGetters(['name']),
     repository() {
       let app = Repository.query()
         .whereId(this.$route.params.id)
@@ -151,13 +179,26 @@ export default {
 
       return app;
     },
+    tagged(){
+      let tag = Tags.all();
+      let opts = tag.map((t) => {
+        const container = [];
+        container.label = t.title;
+        container.value = t.id;
+        container.id = this.repository.user.uuid;
+        return container;
+      });
+
+      return opts;
+    },
   },
 
   created() {
+    this.$store.dispatch('GetAllTag');
     this.$store.dispatch('GetAllUsers');
     this.$store.dispatch('GetRepositoryNote', this.$route.params.id);
+    this.$store.dispatch('GetTagRepo', this.$route.params.id);
   },
-
   methods: {
     onClickComment() {
       this.$store.dispatch('AddRepositoryNote', {
@@ -165,6 +206,16 @@ export default {
         from: this.repository.user.uuid,
         text: this.form.comment,
       });
+    },
+    async onClickSubmit() {
+      try {
+        await this.$store.dispatch('AddTagRepo', {
+          repoId: this.repository.id, 
+          tagsId: this.form.tagId
+        })
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

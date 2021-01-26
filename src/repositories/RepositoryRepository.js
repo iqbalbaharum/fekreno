@@ -17,6 +17,13 @@ export default class RepositoryRepository extends Repository {
     })
   }
 
+  async getTagsRepo(id){
+    return datasource({
+      method:'get',
+      url: `repositories/${id}/tags`,
+    })
+  }
+
   async createNote(id, fromUserId, toUserId, text) {
     return datasource({
       method: 'post',
@@ -28,4 +35,15 @@ export default class RepositoryRepository extends Repository {
       }
     })
   }
+  
+  async assignTagsRepo(repoId, tagsId) {
+    return datasource({
+      method: 'post',
+      url: `repositories/${repoId}/tags`,
+      data:{
+        tagsId: tagsId
+      }
+    })
+  }
+
 }

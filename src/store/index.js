@@ -18,6 +18,7 @@ import repository from './modules/repository'
 import position from './modules/position'
 import applicaton from './modules/application'
 import userapplication from './modules/userapplication'
+import tags from './modules/tags'
 
 Vue.use(Vuex)
 
@@ -46,7 +47,8 @@ export default function (/* { ssrContext } */) {
       repository,
       position,
       applicaton,
-      userapplication
+      userapplication,
+      tags,
     },
     getters,
     plugins: [VuexORM.install(database)],

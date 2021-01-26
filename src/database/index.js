@@ -15,6 +15,8 @@ import Application from '../models/Application'
 import ApplicationProject from '../models/ApplicationProject'
 import Note from '../models/Note'
 import RepositoryNote from '../models/RepositoryNote'
+import Tags from '../models/Tag'
+import TagsRepo from '../models/TagsRepo'
 
 // Relation
 import UserRole from '../models/UserRole'
@@ -38,6 +40,8 @@ database.register(DevEnvironment)
 database.register(Position)
 database.register(Application)
 database.register(ApplicationProject)
+database.register(Tags)
+database.register(TagsRepo)
 //
 database.register(UserRole)
 database.register(UserProfile)

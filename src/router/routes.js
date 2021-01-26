@@ -189,6 +189,16 @@ const routes = [
         },
         component: () => import('pages/Tab/Participants.vue')
       },
+      {
+        path: '/tags',
+        meta: {
+          title: 'Tag Management',
+          roles: ['admin', 'master'],
+          sidebar: true,
+          icon: 'school'
+        },
+        component: () => import('pages/Tab/Tags.vue')
+      },
     ]
   },
 
