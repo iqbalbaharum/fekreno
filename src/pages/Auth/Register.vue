@@ -168,7 +168,7 @@ export default {
     },
 
     onClickOk() {
-      // this.$router.push('/login')
+      this.dialog.alert = false;
     },
 
     onClickContinue() {
