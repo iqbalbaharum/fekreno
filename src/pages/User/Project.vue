@@ -126,6 +126,25 @@
                     />
                   </div>
                 </div>
+                <div class="col q-gutter-y-sm">
+                  <div class="text-h6">
+                    Step 4: Add tagings
+                  </div>
+                  <div class="text-grey-5">
+                    Add your tagings for the project you want to submit.
+                  </div>
+                  <q-select
+                    filled
+                    v-model="form.tagIds"
+                    :options="tags"
+                    label="Tagings"
+                    emit-value
+                    map-options
+                    use-chips
+                    multiple
+                    stack-label
+                  />
+                </div>
               </q-item>
 
               <q-item class="q-pa-md row justify-center">
@@ -149,6 +168,7 @@ import Project from './../../models/Project';
 import Environment from './../../models/DevEnvironment';
 import Position from './../../models/Position';
 import Repository from './../../models/Repository';
+import Tag from './../../models/Tag';
 
 export default {
   computed: {
@@ -184,6 +204,17 @@ export default {
 
       return opts;
     },
+    tags() {
+      let tags = Tag.all();
+      let opts = tags.map((tag) => {
+        const container = [];
+        container.label = tag.title;
+        container.value = tag.id;
+        return container;
+      });
+
+      return opts;
+    },
   },
 
   data() {
@@ -202,6 +233,7 @@ export default {
     this.$store.dispatch('GetAllRepositories');
     this.$store.dispatch('GetAllEnvironments');
     this.$store.dispatch('GetAllPositions');
+    this.$store.dispatch('GetAllTags');
   },
 
   methods: {
