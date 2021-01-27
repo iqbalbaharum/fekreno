@@ -1,8 +1,8 @@
 import { Model } from '@vuex-orm/core'
 
-export default class DevEnvironment extends Model {
+export default class Tag extends Model {
 
-  static entity = 'position'
+  static entity = 'tags'
 
   static primaryKey = 'id'
 
@@ -10,7 +10,6 @@ export default class DevEnvironment extends Model {
     return {
       id: this.attr(''),
       title: this.attr(null),
-      description: this.attr(''),
       createdAt: this.attr('')
     }
 
