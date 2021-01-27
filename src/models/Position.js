@@ -10,7 +10,8 @@ export default class DevEnvironment extends Model {
     return {
       id: this.attr(''),
       title: this.attr(null),
-      description: this.attr('')
+      description: this.attr(''),
+      createdAt: this.attr('')
     }
 
   }
