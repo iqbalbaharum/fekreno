@@ -89,26 +89,26 @@
         </div>
       </q-card>
 
-      <q-dialog v-model="dialog.success" persistent>
-        <prompt
-          boxtype="success"
-          :buttons="['continue']"
-          icon="fas fa-check-circle"
-          title="Registration Successful"
-          body="Congratulations, your account has been succesfully created"
-          @continue="onClickContinue"
-        />
-      </q-dialog>
-      <q-dialog v-model="dialog.alert" persistent>
-        <prompt
-          boxtype="alert"
-          :buttons="['ok']"
-          icon="fas fa-bomb"
-          title="Registration Error"
-          body="Oh no, please contact customer service"
-          @ok="onClickOk"
-        />
-      </q-dialog>
+      <prompt
+        :show="dialog.success"
+        boxtype="success"
+        :buttons="['continue']"
+        icon="fas fa-check-circle"
+        title="Registration Successful"
+        body="Congratulations, your account has been succesfully created"
+        @continue="onClickContinue"
+      />
+      
+      <prompt
+        :show="dialog.alert"
+        boxtype="alert"
+        :buttons="['ok']"
+        icon="fas fa-bomb"
+        title="Registration Error"
+        body="Oh no, please contact customer service"
+        @ok="onClickOk"
+      />
+
     </div>
   </div>
 </template>
@@ -129,7 +129,7 @@ export default {
       type: 'password',
       dialog: {
         success: false,
-        alert: false,
+        alert: true,
       }
     };
   },
