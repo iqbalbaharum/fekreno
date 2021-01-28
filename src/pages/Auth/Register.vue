@@ -89,25 +89,26 @@
         </div>
       </q-card>
 
-      <prompt
-        :show="dialog.success"
-        boxtype="success"
-        :buttons="['continue']"
-        icon="fas fa-check-circle"
-        title="Registration Successful"
-        body="Congratulations, your account has been succesfully created"
-        @continue="onClickContinue"
-      />
-
-      <prompt
-        :show="dialog.alert"
-        boxtype="alert"
-        :buttons="['ok']"
-        icon="fas fa-bomb"
-        title="Registration Error"
-        body="Oh no, please contact customer service"
-        @ok="onClickOk"
-      />
+      <q-dialog v-model="dialog.success" persistent>
+        <prompt
+          boxtype="success"
+          :buttons="['continue']"
+          icon="fas fa-check-circle"
+          title="Registration Successful"
+          body="Congratulations, your account has been succesfully created"
+          @continue="onClickContinue"
+        />
+      </q-dialog>
+      <q-dialog v-model="dialog.alert" persistent>
+        <prompt
+          boxtype="alert"
+          :buttons="['ok']"
+          icon="fas fa-bomb"
+          title="Registration Error"
+          body="Oh no, please contact customer service"
+          @ok="onClickOk"
+        />
+      </q-dialog>
     </div>
   </div>
 </template>
@@ -123,18 +124,18 @@ export default {
         name: '',
         password: '',
         email: '',
-        mobile: '',
+        mobile: ''
       },
       type: 'password',
       dialog: {
         success: false,
         alert: false,
-      },
+      }
     };
   },
 
   components: {
-    Prompt,
+    Prompt
   },
 
   validations: {
@@ -142,13 +143,17 @@ export default {
       name: { required },
       email: { required, email },
       password: { required },
-      mobile: { required },
-    },
+      mobile: { required }
+    }
   },
 
   methods: {
     async onClickRegister() {
       this.$v.form.$touch();
+
+      if (this.$v.form.$invalid) {
+        return this.dialog.alert = true
+      }
 
       try {
         let res = await this.$store.dispatch('RegisterIndividual', this.form);
@@ -174,7 +179,7 @@ export default {
 
     onClickContinue() {
       this.$router.push('/login');
-    },
-  },
+    }
+  }
 };
 </script>
