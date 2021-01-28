@@ -20,6 +20,7 @@
             ref="name"
             error-message="Username can't be empty"
             :error="$v.form.name.$error"
+            @keydown.space.prevent
           />
 
           <q-input
@@ -168,7 +169,7 @@ export default {
     },
 
     onClickOk() {
-      // this.$router.push('/login')
+      this.dialog.alert = false;
     },
 
     onClickContinue() {

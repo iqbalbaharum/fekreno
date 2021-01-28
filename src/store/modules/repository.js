@@ -1,6 +1,8 @@
 import Note from 'src/models/Note'
 import Repository from './../../models/Repository'
 import RepositoryNote from './../../models/RepositoryNote'
+import Tag from './../../models/Tag'
+import Taging from './../../models/Taging'
 
 const repo = {
 	state: {
@@ -20,7 +22,9 @@ const repo = {
           include: [
             {
               relation: "user"
-            }
+              
+            },
+            {relation: "tags"}
           ]
         }
 
@@ -83,6 +87,32 @@ const repo = {
                 data: {
                   repositoryId: id,
                   noteId: note.id
+                }
+              })
+            }
+
+            resolve(res)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
+
+    GetRepositoryTags({ commit }, id) {
+      return new Promise(async (resolve, reject) => {
+        this.$repository.repository.getTags(id)
+          .then(async res => {
+
+            Tag.insert(res)
+
+            let data = res.data
+
+            for (let tag of data) {
+              await Taging.insert({
+                data: {
+                  repositoryId: id,
+                  tagIds: tag.id
                 }
               })
             }

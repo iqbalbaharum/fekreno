@@ -202,6 +202,16 @@ const routes = [
         component: () => import('pages/Position.vue')
       },
       {
+        path: '/admin/tags',
+        meta: {
+          title: 'Tags Management',
+          roles: ['admin', 'master'],
+          sidebar: true,
+          icon: 'school'
+        },
+        component: () => import('pages/Tags.vue')
+      },
+      {
         path: `admin/participants/:id`,
         meta: {
           roles: ['admin'],

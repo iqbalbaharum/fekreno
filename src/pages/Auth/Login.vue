@@ -51,22 +51,22 @@
               no-caps
               @click="login"
             />
-            <q-btn
-              color="primary"
-              text-color="primary"
-              outline
-              unelevated
-              to="/register"
-              label="Create Account"
-              no-caps
-            />
-
+          </div>
+          <div class="q-gutter-sm flex flex-center">
             <q-btn
               color="primary"
               text-color="primary"
               flat
               to="/forget"
               label="I forgot my password"
+              no-caps />
+
+            <q-btn
+              color="primary"
+              text-color="primary"
+              flat
+              to="/register"
+              label="Not register? Create account"
               no-caps />
           </div>
         </div>
