@@ -1,4 +1,6 @@
 import { Model } from '@vuex-orm/core'
+import Repository from './Repository'
+
 export default class Project extends Model {
 
   static entity = 'project'
@@ -16,6 +18,9 @@ export default class Project extends Model {
       createdAt: this.attr(''),
       updatedAt: this.attr(''),
       deletedAt: this.attr(''),
+
+      //relation
+      repository: this.hasMany(Repository, 'projectId'),
     }
 
   }

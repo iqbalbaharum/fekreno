@@ -35,6 +35,7 @@ export default class Repository extends Model {
       devEnvironment: this.belongsTo(DevEnvironment, 'devEnvironmentId'),
       notes: this.belongsToMany(Note, RepositoryNote, 'repositoryId', 'noteId'),
       tags: this.belongsToMany(Tag, Taging, 'repositoryId', 'tagIds'),
+      
     }
   }
 

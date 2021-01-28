@@ -91,7 +91,7 @@ export default {
     },
 
     onClickCancel() {
-      this.$emit('update:show', false);
+      this.$emit('cancel');
       this.show = false;
     },
 
