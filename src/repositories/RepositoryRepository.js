@@ -17,6 +17,16 @@ export default class RepositoryRepository extends Repository {
     })
   }
 
+  async getTags(id, filter) {
+    return datasource({
+      method: 'get',
+      url: `repositories/${id}/tags`,
+      params: {
+        filter: filter
+      }
+    })
+  }
+
   async createNote(id, fromUserId, toUserId, text) {
     return datasource({
       method: 'post',

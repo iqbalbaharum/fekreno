@@ -76,7 +76,7 @@
               to=""
               clickable
               v-ripple
-              @click="onClickApplicationDialog(uapp.userId, uapp)"
+              @click="onClickApplicationDialog(uapp.user, uapp)"
             >
               <q-item-section avatar>
                 <span
@@ -119,6 +119,7 @@
       <q-card style="width: 600px">
         <q-tabs v-model="dialog.tabs" class="bg-teal text-white">
           <q-tab name="checklist" label="Checklist" />
+          <q-tab name="contact" label="Contact" />
           <q-tab name="profile" label="Profile" />
           <q-tab name="repository" label="Repository" />
           <q-tab name="questions" label="Questions" />
@@ -165,6 +166,28 @@
                     v-if="userrepositories.length > 0"
                   />
                   <q-icon name="fas fa-times-circle" class="text-red" v-else />
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-tab-panel>
+          <q-tab-panel name="contact">
+            <q-list v-if="dialog.user">
+              <q-item>
+                <q-item-section>
+                  <div class="text-caption text-uppercase">USERNAME</div>
+                  <div class="text-grey">{{ dialog.user.name }}</div>
+                </q-item-section>
+              </q-item>
+              <q-item>
+                <q-item-section>
+                  <div class="text-caption text-uppercase">EMAIL</div>
+                  <div class="text-grey">{{ dialog.user.email }}</div>
+                </q-item-section>
+              </q-item>
+              <q-item>
+                <q-item-section>
+                  <div class="text-caption text-uppercase">MOBILE</div>
+                  <div class="text-grey">{{ dialog.user.mobile }}</div>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -258,7 +281,7 @@ export default {
       dialog: {
         show: false,
         tabs: 'checklist',
-        userId: '',
+        user: {},
         userapplication: {},
       },
     };
@@ -279,7 +302,8 @@ export default {
         .get();
     },
     userprofile() {
-      return UserProfile.query().where('userId', this.dialog.userId).first();
+      if(!this.dialog.user) return
+      return UserProfile.query().where('userId', this.dialog.user.uuid).first();
     },
     userrepositories() {
       return Repository.query()
@@ -305,18 +329,18 @@ export default {
   },
 
   methods: {
-    onClickApplicationDialog(userId, uapp) {
+    onClickApplicationDialog(user, uapp) {
       this.dialog.show = true;
-      this.dialog.userId = userId;
+      this.dialog.user = user
       this.dialog.userapplication = uapp;
 
-      this.$store.dispatch('GetUserProfileById', userId);
+      this.$store.dispatch('GetUserProfileById', user.uuid);
     },
     resetDialog() {
       this.dialog = {
         show: false,
         tabs: 'checklist',
-        userId: '',
+        user: {},
       };
     },
     getUserProfile() {},
