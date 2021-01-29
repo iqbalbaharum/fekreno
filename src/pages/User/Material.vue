@@ -16,6 +16,14 @@
       />
     </div>
 
+    <div class="q-pa-md row justify-left">
+        <q-input v-model="search" filled type="search" style="width: 500px">
+        <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+    </div>
+
     <div class="row">
       <div class="col">
         <q-list separator flat>
