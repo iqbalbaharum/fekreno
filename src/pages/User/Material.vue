@@ -15,7 +15,6 @@
         label="Search Learning Material"
         style="max-width:600px"
       />
-      <q-btn color="primary" icon="fas fa-search" label="Search" />
       <q-space />
       <q-btn
         @click="onClickAddMaterial"
@@ -204,9 +203,7 @@ export default {
             .get()
         : Material.query()
             .withAll()
-            .where("title", this.search)
-            .orWhere("type", this.search)
-            .orWhere("description", this.search)
+            .search(this.search)
             .get();
     },
     ...mapGetters(["userId"])
