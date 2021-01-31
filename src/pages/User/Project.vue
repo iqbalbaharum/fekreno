@@ -67,7 +67,7 @@
                     </q-item-label>
                   </q-item-section>
 
-                  <q-item-section side>
+                  <q-item-section side style="text-transform:capitalize;">
                     {{ repository.position.title }}
                   </q-item-section>
                 </q-item>
