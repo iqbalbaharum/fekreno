@@ -7,7 +7,15 @@
       </q-breadcrumbs>
     </div>
 
-    <div class="q-pa-md row justify-end">
+    <div class="full-width q-pa-md row justify-end">
+      <q-input
+        class="col q-mr-md"
+        filled
+        v-model="search"
+        label="Search Learning Material"
+        style="max-width:600px"
+      />
+      <q-space />
       <q-btn
         @click="onClickAddMaterial"
         color="primary"
@@ -15,7 +23,7 @@
         label="Material"
       />
     </div>
-
+    <!-- Material Class -->
     <div class="row">
       <div class="col">
         <q-list separator flat>
@@ -67,7 +75,7 @@
                         :class="{
                           'text-primary': material.reviewStatus === 'pending',
                           'text-positive': material.reviewStatus === 'good',
-                          'text-negative': material.reviewStatus === 'bad',
+                          'text-negative': material.reviewStatus === 'bad'
                         }"
                       />
                       <span class="text-capitalize">{{
@@ -100,7 +108,7 @@
         </div> -->
       </div>
     </div>
-
+    <!-- End -->
     <q-dialog v-model="dialog.show" position="bottom">
       <q-card style="width: 500px">
         <q-item-section class="q-pa-md bg-primary text-white">
@@ -153,44 +161,52 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      search: "",
       date: date,
       form: {
-        description: "",
+        description: ""
       },
       dialog: {
         show: false,
-        update: false,
+        update: false
       },
       options: [
         {
           label: "Book",
-          value: "book",
+          value: "book"
         },
         {
           label: "Tutorial",
-          value: "tutorial",
+          value: "tutorial"
         },
         {
           label: "Video",
-          value: "video",
+          value: "video"
         },
         {
           label: "Document",
-          value: "document",
+          value: "document"
         },
         {
           label: "Other",
-          value: "other",
-        },
-      ],
+          value: "other"
+        }
+      ]
     };
   },
 
   computed: {
     materials() {
-      return Material.query().withAll().get();
+      return this.search == ""
+        ? Material.query()
+            .withAll()
+            .get()
+        : Material.query()
+            .withAll()
+            .search(this.search)
+            .get();
     },
-    ...mapGetters(["userId"]),
+    ...mapGetters(["userId"])
   },
 
   created() {
@@ -202,7 +218,7 @@ export default {
   methods: {
     onClickAddMaterial() {
       this.form = {
-        description: "",
+        description: ""
       };
       this.dialog.show = true;
       this.dialog.update = false;
@@ -219,12 +235,12 @@ export default {
 
       this.$store
         .dispatch(func, this.form)
-        .then((res) => {
+        .then(res => {
           this.form = {};
           this.dialog.show = false;
           this.dialog.update = false;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -241,7 +257,7 @@ export default {
         url: material.url,
         description: material.description,
         reviewStatus: "pending",
-        remark: "",
+        remark: ""
       };
 
       this.dialog.show = true;
@@ -274,7 +290,7 @@ export default {
           "approximately " + Math.round(elapsed / msPerYear) + " years ago"
         );
       }
-    },
-  },
+    }
+  }
 };
 </script>
