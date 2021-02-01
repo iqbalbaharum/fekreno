@@ -195,27 +195,48 @@
             </div>
           </div>
 
-          <div class="col-12 q-gutter-y-md">
-            <div v-for="(question, index) in form.questions" :key="index">
-              <div class="text-weight-bold text-primary q-my-sm">
-                Question {{ index + 1 }}
-                <q-btn
-                  dense
-                  flat
-                  label="Delete"
-                  text-color="red"
-                  @click="onClickDeleteQuestion(index)"
-                />
+      <q-separator class="q-my-md" />
+
+            <div class="col-12 q-gutter-y-md">
+              <div
+                v-for="(question, index) in form.questions"
+                :key="index"
+                class="q-pa-md bg-light-blue-1"
+              >
+                <div
+                  class="row text-weight-bold text-primary q-my-sm justify-between items-center"
+                >
+                  Question {{ index + 1 }}
+                  <q-btn
+                    dense
+                    flat
+                    label="Delete"
+                    text-color="red"
+                    @click="onClickDeleteQuestion(index)"
+                  />
+                </div>
+                <q-editor filled v-model="form.questions[index].text" />
               </div>
-              <q-editor filled v-model="form.questions[index].text" />
             </div>
-          </div>
+
+            <div class="col-12 q-pt-lg">
+              <q-btn
+                flat
+                @click="onAddNewQuestion"
+                label="Add Question"
+                color="primary"
+               
+              />
+            </div>
+     
+
+      
         </q-card-section>
 
         <q-separator />
 
         <q-card-section class="row q-gutter-md justify-between">
-          <q-btn color="primary" label="Submit" @click="onClickSubmit" />
+          <q-btn color="blue" label="Submit" @click="onClickSubmit" />
           <q-btn flat color="negative" label="Cancel" @click="onClickCancel" />
         </q-card-section>
       </q-card>
@@ -309,6 +330,7 @@
 import UserApplication from 'src/models/UserApplication';
 import Application from './../../models/Application';
 
+
 export default {
   data() {
     return {
@@ -321,6 +343,9 @@ export default {
         icon: '',
         questions: [],
       },
+      app: {},
+
+      
       dialog: {
         isShow: false,
         activate: {
@@ -387,10 +412,21 @@ export default {
   },
 
   methods: {
+
+    onClickDeleteQuestion(index) {
+      this.form.questions.splice(index, 1);
+    },
+
+    onAddNewQuestion() {
+     this.form.questions.push({
+        text: '',
+      });
+    },
+
     onClickAddApplication() {
       this.dialog.isShow = true;
     },
-    async onClickSubmit() {
+    async onClickSubmit() {   
       try {
         await this.$store.dispatch('AddApplication', this.form);
         this.dialog.isShow = false;
