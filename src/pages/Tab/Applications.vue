@@ -197,7 +197,7 @@
 
           <div class="col-12 q-gutter-y-md">
             <div v-for="(question, index) in form.questions" :key="index">
-              <div class="text-weight-bold text-primary q-my-sm">
+              <div class="row text-weight-bold text-primary q-my-sm justify-between items-center">
                 Question {{ index + 1 }}
                 <q-btn
                   dense
@@ -210,6 +210,15 @@
               <q-editor filled v-model="form.questions[index].text" />
             </div>
           </div>
+
+            <div class="col-12 q-pt-md">
+              <q-btn
+                flat
+                @click="onAddNewQuestion"
+                label="Add Question"
+                color="primary"
+              />
+            </div>
         </q-card-section>
 
         <q-separator />
@@ -387,6 +396,16 @@ export default {
   },
 
   methods: {
+    onClickDeleteQuestion(index) {
+      this.form.questions.splice(index, 1);
+    },
+
+    onAddNewQuestion() {
+      this.form.questions.push({
+        text: '',
+      });
+    },
+
     onClickAddApplication() {
       this.dialog.isShow = true;
     },

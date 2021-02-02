@@ -125,7 +125,7 @@
               </div>
             </div>
 
-            <div class="col-12 row justify-end q-py-sm">
+            <div class="col-12 q-pt-md">
               <q-btn
                 flat
                 @click="onAddNewQuestion"
@@ -281,7 +281,7 @@ export default {
     },
 
     onClickDeleteQuestion(index) {
-      this.form.questions.splice(index, 1);
+      this.questions.splice(index, 1);
     },
 
     onAddNewQuestion() {
