@@ -186,7 +186,6 @@
             />
           </div>
 
-          <q-separator class="q-my-md" />
 
           <div class="col-12 q-py-sm">
             <div class="text-weight-bold">Questions</div>
@@ -209,16 +208,17 @@
               </div>
               <q-editor filled v-model="form.questions[index].text" />
             </div>
+           
           </div>
-
-            <div class="col-12 q-pt-md">
-              <q-btn
+          <div class="col-12 q-pt-md">
+             <q-btn
                 flat
                 @click="onAddNewQuestion"
                 label="Add Question"
                 color="primary"
               />
-            </div>
+          </div>
+
         </q-card-section>
 
         <q-separator />
@@ -317,6 +317,7 @@
 <script>
 import UserApplication from 'src/models/UserApplication';
 import Application from './../../models/Application';
+
 
 export default {
   data() {
