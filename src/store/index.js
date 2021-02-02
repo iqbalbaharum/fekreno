@@ -20,6 +20,7 @@ import position from "./modules/position";
 import applicaton from "./modules/application";
 import userapplication from "./modules/userapplication";
 import tags from "./modules/tags";
+import file from './modules/file'
 
 Vue.use(Vuex);
 VuexORM.use(VuexORMSearch);
@@ -50,7 +51,8 @@ export default function(/* { ssrContext } */) {
       position,
       applicaton,
       userapplication,
-      tags
+      tags,
+      file
     },
     getters,
     plugins: [VuexORM.install(database)],
