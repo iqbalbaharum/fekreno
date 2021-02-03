@@ -72,6 +72,7 @@ const repo = {
       return new Promise(async (resolve, reject) => {
 
         let filter = {
+          order: ["createdAt DESC"],
           include: [{ relation: "toUser" }, { relation: "fromUser" }]
         }
 

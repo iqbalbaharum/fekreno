@@ -6,7 +6,7 @@ export default class RepositoryNote extends Model {
 
   static entity = 'repository-note'
 
-  static primaryKey = 'id'
+  static primaryKey = ['repositoryId', 'noteId']
 
   static fields () {
     return {
