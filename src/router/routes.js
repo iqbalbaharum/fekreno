@@ -88,6 +88,17 @@ const routes = [
         component: () => import('pages/User/Applications.vue')
       },
       {
+        path: '/privacy',
+        meta: {
+          title: 'Privacy',
+          roles: ['user'],
+          sidebar: true,
+          icon: 'fas fa-exclamation-triangle',
+          subtitle: ''
+        },
+        component: () => import('pages/User/Privacy.vue')
+      },
+      {
         path: '/journal',
         meta: {
           title: 'Journals',
