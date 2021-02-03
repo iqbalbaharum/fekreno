@@ -156,7 +156,7 @@ export default {
         .first();
 
       return app;
-    },
+    }
   },
 
   created() {

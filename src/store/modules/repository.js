@@ -128,11 +128,16 @@ const repo = {
     
     AddRepositoryNote({ rootState }, data) {
       data.from = rootState.user.userId
-      console.log(data)
       return new Promise((resolve, reject) => {
         this.$repository.repository.createNote(data.id, data.from, data.to, data.text)
           .then(res => {
-            Note.insert(res.data)
+            Note.insert(res)
+            RepositoryNote.insert({
+              data: {
+                repositoryId: data.id,
+                noteId: res.data.id
+              }
+            })
             resolve(res.data)
           })
           .catch(err => {
