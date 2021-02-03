@@ -161,14 +161,11 @@ export default {
 
   created() {
     this.$store.dispatch('GetAllUsers');
-    this.$store.dispatch('GetRepositoryTags', this.$route.params.id)
-    this.loadComment();
+    this.$store.dispatch('GetRepositoryTags', this.$route.params.id);
+    this.$store.dispatch('GetRepositoryNote', this.$route.params.id);
   },
 
   methods: {
-    loadComment() {
-      this.$store.dispatch('GetRepositoryNote', this.$route.params.id);
-    },
     onClickComment() {
       this.$store.dispatch('AddRepositoryNote', {
         id: this.repository.id,
@@ -176,7 +173,6 @@ export default {
         text: this.form.comment,
       })
       .then((res)=>{
-        this.loadComment();
         this.resetForm();
       })
       .catch((e)=>{
