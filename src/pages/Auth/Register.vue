@@ -98,7 +98,7 @@
         body="Congratulations, your account has been succesfully created"
         @continue="onClickContinue"
       />
-
+      
       <prompt
         :show="dialog.alert"
         boxtype="alert"
@@ -108,6 +108,7 @@
         body="Oh no, please contact customer service"
         @ok="onClickOk"
       />
+
     </div>
   </div>
 </template>
@@ -123,18 +124,18 @@ export default {
         name: '',
         password: '',
         email: '',
-        mobile: '',
+        mobile: ''
       },
       type: 'password',
       dialog: {
         success: false,
-        alert: false,
-      },
+        alert: true,
+      }
     };
   },
 
   components: {
-    Prompt,
+    Prompt
   },
 
   validations: {
@@ -142,13 +143,17 @@ export default {
       name: { required },
       email: { required, email },
       password: { required },
-      mobile: { required },
-    },
+      mobile: { required }
+    }
   },
 
   methods: {
     async onClickRegister() {
       this.$v.form.$touch();
+
+      if (this.$v.form.$invalid) {
+        return this.dialog.alert = true
+      }
 
       try {
         let res = await this.$store.dispatch('RegisterIndividual', this.form);
@@ -174,7 +179,7 @@ export default {
 
     onClickContinue() {
       this.$router.push('/login');
-    },
-  },
+    }
+  }
 };
 </script>

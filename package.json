@@ -12,6 +12,7 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "@vuex-orm/core": "^0.36.3",
+    "@vuex-orm/plugin-search": "^0.24.1",
     "axios": "^0.18.1",
     "core-js": "^3.6.5",
     "qs": "^6.9.4",

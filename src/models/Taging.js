@@ -6,7 +6,7 @@ export default class Taging extends Model {
 
   static entity = 'taging'
 
-  static primaryKey = 'id'
+  static primaryKey = ['repositoryId', 'tagIds']
 
   static fields () {
     return {

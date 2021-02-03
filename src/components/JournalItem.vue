@@ -9,12 +9,13 @@
 
       <q-item-section v-if="admin">
         <q-item-label class="text-weight-bold"><user-popup popup :id="journal.userId" :username="journal.user ? journal.user.name : ''" /></q-item-label>
+        <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
         <q-item-label class="text-capitalize text-caption">{{ journal.category }}</q-item-label>
       </q-item-section>
 
       <q-item-section v-else>
         <q-item-label class="text-weight-bold text-capitalize">{{ journal.category }}</q-item-label>
-        <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:MM A') }}</q-item-label>
+        <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
       </q-item-section>
 
       <q-item-section v-if="admin">
