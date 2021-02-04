@@ -281,7 +281,7 @@ export default {
     },
 
     onClickDeleteQuestion(index) {
-      this.form.questions.splice(index, 1);
+      this.questions.splice(index, 1);
     },
 
     onAddNewQuestion() {
