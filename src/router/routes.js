@@ -90,13 +90,13 @@ const routes = [
 
       {
         path:'/policy',
-      meta:{
-        title:'Privacy Policy',
-        roles:['user'],
-        sidebar: true,
-        icon:'fas fa-exclamation-circle'
-      },   
-    component: () => import('pages/User/Privacy.vue')
+        meta:{
+          title:'Privacy Policy',
+          roles:[],
+          sidebar: true,
+          icon:'fas fa-exclamation-circle'
+        },   
+      component: () => import('pages/User/Privacy.vue')
    },
 
       {
