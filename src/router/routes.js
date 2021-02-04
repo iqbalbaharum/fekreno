@@ -91,12 +91,12 @@ const routes = [
         path: '/privacy',
         meta: {
           title: 'Privacy',
-          roles: ['user'],
+          roles: [],
           sidebar: true,
           icon: 'fas fa-exclamation-triangle',
           subtitle: ''
         },
-        component: () => import('pages/User/Privacy.vue')
+        component: () => import('pages/Privacy.vue')
       },
       {
         path: '/journal',
