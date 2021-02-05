@@ -87,6 +87,18 @@ const routes = [
         },
         component: () => import('pages/User/Applications.vue')
       },
+
+      {
+        path:'/policy',
+        meta:{
+          title:'Privacy Policy',
+          roles:[],
+          sidebar: true,
+          icon:'fas fa-exclamation-circle'
+        },   
+      component: () => import('pages/User/Privacy.vue')
+   },
+
       {
         path: '/journal',
         meta: {
