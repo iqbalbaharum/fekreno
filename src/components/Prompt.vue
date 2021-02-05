@@ -7,7 +7,7 @@
           :class="{
             'bg-positive': boxtype === 'success',
             'bg-negative': boxtype === 'alert',
-            'bg-warning': boxtype === 'warning',
+            'bg-warning': boxtype === 'warning'
           }"
         >
           <q-icon :name="icon" color="white" style="font-size: 6.4em" />
@@ -60,16 +60,16 @@ export default {
     return {};
   },
   props: {
-    show: {
-      type: Boolean,
-      default: false,
-    },
     icon: {
       type: String,
     },
+    show: {
+      type: Boolean,
+      default: false
+    },
     boxtype: {
       type: String,
-      default: 'success',
+      default: 'success'
     },
     title: {
       type: String,
@@ -79,33 +79,33 @@ export default {
     },
     buttons: {
       type: Array,
-      default: () => [],
-    },
+      default: () => []
+    }
   },
 
   methods: {
     onClickOK() {
       this.$emit('ok');
-      this.$emit('update:show', false);
       this.show = false;
+      this.$emit('update:show', this.show);
     },
 
     onClickCancel() {
-      this.$emit('update:show', false);
+      this.$emit('cancel');
       this.show = false;
     },
 
     onClickDelete() {
       this.$emit('delete');
-      this.$emit('update:show', false);
       this.show = false;
+      this.$emit('update:show', this.show);
     },
 
     onClickContinue() {
       this.$emit('continue');
-      this.$emit('update:show', false);
       this.show = false;
-    },
-  },
+      this.$emit('update:show', this.show);
+    }
+  }
 };
 </script>

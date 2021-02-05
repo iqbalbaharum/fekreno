@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page v-if="repository">
     <div class="q-pa-md q-gutter-sm">
       <div class="row q-pa-md">
         <div class="col-xl-12 col-md-12">
@@ -23,8 +23,11 @@
                     >Posted by @{{ repository.user.name }}</span
                   >
                 </q-item-label>
-                <q-item-label lines="4" caption>
+                <q-item-label lines="4" caption class="q-gutter-x-sm">
                   <q-icon name="fas fa-tag" />
+                  <span class="text-caption" v-for="(tag) in repository.tags" :key="tag.id">
+                    <q-badge color="blue-4">{{tag.title}}</q-badge>
+                  </span>
                 </q-item-label>
               </q-item-section>
 
@@ -125,6 +128,8 @@
 import Repository from 'src/models/Repository';
 import RepositoryNote from 'src/models/RepositoryNote';
 import Note from '../../models/Note';
+import Tag from '../../models/Tag';
+
 
 import { date } from 'quasar';
 
@@ -137,6 +142,7 @@ export default {
         comment: '',
       },
       tab: 'comment',
+      title:'',
     };
   },
 
@@ -146,15 +152,16 @@ export default {
         .whereId(this.$route.params.id)
         .withAll()
         .with('notes.*')
-        .orderBy('notes.createdAt')
+        .orderBy('notes.createdAt','DESC')
         .first();
 
       return app;
-    },
+    }
   },
 
   created() {
     this.$store.dispatch('GetAllUsers');
+    this.$store.dispatch('GetRepositoryTags', this.$route.params.id);
     this.$store.dispatch('GetRepositoryNote', this.$route.params.id);
   },
 
@@ -164,7 +171,18 @@ export default {
         id: this.repository.id,
         from: this.repository.user.uuid,
         text: this.form.comment,
+      })
+      .then((res)=>{
+        this.resetForm();
+      })
+      .catch((e)=>{
+        console.log(e);
       });
+    },
+    resetForm() {
+      this.form = {
+        comment: '',
+      }
     },
   },
 };

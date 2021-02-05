@@ -87,6 +87,18 @@ const routes = [
         },
         component: () => import('pages/User/Applications.vue')
       },
+
+      {
+        path:'/policy',
+        meta:{
+          title:'Privacy Policy',
+          roles:[],
+          sidebar: true,
+          icon:'fas fa-exclamation-circle'
+        },   
+      component: () => import('pages/User/Privacy.vue')
+   },
+
       {
         path: '/journal',
         meta: {
@@ -162,6 +174,26 @@ const routes = [
         component: () => import('pages/Application.vue')
       },
       {
+        path: '/admin/journals',
+        meta: {
+          title: 'Cohort Journals',
+          roles: ['admin', 'master'],
+          sidebar: true,
+          icon: 'school'
+        },
+        component: () => import('pages/Tab/Journal.vue')
+      },
+      {
+        path: '/admin/materials',
+        meta: {
+          title: 'Cohort Materials',
+          roles: ['admin', 'master'],
+          sidebar: true,
+          icon: 'school'
+        },
+        component: () => import('pages/Tab/Material.vue')
+      },
+      {
         path: '/admin/application/:id',
         meta: {
           title: 'Application',
@@ -180,6 +212,16 @@ const routes = [
           icon: 'school'
         },
         component: () => import('pages/Position.vue')
+      },
+      {
+        path: '/admin/tags',
+        meta: {
+          title: 'Tags Management',
+          roles: ['admin', 'master'],
+          sidebar: true,
+          icon: 'school'
+        },
+        component: () => import('pages/Tags.vue')
       },
       {
         path: `admin/participants/:id`,

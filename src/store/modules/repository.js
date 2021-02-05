@@ -1,6 +1,8 @@
 import Note from 'src/models/Note'
 import Repository from './../../models/Repository'
 import RepositoryNote from './../../models/RepositoryNote'
+import Tag from './../../models/Tag'
+import Taging from './../../models/Taging'
 
 const repo = {
 	state: {
@@ -20,7 +22,9 @@ const repo = {
           include: [
             {
               relation: "user"
-            }
+              
+            },
+            {relation: "tags"}
           ]
         }
 
@@ -68,6 +72,7 @@ const repo = {
       return new Promise(async (resolve, reject) => {
 
         let filter = {
+          order: ["createdAt DESC"],
           include: [{ relation: "toUser" }, { relation: "fromUser" }]
         }
 
@@ -94,14 +99,45 @@ const repo = {
           })
       })
     },
+
+    GetRepositoryTags({ commit }, id) {
+      return new Promise(async (resolve, reject) => {
+        this.$repository.repository.getTags(id)
+          .then(async res => {
+
+            Tag.insert(res)
+
+            let data = res.data
+
+            for (let tag of data) {
+              await Taging.insert({
+                data: {
+                  repositoryId: id,
+                  tagIds: tag.id
+                }
+              })
+            }
+
+            resolve(res)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
     
     AddRepositoryNote({ rootState }, data) {
       data.from = rootState.user.userId
-      console.log(data)
       return new Promise((resolve, reject) => {
         this.$repository.repository.createNote(data.id, data.from, data.to, data.text)
           .then(res => {
-            Note.insert(res.data)
+            Note.insert(res)
+            RepositoryNote.insert({
+              data: {
+                repositoryId: data.id,
+                noteId: res.data.id
+              }
+            })
             resolve(res.data)
           })
           .catch(err => {

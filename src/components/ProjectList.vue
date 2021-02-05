@@ -26,10 +26,10 @@
           /></q-item-label>
           <q-item-label caption>Featured</q-item-label>
         </q-item-section>
-
+        
         <q-item-section side>
           <q-item-section class="text-center">
-            <span class="text-h6 text-weight-bold">0</span>
+            <span class="text-h6 text-weight-bold">{{project.repository.length}}</span>
             <span class="text-caption">repositories</span>
           </q-item-section>
         </q-item-section>
@@ -47,11 +47,13 @@ export default {
   data() {
     return {};
   },
-
   computed: {
     projects() {
-      return Project.all();
+      return Project.query().withAll().get();
     },
+  },
+  created(){
+    this.$store.dispatch('GetAllRepositories');
   },
 };
 </script>
