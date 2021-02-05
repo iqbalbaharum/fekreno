@@ -1,5 +1,5 @@
 <template>
-  <q-list bordered class="q-ma-md" v-ripple>
+  <q-list bordered class="q-ma" v-ripple>
     <div
       v-for="(uapplication, index) in userapplications"
       :key="uapplication.id"
