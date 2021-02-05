@@ -88,6 +88,16 @@ const routes = [
         component: () => import('pages/User/Applications.vue')
       },
       {
+        path:'/terms',
+        meta: {
+          title:'Terms and Condition',
+          roles:[],
+          sidebar: true,
+          icon:'fas fa-exclamation-circle'
+       },   
+        component: () => import('pages/User/Terms.vue')
+      },
+      {
         path: '/journal',
         meta: {
           title: 'Journals',
