@@ -61,7 +61,7 @@
                   {{
                     date.formatDate(
                       userapplication.updatedAt,
-                      'DD MMM YYYY hh:mm A'
+                      "DD MMM YYYY hh:mm A"
                     )
                   }}
                 </div>
@@ -112,8 +112,8 @@
                     {{ application.minProject }}
                     {{
                       application.minProject === 1
-                        ? 'repository'
-                        : 'repositories'
+                        ? "repository"
+                        : "repositories"
                     }}
                   </div>
                 </q-item-section>
@@ -245,9 +245,7 @@
                       name="fas fa-check-circle"
                       color="green"
                       v-if="
-                        userrepositories.find(
-                          (el) => el.projectId === project.id
-                        )
+                        userrepositories.find(el => el.projectId === project.id)
                       "
                     />
                   </q-item-section>
@@ -282,38 +280,48 @@
       :title="`You are applying for ${application.title}`"
       body="Complete your application by following checklist given and click Submit Application. Fail to do so, may result in your application void."
     />
+
+    <prompt
+      :show.sync="dialog.info2"
+      boxtype="warning"
+      :buttons="['gotoprofile']"
+      icon="fas fa-check-circle"
+      :title="`You are applying for ${application.title}`"
+      body="Complete your profile first before submitting. Fail to do so, may result in your application void."
+    />
   </q-page>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { date } from 'quasar';
-import Application from './../../models/Application';
-import UserApplication from './../../models/UserApplication';
-import Repository from './../../models/Repository';
+import { mapGetters } from "vuex";
+import { date } from "quasar";
+import Application from "./../../models/Application";
+import UserApplication from "./../../models/UserApplication";
+import Repository from "./../../models/Repository";
 
-import Prompt from './../../components/Prompt';
+import Prompt from "./../../components/Prompt";
 
 export default {
   data() {
     return {
       date: date,
-      tabs: 'about',
+      tabs: "about",
       form: [],
       isCanSubmit: false,
       dialog: {
         notification: false,
         info: false,
-      },
+        info2: false
+      }
     };
   },
 
   components: {
-    Prompt,
+    Prompt
   },
 
   computed: {
-    ...mapGetters(['name', 'userId']),
+    ...mapGetters(["name", "userId"]),
     application() {
       let app = Application.query()
         .whereId(this.$route.params.id)
@@ -324,29 +332,29 @@ export default {
     },
     userapplication() {
       let uapp = UserApplication.query()
-        .where('userId', this.userId)
-        .where('applicationId', this.$route.params.id)
+        .where("userId", this.userId)
+        .where("applicationId", this.$route.params.id)
         .first();
       return uapp;
     },
     userrepositories() {
       return Repository.query()
-        .where('userId', this.userId)
+        .where("userId", this.userId)
         .where(
-          'projectId',
-          this.application.projects.map((val) => val.id)
+          "projectId",
+          this.application.projects.map(val => val.id)
         )
         .get();
-    },
+    }
   },
 
   mounted() {
-    this.$store.dispatch('GetAllApplications');
-    this.$store.dispatch('GetAllProjects');
-    this.$store.dispatch('GetAllRepositories');
-    this.$store.dispatch('GetUserApplications');
-    this.$store.dispatch('GetUserRepositories');
-    this.$store.dispatch('GetApplicationProject', this.$route.params.id);
+    this.$store.dispatch("GetAllApplications");
+    this.$store.dispatch("GetAllProjects");
+    this.$store.dispatch("GetAllRepositories");
+    this.$store.dispatch("GetUserApplications");
+    this.$store.dispatch("GetUserRepositories");
+    this.$store.dispatch("GetApplicationProject", this.$route.params.id);
 
     if (this.userapplication && this.userapplication.getAnswersJsonObject) {
       this.form = this.userapplication.getAnswersJsonObject;
@@ -360,12 +368,12 @@ export default {
   methods: {
     async onClickSaveAnswer() {
       try {
-        await this.$store.dispatch('UpdateUserApplication', {
+        await this.$store.dispatch("UpdateUserApplication", {
           id: this.userapplication.id,
-          answers: this.form,
+          answers: this.form
         });
 
-        this.tabs = 'requirement';
+        this.tabs = "requirement";
         this.checkCanSubmit();
       } catch (e) {
         console.log(e);
@@ -373,27 +381,32 @@ export default {
     },
     onClickParticipate() {
       this.$store
-        .dispatch('ApplyUserApplication', {
-          applicationId: this.$route.params.id,
+        .dispatch("ApplyUserApplication", {
+          applicationId: this.$route.params.id
         })
-        .then((res) => {
+        .then(res => {
           this.dialog.info = true;
-          this.$store.dispatch('GetUserApplications');
+          this.$store.dispatch("GetUserApplications");
         });
     },
     onClickSubmission() {
-      this.dialog.notification = true;
+      if (this.userapplication && this.userapplication.state === "draft") {
+        this.dialog.info2 = true;
+      }
+      if (this.userapplication && this.userapplication.state !== "draft") {
+        this.dialog.notification = true;
+      }
     },
     onClickApply() {
-      this.$store.dispatch('SubmitUserApplication', {
-        id: this.userapplication.id,
+      this.$store.dispatch("SubmitUserApplication", {
+        id: this.userapplication.id
       });
       this.$router.go(-1);
     },
     checkCanSubmit() {
       let submit = true;
 
-      if (this.userapplication && this.userapplication.state !== 'draft') {
+      if (this.userapplication && this.userapplication.state !== "draft") {
         submit = false;
       }
 
@@ -417,7 +430,7 @@ export default {
       }
 
       this.isCanSubmit = submit;
-    },
-  },
+    }
+  }
 };
 </script>

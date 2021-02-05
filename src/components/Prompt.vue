@@ -48,6 +48,13 @@
             label="Continue"
             @click="onClickContinue"
           />
+          <q-btn
+            v-if="buttons.includes('gotoprofile')"
+            flat
+            text-color="negative"
+            label="Go to Profile"
+            @click="onClickProfile"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -61,7 +68,7 @@ export default {
   },
   props: {
     icon: {
-      type: String,
+      type: String
     },
     show: {
       type: Boolean,
@@ -69,13 +76,13 @@ export default {
     },
     boxtype: {
       type: String,
-      default: 'success'
+      default: "success"
     },
     title: {
-      type: String,
+      type: String
     },
     body: {
-      type: String,
+      type: String
     },
     buttons: {
       type: Array,
@@ -85,26 +92,33 @@ export default {
 
   methods: {
     onClickOK() {
-      this.$emit('ok');
+      this.$emit("ok");
       this.show = false;
-      this.$emit('update:show', this.show);
+      this.$emit("update:show", this.show);
     },
 
     onClickCancel() {
-      this.$emit('cancel');
+      this.$emit("cancel");
       this.show = false;
     },
 
     onClickDelete() {
-      this.$emit('delete');
+      this.$emit("delete");
       this.show = false;
-      this.$emit('update:show', this.show);
+      this.$emit("update:show", this.show);
     },
 
     onClickContinue() {
-      this.$emit('continue');
+      this.$emit("continue");
       this.show = false;
-      this.$emit('update:show', this.show);
+      this.$emit("update:show", this.show);
+    },
+
+    onClickProfile() {
+      this.$emit("gotoprofile");
+      this.show = false;
+      this.$router.push({ path: "/" });
+      this.$emit("update:show", this.show);
     }
   }
 };
