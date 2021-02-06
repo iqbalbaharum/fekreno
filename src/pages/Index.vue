@@ -36,6 +36,7 @@
           </q-item>
 
           <q-item class="q-py-md">
+         
             <span>{{ userprofile.about }}</span>
           </q-item>
 
@@ -58,7 +59,7 @@
               />
             </div>
           </q-tabs>
-        </q-card>
+        </q-card>mt
 
         <q-tab-panels v-model="tab" animated class="q-mt-lg">
           <q-tab-panel name="overview" class="q-pa-none">
