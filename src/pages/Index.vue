@@ -80,69 +80,72 @@
 </template>
 
 <script>
-import OverviewTab from './Dashboard/Overview';
-import ProfileTab from './Dashboard/Profile';
-import RepositoryTab from './Dashboard/Repository';
-import ApplicationTab from './Dashboard/Application';
-import UserProfile from './../models/UserProfile';
-import User from './../models/User';
-import { mapGetters } from 'vuex';
-import { date } from 'quasar';
+import OverviewTab from "./Dashboard/Overview";
+import ProfileTab from "./Dashboard/Profile";
+import RepositoryTab from "./Dashboard/Repository";
+import ApplicationTab from "./Dashboard/Application";
+import UserProfile from "./../models/UserProfile";
+import User from "./../models/User";
+import { mapGetters } from "vuex";
+import { date } from "quasar";
 
 export default {
-  name: 'PageIndex',
+  name: "PageIndex",
   data() {
     return {
-      tab: 'overview',
+      tab: "overview",
       dialog: {
-        show: false,
+        show: false
       },
       fixed: {
-        mobile: '',
-        email: '',
+        mobile: "",
+        email: ""
       },
       form: {
-        fullname: '',
-        about: '',
-        birthday: '',
-        country: '',
-        github: '',
-        linkedin: '',
-      },
+        fullname: "",
+        about: "",
+        birthday: "",
+        country: "",
+        github: "",
+        linkedin: ""
+      }
     };
   },
 
   computed: {
-    ...mapGetters(['name', 'email', 'mobile', 'userId']),
+    ...mapGetters(["name", "email", "mobile", "userId"]),
 
     user() {
-      return User.query().where('$id', this.userId).with('profile').first();
+      return User.query()
+        .where("$id", this.userId)
+        .with("profile")
+        .first();
     },
     userprofile() {
       let profile = UserProfile.query()
         .withAll()
-        .where('userId', this.userId)
+        .where("userId", this.userId)
         .first();
       return profile;
-    },
+    }
   },
 
   created() {
-    this.$store.dispatch('GetAllCountries');
-    this.$store.dispatch('GetAllApplications');
-    this.$store.dispatch('GetUserByID', this.userId);
-    this.$store.dispatch('GetUserProfile');
-    this.$store.dispatch('GetUserRepositories');
-    this.$store.dispatch('GetUserApplications');
+    this.$store.dispatch("GetAllCountries");
+    this.$store.dispatch("GetAllApplications");
+    this.$store.dispatch("GetUserByID", this.userId);
+    this.$store.dispatch("GetUserProfile");
+    this.$store.dispatch("GetUserRepositories");
+    this.$store.dispatch("GetUserApplications");
   },
 
   components: {
     OverviewTab,
     ProfileTab,
     RepositoryTab,
-    ApplicationTab,
+    ApplicationTab
   },
 
-  methods: {},
+  methods: {}
 };
 </script>
