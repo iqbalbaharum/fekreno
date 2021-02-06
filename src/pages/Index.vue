@@ -59,7 +59,7 @@
               />
             </div>
           </q-tabs>
-        </q-card>mt
+        </q-card>
 
         <q-tab-panels v-model="tab" animated class="q-mt-lg">
           <q-tab-panel name="overview" class="q-pa-none">
