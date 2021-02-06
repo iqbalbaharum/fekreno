@@ -65,7 +65,7 @@
           <q-tab-panel name="overview" class="q-pa-none">
             <overview-tab />
           </q-tab-panel>
-          <q-tab-panel name="repository" class="q-pa-xs">
+          <q-tab-panel name="repository" class="q-pa-none">
             <repository-tab />
           </q-tab-panel>
           <q-tab-panel name="application" class="q-pa-none">
