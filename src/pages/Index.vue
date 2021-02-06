@@ -10,7 +10,7 @@
                   <img
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyGo8XzszXwJThST5wxfqGFehUkRrVS6Njdw&usqp=CAU"
                   />
-                </q-avatar>
+                </q-avatar> 
               </q-item-section>
               <q-card-section>
                 <div class="text-weight-semi">{{ userprofile.fullname }}</div>
@@ -58,7 +58,7 @@
               />
             </div>
           </q-tabs>
-        </q-card>
+        
 
         <q-tab-panels v-model="tab" animated class="q-mt-lg">
           <q-tab-panel name="overview" class="q-pa-none">
@@ -74,6 +74,7 @@
             <profile-tab />
           </q-tab-panel>
         </q-tab-panels>
+        </q-card>
       </div>
     </div>
   </q-page>
