@@ -380,14 +380,18 @@ export default {
       }
     },
     onClickParticipate() {
-      this.$store
-        .dispatch("ApplyUserApplication", {
-          applicationId: this.$route.params.id
-        })
-        .then(res => {
-          this.dialog.info = true;
-          this.$store.dispatch("GetUserApplications");
-        });
+      if (this.userapplication && this.userapplication.state !== "draft") {
+        this.$store
+          .dispatch("ApplyUserApplication", {
+            applicationId: this.$route.params.id
+          })
+          .then(res => {
+            this.dialog.info = true;
+            this.$store.dispatch("GetUserApplications");
+          });
+      } else {
+        this.dialog.info2 = true;
+      }
     },
     onClickSubmission() {
       if (this.userapplication && this.userapplication.state === "draft") {

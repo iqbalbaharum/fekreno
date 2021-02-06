@@ -152,6 +152,7 @@
                   label="Make Submission"
                   color="primary"
                   @click="onClickSubmit"
+                  to="/"
                 />
               </q-item>
             </q-list>
@@ -163,88 +164,81 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import Project from './../../models/Project';
-import Environment from './../../models/DevEnvironment';
-import Position from './../../models/Position';
-import Repository from './../../models/Repository';
-import Tag from './../../models/Tag';
-
+import { mapGetters } from "vuex";
+import Project from "./../../models/Project";
+import Environment from "./../../models/DevEnvironment";
+import Position from "./../../models/Position";
+import Repository from "./../../models/Repository";
+import Tag from "./../../models/Tag";
 export default {
   computed: {
-    ...mapGetters(['name']),
+    ...mapGetters(["name"]),
     project() {
       return Project.find(this.$route.params.id);
     },
     repositories() {
       return Repository.query()
-        .where('projectId', this.$route.params.id)
+        .where("projectId", this.$route.params.id)
         .withAll()
         .get();
     },
     environments() {
       let environments = Environment.all();
-      let opts = environments.map((env) => {
+      let opts = environments.map(env => {
         const container = [];
         container.label = `${env.language} (${env.version})`;
         container.value = env.id;
         return container;
       });
-
       return opts;
     },
     positions() {
       let positions = Position.all();
-      let opts = positions.map((pos) => {
+      let opts = positions.map(pos => {
         const container = [];
         container.label = pos.title;
         container.value = pos.id;
         return container;
       });
-
       return opts;
     },
     tags() {
       let tags = Tag.all();
-      let opts = tags.map((tag) => {
+      let opts = tags.map(tag => {
         const container = [];
         container.label = tag.title;
         container.value = tag.id;
         return container;
       });
-
       return opts;
-    },
+    }
   },
-
   data() {
     return {
-      tabs: 'requirement',
+      tabs: "requirement",
       form: {
-        giturl: '',
-        description: '',
+        giturl: "",
+        description: "",
         projectId: this.$route.params.id,
-        devEnvironmentId: '',
-      },
+        devEnvironmentId: ""
+      }
     };
   },
-
   created() {
-    this.$store.dispatch('GetAllRepositories');
-    this.$store.dispatch('GetAllEnvironments');
-    this.$store.dispatch('GetAllPositions');
-    this.$store.dispatch('GetAllTags');
+    this.$store.dispatch("GetAllRepositories");
+    this.$store.dispatch("GetAllEnvironments");
+    this.$store.dispatch("GetAllPositions");
+    this.$store.dispatch("GetAllTags");
   },
-
   methods: {
     async onClickSubmit() {
       try {
-        await this.$store.dispatch('AddRepository', this.form);
-        this.$router.push({ path: '/projects' });
+        await this.$store.dispatch("AddRepository", this.form);
+        this.$router.push({ path: "/projects" });
       } catch (e) {
         console.log(e);
       }
-    },
-  },
+    }
+  }
 };
 </script>
