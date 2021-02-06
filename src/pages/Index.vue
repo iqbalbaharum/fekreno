@@ -35,7 +35,7 @@
             </q-card-section>
           </q-item>
 
-          <q-item class="q-py-md">
+          <q-item class="q-py-lg">
          
             <span>{{ userprofile.about }}</span>
           </q-item>
@@ -65,7 +65,7 @@
           <q-tab-panel name="overview" class="q-pa-none">
             <overview-tab />
           </q-tab-panel>
-          <q-tab-panel name="repository" class="q-pa-none">
+          <q-tab-panel name="repository" class="q-pa-xs">
             <repository-tab />
           </q-tab-panel>
           <q-tab-panel name="application" class="q-pa-none">
@@ -75,7 +75,7 @@
             <profile-tab />
           </q-tab-panel>
         </q-tab-panels>
-      </div>
+      </div> 
     </div>
   </q-page>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <q-list bordered class="q-ma-md">
+  <q-list bordered class="q-ma-auto">
     <div v-for="(repository, index) in repositories" :key="repository.id">
       <q-item>
         <q-item-section top>

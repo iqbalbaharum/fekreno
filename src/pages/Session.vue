@@ -20,7 +20,7 @@
         >
           <q-tab name="session" label="Session" />
           <q-tab name="templates" label="Templates" />
-        </q-tabs>
+        // bbb</q-tabs>
       </div>
     </div>
 
