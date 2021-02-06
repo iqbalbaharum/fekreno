@@ -210,6 +210,15 @@
               <q-editor filled v-model="form.questions[index].text" />
             </div>
           </div>
+
+          <div class="col-12 row justify-end q-py-sm">
+              <q-btn
+                flat
+                @click="onAddNewQuestion"
+                label="Add Question"
+                color="primary"
+              />
+            </div>
         </q-card-section>
 
         <q-separator />
@@ -437,6 +446,16 @@ export default {
         show: false,
         acceptedIds: [],
       };
+    },
+
+    onClickDeleteQuestion(index) {
+      this.form.questions.splice(index, 1);
+    },
+
+    onAddNewQuestion() {
+      this.form.questions.push({
+        text: '',
+      });
     },
 
     async onClickConfirmActivate() {

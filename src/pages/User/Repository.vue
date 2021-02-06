@@ -152,17 +152,17 @@ export default {
         .whereId(this.$route.params.id)
         .withAll()
         .with('notes.*')
-        .orderBy('notes.createdAt')
+        .orderBy('notes.createdAt','DESC')
         .first();
 
       return app;
-    },
+    }
   },
 
   created() {
     this.$store.dispatch('GetAllUsers');
-    this.$store.dispatch('GetRepositoryNote', this.$route.params.id)
-    this.$store.dispatch('GetRepositoryTags', this.$route.params.id)
+    this.$store.dispatch('GetRepositoryTags', this.$route.params.id);
+    this.$store.dispatch('GetRepositoryNote', this.$route.params.id);
   },
 
   methods: {
@@ -171,7 +171,18 @@ export default {
         id: this.repository.id,
         from: this.repository.user.uuid,
         text: this.form.comment,
+      })
+      .then((res)=>{
+        this.resetForm();
+      })
+      .catch((e)=>{
+        console.log(e);
       });
+    },
+    resetForm() {
+      this.form = {
+        comment: '',
+      }
     },
   },
 };

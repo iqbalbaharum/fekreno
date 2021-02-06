@@ -22,7 +22,8 @@ module.exports = function (/* ctx */) {
       'axios',
       'vuelidate',
       'repository',
-      'routing'
+      'routing',
+      'services'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
