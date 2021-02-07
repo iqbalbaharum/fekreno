@@ -97,7 +97,18 @@ const routes = [
           icon:'fas fa-exclamation-circle'
         },   
       component: () => import('pages/User/Privacy.vue')
-   },
+      },
+
+      {
+        path:'/term',
+        meta:{
+          title:'Term and Condition',
+          roles:[],
+          sidebar: true,
+          icon:'fas fa-exclamation-circle'
+        },   
+      component: () => import('pages/User/TermCondition.vue')
+      },
 
       {
         path: '/journal',
