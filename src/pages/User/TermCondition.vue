@@ -3,7 +3,7 @@
     <div class="q-pa-md q-gutter-sm">
       <q-breadcrumbs>
         <q-breadcrumbs-el label="Home" to="/" />
-        <q-breadcrumbs-el label="Term and Condiiton" />
+        <q-breadcrumbs-el label="Term and Conditon" />
       </q-breadcrumbs>
     </div>
     <div class="row q-pa-xl">
@@ -17,7 +17,7 @@
             <p class="text-h5"> Term of Use </p>
             <p> Effective on 39 February 2021 </p>
             <p> Welcome to Kaggle. Please read on to learn the rules and restrictions that govern your use of our website(s), 
-            products, services and applications (the “Services”). 
+            products, services and applications (the “Services”).
             If you have any questions, comments, or concerns regarding these Terms or the Services, please contact us. 
             These Terms of Use (the “Terms”) are a binding contract between you and Kaggle Inc. (“Kaggle,” “we” and “us”). 
             You must agree to and accept all of the Terms, or you don’t have the right to use the Services. 
