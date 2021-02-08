@@ -145,10 +145,21 @@ export default {
           telegram: this.user.profile.telegram
             ? this.user.profile.telegram
             : '',
+          isCompleted: this.user.profile.isCompleted,
         };
       });
     },
     onClickSubmit() {
+      const { about, birthday, country, fullname } = this.form
+      if ( about === null ||
+        birthday === null ||
+        country === null ||
+        fullname === null 
+      ) {
+        this.form.isCompleted = false;
+      } else {
+        this.form.isCompleted = true;
+      }
       this.form.birthday = date.formatDate(
         this.form.birthday,
         'YYYY-MM-DDTHH:mm:ss.SSSZ'

@@ -282,6 +282,16 @@
       :title="`You are applying for ${application.title}`"
       body="Complete your application by following checklist given and click Submit Application. Fail to do so, may result in your application void."
     />
+
+    <prompt
+      :show.sync="dialog.alert"
+      boxtype="alert"
+      :buttons="['ok']"
+      icon="fas fa-bomb"
+      title="Profile not complete"
+      body="Please complete your profile before subsmission"
+      @ok="onClickOk"
+    />
   </q-page>
 </template>
 
@@ -291,6 +301,7 @@ import { date } from 'quasar';
 import Application from './../../models/Application';
 import UserApplication from './../../models/UserApplication';
 import Repository from './../../models/Repository';
+import UserProfile from './../../models/UserProfile';
 
 import Prompt from './../../components/Prompt';
 
@@ -304,7 +315,9 @@ export default {
       dialog: {
         notification: false,
         info: false,
+        alert: false,
       },
+      profile: {},
     };
   },
 
@@ -338,7 +351,12 @@ export default {
         )
         .get();
     },
+    userprofile() {
+        let profile = UserProfile.query().where('userId', this.userId).first();
+        return profile ? profile.isCompleted : false
+      },
   },
+
 
   mounted() {
     this.$store.dispatch('GetAllApplications');
@@ -347,6 +365,7 @@ export default {
     this.$store.dispatch('GetUserApplications');
     this.$store.dispatch('GetUserRepositories');
     this.$store.dispatch('GetApplicationProject', this.$route.params.id);
+
 
     if (this.userapplication && this.userapplication.getAnswersJsonObject) {
       this.form = this.userapplication.getAnswersJsonObject;
@@ -372,6 +391,10 @@ export default {
       }
     },
     onClickParticipate() {
+      if (!this.userprofile) {
+        this.dialog.alert = true;
+        return
+      }
       this.$store
         .dispatch('ApplyUserApplication', {
           applicationId: this.$route.params.id,
@@ -417,6 +440,9 @@ export default {
       }
 
       this.isCanSubmit = submit;
+    },
+    onClickOk(){
+      this.$router.push('/')
     },
   },
 };
