@@ -99,6 +99,17 @@ const routes = [
       component: () => import('pages/User/Privacy.vue')
    },
 
+   {
+    path:'/terms',
+    meta:{
+      title:'Terms of Use',
+      roles:[],
+      sidebar: true,
+      icon:'fas fa-exclamation-circle'
+    },   
+  component: () => import('pages/User/Terms.vue')
+},
+
       {
         path: '/journal',
         meta: {
