@@ -35,8 +35,7 @@
 export default {
   data() {
     return {
-      data: {
-        tabs: 'session' 
+      data: {       
       },
     }
   },
