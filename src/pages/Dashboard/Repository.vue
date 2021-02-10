@@ -1,5 +1,5 @@
 <template>
-  <q-list bordered class="q-ma-md">
+  <q-list bordered>
     <div v-for="(repository, index) in repositories" :key="repository.id">
       <q-item>
         <q-item-section top>
@@ -29,9 +29,9 @@
 </template>
 
 <script>
-import Repository from './../../models/Repository';
-import { mapGetters } from 'vuex';
-import { date } from 'quasar';
+import Repository from "./../../models/Repository";
+import { mapGetters } from "vuex";
+import { date } from "quasar";
 
 export default {
   data() {
@@ -39,19 +39,19 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['userId']),
+    ...mapGetters(["userId"]),
 
     repositories() {
       let profile = Repository.query()
-        .where('userId', this.userId)
+        .where("userId", this.userId)
         .withAll()
         .get();
       return profile;
-    },
+    }
   },
 
   created() {},
 
-  methods: {},
+  methods: {}
 };
 </script>
