@@ -18,7 +18,7 @@
               <div class="text-h5">{{ project.title }}</div>
               <div class="text-caption">{{ project.description }}</div>
 
-              <div class="q-mt-sm">{{ repositories.length }} repositories</div>
+             <div class="q-mt-sm">{{ repositories.length }} repositories</div>
             </div>
           </q-card-section>
           <q-tabs
