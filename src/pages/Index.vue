@@ -10,8 +10,11 @@
                 <div v-show="addButton" class="absolute-full text-subtitle flex flex-center">
                   <q-btn icon="add" flat size="sm" @click="dialogPhoto=true" />
                 </div>
-                  <img
-                    v-bind:src="this.form['avatar']" 
+                  <img v-if="this.userprofile.avatar != null"
+                    v-bind:src="userprofile.avatar"
+                  />
+                  <img v-if="this.userprofile.avatar == null"
+                    v-bind:src="this.form['avatar']"
                   />
                 </q-avatar>
               </q-item-section>
@@ -166,6 +169,10 @@ export default {
      this.form.avatar = url
      this.form['avatar'] === this.form.avatar
      this.dialogPhoto = false
+     const payload = {
+       avatar: url
+     }
+     this.$store.dispatch('UpdateUserProfile', payload)
     },
     onRejected () {
       this.$q.notify({

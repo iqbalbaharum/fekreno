@@ -317,6 +317,7 @@ const user = {
     },
 
     async UpdateUserProfile({ commit, rootState }, data) {
+      return new Promise((resolve, reject) => {
       this.$repository.user.updateUserProfile(rootState.user.userId, data)
         .then(res => {
           UserProfile.update({ where: rootState.user.userId, data: data })
@@ -326,6 +327,7 @@ const user = {
           console.log(err)
           reject(err)
         })
+      })
     }
   }
 }
