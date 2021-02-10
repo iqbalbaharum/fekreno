@@ -136,7 +136,7 @@ export default {
         this.form = {
           fullname: this.user.profile.fullname,
           about: this.user.profile.about,
-          birthday: date.formatDate(this.user.profile.birthday, 'DD/MM/YYYY'),
+          birthday: date.formatDate(this.user.profile.birthday, 'YYYY-MM-DD'),
           country: this.user.profile.country,
           github: this.user.profile.github ? this.user.profile.github : '',
           linkedin: this.user.profile.linkedin

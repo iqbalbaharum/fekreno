@@ -1,5 +1,5 @@
 <template>
-  <q-list bordered class="q-ma-md" v-ripple>
+  <q-list bordered v-ripple>
     <div
       v-for="(uapplication, index) in userapplications"
       :key="uapplication.id"
@@ -26,7 +26,7 @@
               class="text-weight-medium text-red"
               v-if="
                 userapplications.find(
-                  (el) => el.applicationId === uapplication.application.id
+                  el => el.applicationId === uapplication.application.id
                 ).state === 'draft'
               "
             >
@@ -60,10 +60,10 @@
 </template>
 
 <script>
-import User from './../../models/User';
-import UserApplication from './../../models/UserApplication';
-import { mapGetters } from 'vuex';
-import { date } from 'quasar';
+import User from "./../../models/User";
+import UserApplication from "./../../models/UserApplication";
+import { mapGetters } from "vuex";
+import { date } from "quasar";
 
 export default {
   data() {
@@ -71,16 +71,16 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['userId']),
+    ...mapGetters(["userId"]),
 
     userapplications() {
       return UserApplication.query()
-        .where('userId', this.userId)
+        .where("userId", this.userId)
         .withAll()
         .get();
-    },
+    }
   },
 
-  methods: {},
+  methods: {}
 };
 </script>
