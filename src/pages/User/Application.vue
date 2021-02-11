@@ -282,6 +282,15 @@
       :title="`You are applying for ${application.title}`"
       body="Complete your application by following checklist given and click Submit Application. Fail to do so, may result in your application void."
     />
+
+    <prompt
+      :show.sync="dialog.warn"
+      boxtype="alert"
+      :buttons="['cancel','editProfile']"
+      icon="fas fa-exclamation"
+      :title="`Incomplete profile.`"
+      body="You profile is not complete. Please complete your profile in 'EDIT PROFILE' before submitting applications."
+    />
   </q-page>
 </template>
 
@@ -291,7 +300,7 @@ import { date } from 'quasar';
 import Application from './../../models/Application';
 import UserApplication from './../../models/UserApplication';
 import Repository from './../../models/Repository';
-
+import UserProfile from './../../models/UserProfile';
 import Prompt from './../../components/Prompt';
 
 export default {
@@ -304,7 +313,9 @@ export default {
       dialog: {
         notification: false,
         info: false,
+        warn: false
       },
+      profile: {},
     };
   },
 
@@ -338,6 +349,10 @@ export default {
         )
         .get();
     },
+    userprofile() {
+        let profile = UserProfile.query().where('userId', this.userId).first();
+        return profile ? profile.ProfileComplete : false
+      },
   },
 
   mounted() {
@@ -372,8 +387,12 @@ export default {
       }
     },
     onClickParticipate() {
-      this.$store
-        .dispatch('ApplyUserApplication', {
+      if (!this.userprofile) {
+        this.dialog.warn = true;
+        return
+      }
+      
+        this.$store.dispatch('ApplyUserApplication', {
           applicationId: this.$route.params.id,
         })
         .then((res) => {
@@ -384,11 +403,12 @@ export default {
     onClickSubmission() {
       this.dialog.notification = true;
     },
-    onClickApply() {
-      this.$store.dispatch('SubmitUserApplication', {
+    onClickApply() {     
+        this.$store.dispatch('SubmitUserApplication', {
         id: this.userapplication.id,
       });
       this.$router.go(-1);
+      
     },
     checkCanSubmit() {
       let submit = true;

@@ -31,7 +31,7 @@
           >
             <q-tab name="requirement" label="Requirements" />
             <q-tab name="repository" label="Repositories" />
-            <q-tab name="submission" label="Submission" />
+            <q-tab name="submission" label="Submission" @click="onClickSubmission"/>
           </q-tabs>
         </q-card>
 
@@ -159,6 +159,14 @@
         </q-tab-panels>
       </div>
     </div>
+    <prompt
+      :show.sync="dialog.warn"
+      boxtype="alert"
+      :buttons="['editProfile','cancel']"
+      icon="fas fa-exclamation"
+      title="Incomplete profile."
+      body="You profile is not complete. Please complete your profile in 'EDIT PROFILE' before submitting projects."
+    />
   </q-page>
 </template>
 
@@ -169,10 +177,12 @@ import Environment from './../../models/DevEnvironment';
 import Position from './../../models/Position';
 import Repository from './../../models/Repository';
 import Tag from './../../models/Tag';
+import UserProfile from './../../models/UserProfile';
+import Prompt from './../../components/Prompt';
 
 export default {
   computed: {
-    ...mapGetters(['name']),
+    ...mapGetters(['name', 'userId']),
     project() {
       return Project.find(this.$route.params.id);
     },
@@ -215,6 +225,10 @@ export default {
 
       return opts;
     },
+    userprofile() {
+        let profile = UserProfile.query().where('userId', this.userId).first();
+        return profile ? profile.ProfileComplete : false
+      },
   },
 
   data() {
@@ -226,7 +240,15 @@ export default {
         projectId: this.$route.params.id,
         devEnvironmentId: '',
       },
+      dialog: {
+        warn: false,
+      },
+      profile: {},
     };
+  },
+
+components: {
+    Prompt,
   },
 
   created() {
@@ -245,6 +267,13 @@ export default {
         console.log(e);
       }
     },
+    onClickSubmission(){
+      console.log(this.userprofile)
+      if (!this.userprofile) {
+        this.dialog.warn = true;
+        return
+      }
+    }
   },
 };
 </script>

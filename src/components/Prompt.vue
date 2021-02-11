@@ -48,6 +48,13 @@
             label="Continue"
             @click="onClickContinue"
           />
+          <q-btn
+            v-if="buttons.includes('editProfile')"
+            flat
+            text-color="positive"
+            label="Complete Profile"
+            @click="onClickEditProfile"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -105,6 +112,13 @@ export default {
       this.$emit('continue');
       this.show = false;
       this.$emit('update:show', this.show);
+    },
+
+   onClickEditProfile() {
+      this.$emit('editProfile');
+      this.show = false;
+      this.$emit('update:show', this.show);
+      this.$router.push({ path: "/" });
     }
   }
 };
