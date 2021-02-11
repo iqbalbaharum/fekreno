@@ -227,7 +227,7 @@ export default {
     },
     userprofile() {
         let profile = UserProfile.query().where('userId', this.userId).first();
-        return profile ? profile.ProfileComplete : false
+        return profile ? profile.isCompleted : false
       },
   },
 
