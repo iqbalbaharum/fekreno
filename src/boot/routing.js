@@ -11,7 +11,7 @@ export default async ({ app, router, store, Vue }) => {
   }
 
   // URLs which gonna be public access
-  const whiteListURL = ['/login', '/register']
+  const whiteListURL = ['/login', '/register', '/terms', '/policy']
 
   router.beforeEach( async(to, from, next) => {
 
