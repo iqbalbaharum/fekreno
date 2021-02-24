@@ -147,7 +147,7 @@ const application = {
     },
 
     async DeactivateApplication({ commit }, data) {
-      let res = await this.$repository.application.deactisvateApplication(data.id)
+      let res = await this.$repository.application.deactivateApplication(data.id)
       return res.data
     },
 
