@@ -15,7 +15,7 @@ To run this project, you will need:
  [**Node.js**](https://nodejs.org/en/) version `v10.18.1` or higher
 
 > check node version on terminal, `node -v`
-```json
+```js
 
 $ node -v
 
@@ -26,7 +26,7 @@ v12.19.0 // current version on my machine
 > Note: when you download Node.js, you automatically get npm installed on your machine
 
 > check npm version on terminal, `npm -v`
-```json
+```js
 
 $ npm -v
 
@@ -37,7 +37,7 @@ $ npm -v
 
 
 > check quasar-cli version on terminal, `quasar -v`
-```json
+```js
 
 $ quasar -v
 
@@ -51,7 +51,7 @@ $ git clone https://github.com/iqbalbaharum/fekreno.git
 ```
 
 2. Install dependencies
-```
+```js
 // run npm ci inside the project root folder
 // eg: c:/projects/fekreno
 
@@ -67,7 +67,7 @@ MAIN_BE_TOKEN=jwt
 ```
 
 4. Run the project
-```
+```js
 $ quasar dev
 ```
 You can see your project running on [http://localhost:8080/](http://localhost:8080/) by default
