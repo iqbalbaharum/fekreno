@@ -2,6 +2,7 @@ import MainLayout from 'layouts/MainLayout'
 
 const routes = [
   {
+    // public
     path: '/',
     component: MainLayout,
     meta: {
@@ -11,21 +12,24 @@ const routes = [
       {
         path: 'general',
         meta: {
-          title: 'Topics',
+          title: 'Forum',
           sidebar: true,
+          icon: 'school'
         },
         component: () => import('pages/Forum/Topics.vue')
       },
       {
         path: 'general/:id',
         meta: {
-          title: 'SingleTopic',
           sidebar: false,
+          icon: 'school'
         },
         component: () => import('pages/Forum/Topic.vue')
       },
     ]
   },
+
+  //private
   {
     path: '/',
     component: MainLayout,
@@ -124,19 +128,19 @@ const routes = [
           sidebar: true,
           icon:'fas fa-exclamation-circle'
         },
-      component: () => import('pages/User/Privacy.vue')
-   },
+        component: () => import('pages/User/Privacy.vue')
+      },
 
-   {
-    path:'/terms',
-    meta:{
-      title:'Terms of Use',
-      roles:[],
-      sidebar: true,
-      icon:'fas fa-exclamation-circle'
-    },
-  component: () => import('pages/User/Terms.vue')
-},
+      {
+          path:'/terms',
+          meta:{
+            title:'Terms of Use',
+            roles:[],
+            sidebar: true,
+            icon:'fas fa-exclamation-circle'
+          },
+          component: () => import('pages/User/Terms.vue')
+      },
 
       {
         path: '/journal',
@@ -298,7 +302,8 @@ const routes = [
   {
     path: '/register',
     meta: {
-      access: 'public'
+      access: 'public',
+      sidebar: false
     },
     component: () => import('pages/Auth/Register.vue')
   },
@@ -308,7 +313,8 @@ const routes = [
   {
     path: '*',
     meta: {
-      access: 'public'
+      access: 'public',
+      sidebar: false
     },
     component: () => import('pages/Error404.vue')
   }

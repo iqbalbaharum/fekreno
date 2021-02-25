@@ -4,11 +4,7 @@ import { getToken } from './../datasources/localstorage.storage'
 // more info on params: https://quasar.dev/quasar-cli/cli-documentation/boot-files#Anatomy-of-a-boot-file
 export default async ({ app, router, store, Vue }) => {
 
-  // URLs which gonna be public access
-  const whiteListURL = ['/login', '/register', '/terms', '/policy']
-
   router.beforeEach( async(to, from, next) => {
-    const routes = router.options.routes.filter(element => element.path === '/');
     if(getToken(process.env.MAIN_BE_TOKEN)) {
 
       if(to.path === '/login') {
@@ -21,9 +17,8 @@ export default async ({ app, router, store, Vue }) => {
             let links = []
 
             const routes = router.options.routes.filter(element => element.path === '/')
-
-            if(routes.length === 1) {
-              routes[0].children.forEach(route => {
+            routes.forEach(ro => {
+              ro.children.forEach(route => {
                 if(route.meta.sidebar) {
 
                   if(store.getters.roles.includes('master')) {
@@ -39,7 +34,7 @@ export default async ({ app, router, store, Vue }) => {
                   }
                 }
               })
-            }
+            })
 
             store.dispatch('SetMenu', links)
 
@@ -62,16 +57,21 @@ export default async ({ app, router, store, Vue }) => {
       const routes = router.options.routes.filter(element => element.meta.access === 'public')
       let publicRoutes = []
       routes.forEach(route => {
+
         if(route.children) {
           route.children.forEach(childRoute => {
-            publicRoutes.push(route.path + childRoute.path)
+            let r = { ...childRoute }
+            r.path = route.path + childRoute.path
+            publicRoutes.push(r)
           })
         } else {
-          publicRoutes.push(route.path)
+          publicRoutes.push(route)
         }
       })
 
-      if (publicRoutes.indexOf(to.path) !== -1) {
+      let paths = publicRoutes.map(e => e.path)
+      store.dispatch('SetMenu', publicRoutes.filter(e => e.meta.sidebar))
+      if (paths.indexOf(to.path) !== -1 || paths.indexOf(to.matched[1].path) !== -1) {
         next()
       } else {
         next('/login')
