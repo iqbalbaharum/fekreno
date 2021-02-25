@@ -71,7 +71,7 @@ export default async ({ app, router, store, Vue }) => {
 
       let paths = publicRoutes.map(e => e.path)
       store.dispatch('SetMenu', publicRoutes.filter(e => e.meta.sidebar))
-      if (paths.indexOf(to.path) !== -1 || paths.indexOf(to.matched[1].path) !== -1) {
+      if(to.matched.length && paths.indexOf(to.matched[to.matched.length - 1].path) !== -1) {
         next()
       } else {
         next('/login')
