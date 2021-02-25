@@ -26,6 +26,21 @@ const routes = [
         },
         component: () => import('pages/Forum/Topic.vue')
       },
+      {
+        path:'/policy',
+        meta:{
+          sidebar: false,
+        },
+        component: () => import('pages/User/Privacy.vue')
+      },
+
+      {
+          path:'/terms',
+          meta:{
+            sidebar: false,
+          },
+          component: () => import('pages/User/Terms.vue')
+      },
     ]
   },
 
@@ -118,28 +133,6 @@ const routes = [
           subtitle: ''
         },
         component: () => import('pages/User/Applications.vue')
-      },
-
-      {
-        path:'/policy',
-        meta:{
-          title:'Privacy Policy',
-          roles:[],
-          sidebar: true,
-          icon:'fas fa-exclamation-circle'
-        },
-        component: () => import('pages/User/Privacy.vue')
-      },
-
-      {
-          path:'/terms',
-          meta:{
-            title:'Terms of Use',
-            roles:[],
-            sidebar: true,
-            icon:'fas fa-exclamation-circle'
-          },
-          component: () => import('pages/User/Terms.vue')
       },
 
       {
