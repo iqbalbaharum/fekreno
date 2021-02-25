@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import ProjectList from "./../../components/ProjectList";
+import ProjectList from './../../components/ProjectList';
 
 export default {
   data() {
@@ -34,7 +34,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("GetAllProjects");
+    this.$store.dispatch('GetAllProjects');
   },
 };
 </script>

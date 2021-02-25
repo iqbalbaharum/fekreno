@@ -49,7 +49,7 @@ export default class UserRepository extends Repository {
   async getInfo() {
     const response = await datasource({
       method: 'get',
-      url: `me`,
+      url: 'me',
     })
 
     return response
@@ -72,7 +72,7 @@ export default class UserRepository extends Repository {
   async getUserApplications(filter) {
     return datasource({
       method: 'get',
-      url: `users/applications`,
+      url: 'users/applications',
       params: {
         filter: filter
       }
@@ -102,7 +102,7 @@ export default class UserRepository extends Repository {
   async applyUserApplication(applicationId) {
     return datasource({
       method: 'post',
-      url: `users/applications/apply`,
+      url: 'users/applications/apply',
       data: {
         applicationId: applicationId
       }
@@ -112,7 +112,7 @@ export default class UserRepository extends Repository {
   async changeUserApplicationStatus(applicationId, status) {
     return datasource({
       method: 'post',
-      url: `users/applications/apply`,
+      url: 'users/applications/apply',
       data: {
         applicationId: applicationId,
         status: status

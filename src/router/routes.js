@@ -4,6 +4,34 @@ const routes = [
   {
     path: '/',
     component: MainLayout,
+    meta: {
+      access: 'public'
+    },
+    children: [
+      {
+        path: 'general',
+        meta: {
+          title: 'Topics',
+          sidebar: true,
+        },
+        component: () => import('pages/Forum/Topics.vue')
+      },
+      {
+        path: 'general/:id',
+        meta: {
+          title: 'SingleTopic',
+          sidebar: false,
+        },
+        component: () => import('pages/Forum/Topic.vue')
+      },
+    ]
+  },
+  {
+    path: '/',
+    component: MainLayout,
+    meta: {
+      access: 'jwt'
+    },
     children: [
       {
         path: '/',
@@ -95,7 +123,7 @@ const routes = [
           roles:[],
           sidebar: true,
           icon:'fas fa-exclamation-circle'
-        },   
+        },
       component: () => import('pages/User/Privacy.vue')
    },
 
@@ -106,7 +134,7 @@ const routes = [
       roles:[],
       sidebar: true,
       icon:'fas fa-exclamation-circle'
-    },   
+    },
   component: () => import('pages/User/Terms.vue')
 },
 
@@ -235,7 +263,7 @@ const routes = [
         component: () => import('pages/Tags.vue')
       },
       {
-        path: `admin/participants/:id`,
+        path: 'admin/participants/:id',
         meta: {
           roles: ['admin'],
           sidebar: false,
@@ -250,7 +278,8 @@ const routes = [
     meta: {
       title: 'Login',
       sidebar: false,
-      roles: []
+      roles: [],
+      access: 'public'
     },
     component: () => import('pages/Auth/Login.vue')
   },
@@ -269,9 +298,7 @@ const routes = [
   {
     path: '/register',
     meta: {
-      title: 'Registration',
-      roles: ['user'],
-      sidebar: false
+      access: 'public'
     },
     component: () => import('pages/Auth/Register.vue')
   },
@@ -280,6 +307,9 @@ const routes = [
   // but you can also remove i
   {
     path: '*',
+    meta: {
+      access: 'public'
+    },
     component: () => import('pages/Error404.vue')
   }
 ]

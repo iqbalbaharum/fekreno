@@ -34,32 +34,32 @@
 </template>
 
 <script>
-import Tag from "./../../models/Tag";
+import Tag from './../../models/Tag';
 
 export default {
   data() {
     return {
       isCreateDialogOpened: false,
       columns: [
-        { name: "id", align: "left", label: "ID", field: "id" },
+        { name: 'id', align: 'left', label: 'ID', field: 'id' },
         {
-          name: "title",
-          align: "left",
-          label: "Title",
-          field: "title",
+          name: 'title',
+          align: 'left',
+          label: 'Title',
+          field: 'title',
           sortable: true,
         },
         // { name: 'icon', align: 'left', label: 'Icon', field: 'icon', sortable: true },
         {
-          name: "createdAt",
-          align: "left",
-          label: "Created At",
-          field: "createdAt",
+          name: 'createdAt',
+          align: 'left',
+          label: 'Created At',
+          field: 'createdAt',
           sortable: true,
         },
       ],
       form: {
-        title: "",
+        title: '',
       },
     };
   },
@@ -71,16 +71,16 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("GetAllTags");
+    this.$store.dispatch('GetAllTags');
   },
 
   methods: {
     onDelete(id) {
-      this.$store.dispatch("DeleteTags", id);
+      this.$store.dispatch('DeleteTags', id);
     },
     async onAdd() {
       try {
-        await this.$store.dispatch("AddTags", this.form);
+        await this.$store.dispatch('AddTags', this.form);
         this.isCreateDialogOpened = false;
         this.resetForm();
       } catch (e) {
@@ -92,7 +92,7 @@ export default {
     },
     resetForm() {
       this.form = {
-        title: "",
+        title: '',
       };
     },
   },

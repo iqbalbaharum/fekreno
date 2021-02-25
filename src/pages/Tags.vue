@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TagsBox from "./Tab/Tags";
+import TagsBox from './Tab/Tags';
 
 export default {
   components: {
