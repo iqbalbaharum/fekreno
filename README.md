@@ -30,7 +30,7 @@ Krenovator LMS (frontend) is a collaborative learning platform using Quasar Fram
 
     \- Run `git clone` in the bash terminal following by the url of the project
 
-​      \> fekreno : https://github.com/iqbalbaharum/fekreno.git
+​      \    fekreno : https://github.com/iqbalbaharum/fekreno.git
 
 
 
