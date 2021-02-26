@@ -19,10 +19,9 @@ You can learn this on (https://www.freecodecamp.org) and also other free platfro
 
 ## Documentation
 
-- [System requirements](#system-requirements)
-- [Installation](#installation)
-- [Configuration File](#configuration-file)
-- [Troubleshooting](#)
+- System requirements
+- Installation
+- Configuration File
 
 ## System Requirements
 
@@ -30,7 +29,7 @@ You can learn this on (https://www.freecodecamp.org) and also other free platfro
 - Code IDE - preferably [Visual Studio](https://code.visualstudio.com/), [Vim](https://www.vim.org/)
 - [Github for desktop](https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/installing-github-desktop)
 
-## Installation
+## Installation 
 
 ### Use Github for desktop for easy way to learn as a beginner.
 
@@ -70,11 +69,10 @@ Learn more at (https://www.sitepoint.com/vue-js-quasar-framework/)
 - Quasar
  - [Why this  project use quasar? ](https://quasar.dev/introduction-to-quasar)
 
-Once you done installing quasar cli you will get this folder:
+Once you done installing quasar cli you will get this folder, Here is the file that you can manipulate the frontend view:
 
 1. Src
 2. Public
-3. .quasar
 
 ## In Src have 13 folder :
 
@@ -108,6 +106,17 @@ inlude App.vue
 
  Quasar created a file quasar.conf.js in the root folder, which holds all of our configuration settings.
 
- Here have  we can add or remove dependencies.
+ Here have we can add or remove dependencies.
  Here is important for you to know what are plugin are being use in this project.
 
+# After done all the installation
+
+Here is how to run the program
+
+1. Create a file name `.env` file in root folder
+     - Copy and paste into `.env` file
+     MAIN_BE_URL=http://localhost:3000/
+     MAIN_BE_TOKEN=jwt
+
+ 2. Starts the app in development mode
+   `quasar dev`
