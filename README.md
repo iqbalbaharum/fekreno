@@ -26,17 +26,17 @@ Database used in this project: MySQL
    - Example path: C:\Users\nasuha\Desktop\proKreno>
 ## Fekreno Installation
 1. Open terminal and go to fekreno folder
-   Command: cd fekreno
+   - Command: *cd fekreno*
 
 2. Create .env file and put these in the file - to connect backend(bekreno) and frontend(fekreno)
-   MAIN_BE_URL=http://localhost:3000/
-   MAIN_BE_TOKEN=jwt
+   - MAIN_BE_URL=http://localhost:3000/
+   - MAIN_BE_TOKEN=jwt
 
 3. Install frontend dependency:
-   Command: *npm ci*
+   - Command: *npm ci*
 
 3. Install quasar cli to ensure you can use quasar command:
-   Command: *npm install -g @quasar/cli*
+   - Command: *npm install -g @quasar/cli*
    
 4. To run the frontend: *quasar dev*
 
