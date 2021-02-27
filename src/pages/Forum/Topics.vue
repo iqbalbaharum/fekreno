@@ -3,13 +3,25 @@
     <div class="row q-pa-xl">
       <div class="col-8">
         <div class="q-mb-xl">
-          <p class="text-h3">Krenovator Forum</p>
+          <p class="text-h3">Forum</p>
           <div>
             Events and topics specific to our community
           </div>
         </div>
 
-        <q-list bordered>
+        <div class="q-mb-md">
+          <div class="row justify-end q-py-md">
+            <q-btn
+              no-caps
+              label="New Topic"
+              color="black"
+              icon="add"
+              @click="onClickNewTopic"
+            />
+          </div>
+        </div>
+
+        <q-list bordered v-if="topics">
           <q-item class="bg-secondary justify-between items-center">
             <div>
               {{ topics.length }} topics
@@ -43,13 +55,13 @@
                 }}</q-item-label>
                 <q-item-label caption>{{ topic.description }}</q-item-label>
                 <q-item-label caption>
-                  {{ '3 hours ago' }} &#8226;
-                  <span>Posted by <span class="text-primary text-weight-bold cursor-pointer" href="/">@{{ topic.user.name }}</span></span>
+                  {{ topic.timeAgo }} &#8226;
+                  <span>Posted by <span class="text-primary text-weight-bold cursor-pointer" href="/" v-if="topic.user">@{{ topic.user.name }}</span></span>
                 </q-item-label>
               </q-item-section>
               <q-item-section class="text-center">
                 <q-item-label caption>Last comment {{ '29m ago' }}</q-item-label>
-                <q-item-label caption>by <span class="text-primary text-weight-bold cursor-pointer" href="/">@{{ topic.meta.by.name }}</span></q-item-label>
+                <q-item-label caption>by <span class="text-primary text-weight-bold cursor-pointer" href="/" v-if="topic.meta">@{{ topic.meta.by.name }}</span></q-item-label>
               </q-item-section>
 
               <q-item-section side>
@@ -67,44 +79,30 @@
 </template>
 
 <script>
+import Topic from 'src/models/Topic'
+
 export default {
   data() {
     return {
       form: {
         search: ''
       },
-      topics: [
-        {
-          id: 1,
-          title: 'Welcome to Forum',
-          description: 'Welcoming message for everyone',
-          user: {
-            name: 'iqbalbaharum'
-          },
-          meta: {
-            lastCommentAt: '2021-02-25T10:08:22+0000',
-            by: {
-              name: 'iqbalbaharum'
-            }
-          },
-          comments: 30
-        },
-        {
-          id: 1,
-          title: 'How to use the forum',
-          description: 'use this with care',
-          user: {
-            name: 'iqbalbaharum'
-          },
-          meta: {
-            lastCommentAt: '2021-02-25T10:08:22+0000',
-            by: {
-              name: 'iqbalbaharum'
-            }
-          },
-          comments: 30
-        }
-      ],
+    }
+  },
+
+  computed: {
+    topics() {
+      return Topic.query().withAll().orderBy('updatedAt', 'desc').get()
+    }
+  },
+
+  created() {
+    this.$store.dispatch('GetAllTopics')
+  },
+
+  methods: {
+    onClickNewTopic() {
+      this.$router.push({ path: '/general/new'})
     }
   },
 }

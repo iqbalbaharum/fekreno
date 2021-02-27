@@ -10,7 +10,8 @@ export default class Tag extends Model {
     return {
       id: this.attr(''),
       title: this.attr(null),
-      createdAt: this.attr('')
+      parentTagsId: this.attr(''),
+      createdAt: this.attr(''),
     }
 
   }

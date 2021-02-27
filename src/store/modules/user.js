@@ -14,7 +14,8 @@ const user = {
     userId: '',
     email: '',
     mobile: '',
-    name: ''
+    name: '',
+    avatar: 'https://cdn.quasar.dev/img/avatar.png'
   },
 
   mutations: {

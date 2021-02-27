@@ -1,49 +1,6 @@
 import MainLayout from 'layouts/MainLayout'
 
 const routes = [
-  {
-    // public
-    path: '/',
-    component: MainLayout,
-    meta: {
-      access: 'public'
-    },
-    children: [
-      {
-        path: 'general',
-        meta: {
-          title: 'Forum',
-          sidebar: true,
-          icon: 'school'
-        },
-        component: () => import('pages/Forum/Topics.vue')
-      },
-      {
-        path: 'general/:id',
-        meta: {
-          sidebar: false,
-          icon: 'school'
-        },
-        component: () => import('pages/Forum/Topic.vue')
-      },
-      {
-        path:'/policy',
-        meta:{
-          sidebar: false,
-        },
-        component: () => import('pages/User/Privacy.vue')
-      },
-
-      {
-          path:'/terms',
-          meta:{
-            sidebar: false,
-          },
-          component: () => import('pages/User/Terms.vue')
-      },
-    ]
-  },
-
   //private
   {
     path: '/',
@@ -75,18 +32,6 @@ const routes = [
         },
         component: () => import('pages/User/Application.vue')
       },
-      // {
-      //   path: `/application/${process.env.FEATURED_APP_ID}`,
-      //   meta: {
-      //     title: 'TSA Application',
-      //     roles: ['user'],
-      //     sidebar: true,
-      //     icon: 'fas fa-star',
-      //     color: 'text-amber-12',
-      //     subtitle: 'Opening for cohort 3'
-      //   },
-      //   component: () => import('pages/User/Application.vue')
-      // },
       {
         path: '/projects',
         meta: {
@@ -180,6 +125,14 @@ const routes = [
         component: () => import('pages/User.vue')
       },
       {
+        path: 'general/new',
+        meta: {
+          sidebar: false,
+          icon: 'school'
+        },
+        component: () => import('pages/Forum/New.vue')
+      },
+      {
         path: '/admin/environment',
         meta: {
           title: 'Environment Management',
@@ -269,6 +222,48 @@ const routes = [
       },
     ]
   },
+  // public
+  {
+    path: '/',
+    component: MainLayout,
+    meta: {
+      access: 'public'
+    },
+    children: [
+      {
+        path: '/general',
+        meta: {
+          title: 'Forum',
+          sidebar: true,
+          icon: 'school'
+        },
+        component: () => import('pages/Forum/Topics.vue')
+      },
+      {
+        path: '/general/:id',
+        meta: {
+          sidebar: false,
+          icon: 'school'
+        },
+        component: () => import('pages/Forum/Topic.vue')
+      },
+      {
+        path:'/policy',
+        meta:{
+          sidebar: false,
+        },
+        component: () => import('pages/User/Privacy.vue')
+      },
+
+      {
+          path:'/terms',
+          meta:{
+            sidebar: false,
+          },
+          component: () => import('pages/User/Terms.vue')
+      },
+    ]
+  },
 
   {
     path: '/login',
@@ -280,18 +275,6 @@ const routes = [
     },
     component: () => import('pages/Auth/Login.vue')
   },
-
-
-  // {
-  //   path: '/first-time-registration',
-  //   meta: {
-  //     title: 'First Time Registration',
-  //     roles: [],
-  //     sidebar: false
-  //   },
-  //   component: () => import('pages/Auth/FirstTimeRegister.vue')
-  // },
-
   {
     path: '/register',
     meta: {

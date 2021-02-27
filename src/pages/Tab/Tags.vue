@@ -22,6 +22,9 @@
           <div class="col-12">
             <q-input filled v-model="form.title" label="Title" />
           </div>
+          <div class="col-12">
+            <q-select filled v-model="form.parentTagsId" emit-value map-options label="Grouping" :options="tagsOption" />
+          </div>
         </q-card-section>
 
         <q-card-section class="row q-gutter-md justify-between">
@@ -49,7 +52,7 @@ export default {
           field: 'title',
           sortable: true,
         },
-        // { name: 'icon', align: 'left', label: 'Icon', field: 'icon', sortable: true },
+        { name: 'parent', align: 'left', label: 'Parent', field: 'parentTagsId', sortable: true },
         {
           name: 'createdAt',
           align: 'left',
@@ -60,6 +63,7 @@ export default {
       ],
       form: {
         title: '',
+        parentTagsId: ''
       },
     };
   },
@@ -68,6 +72,15 @@ export default {
     tags() {
       return Tag.all();
     },
+    tagsOption() {
+      let tags = Tag.all()
+      return tags.map((tag) => {
+        const container = [];
+        container.label = tag.title;
+        container.value = tag.id;
+        return container;
+      });
+    }
   },
 
   created() {

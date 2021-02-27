@@ -15,7 +15,7 @@
                 topic.title
               }}</q-item-label>
               <q-item-label caption>
-                {{ "3 hours ago" }} &#8226;
+                {{ topic.timeAgo }} &#8226;
                 <span
                   >Posted by
                   <span class="text-primary text-weight-bold cursor-pointer" href="/"
@@ -31,17 +31,28 @@
           </q-item>
         </q-card>
 
-        <div class="bg-grey-2 border-3 q-pa-md q-my-md">
-          <div class="q-mt-md full-width">
-            <q-editor filled v-model="form.comment" />
+        <div class="row justify-between q-mb-lg q-mt-xl">
+          <span class="text-body1">Comments <span class="text-grey-6">({{ topic.notes.length }})</span></span>
+        </div>
+
+        <div class="border-3 q-pa-md row">
+          <div class="col-1 row justify-center">
+            <q-avatar>
+              <img :src="avatar">
+            </q-avatar>
           </div>
-          <div class="row justify-end q-py-md">
-            <q-btn color="accent" label="Post Comment" @click="onClickComment" />
+          <div class="col">
+            <div class="q-mt-md">
+              <q-editor filled v-model="form.text" />
+            </div>
+            <div class="row justify-end q-py-md">
+              <q-btn color="accent" label="Post Comment" @click="onClickComment" />
+            </div>
           </div>
         </div>
 
         <div class="q-pa-md q-gutter-y-md">
-          <q-card v-for="comment in topic.comments" :key="comment.id" flat bordered>
+          <q-card v-for="comment in topic.notes" :key="comment.id" flat bordered>
             <q-item>
               <q-item-section avatar>
                 <q-avatar>
@@ -73,48 +84,55 @@
 
 <script>
 import { date } from 'quasar'
+import Topic from 'src/models/Topic'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
     return {
       date: date,
       form: {
-        comment: '',
-      },
-      topic: {
-        id: 1,
-        title: 'Welcome to Forum',
-        description: `
-        <blockquote style="margin: 20px 0px; padding: 16px; border: 1px solid rgb(236, 236, 237); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-weight: 400; font-stretch: inherit; font-size: 14px; line-height: inherit; font-family: Inter, sans-serif; vertical-align: baseline; quotes: none; overflow-x: auto; background: rgb(248, 248, 248); border-radius: 4px; color: rgba(0, 0, 0, 0.7); letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-    <p style="margin: 0px; padding: 0px; border: 0px; font: inherit; vertical-align: baseline;">Note: These community guidelines are replaced by revised guidelines available here: <a href="https://www.kaggle.com/community-guidelines" style="margin: 0px; padding: 0px; border: 0px; font: inherit; vertical-align: baseline; color: rgb(0, 138, 188); text-decoration: none;">https://www.kaggle.com/community-guidelines</a></p>
-</blockquote>
-<p style="margin: 20px 0px; padding: 0px; border: 0px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-weight: 400; font-stretch: inherit; font-size: 14px; line-height: inherit; font-family: Inter, sans-serif; vertical-align: baseline; color: rgba(0, 0, 0, 0.7); letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">The Kaggle community has a lot of diversity, with members from over 100 countries and skill levels ranging from those learning Python through to the researchers who created deep neural networks. We have had competition winners with backgrounds ranging from computer science to English literature. However, all our users share a common thread: you love working with data.</p>
-        `,
-        user: {
-          name: 'iqbalbaharum',
-        },
-        meta: {
-          lastCommentAt: '2021-02-25T10:08:22+0000',
-          by: {
-            name: 'iqbalbaharum',
-          },
-        },
-        comments: [
-          {
-            text: 'hello',
-            fromUser: {
-              name: 'iqbalbaharum',
-            },
-            createdAt: '2021-02-25T10:08:22+0000',
-          },
-        ],
+        id: this.$route.params.id,
+        text: '',
+        sentiment: ''
       },
     }
   },
 
+  computed: {
+    ...mapGetters([
+      'avatar'
+    ]),
+
+    topic() {
+      return Topic
+        .query()
+        .where('id', this.$route.params.id)
+        .withAll()
+        .with('notes.*')
+        .orderBy('createdAt','DESC')
+        .first()
+    },
+  },
+
+  created() {
+    if(!this.topic) {
+      this.$store.dispatch('GetTopicById', this.$route.params.id)
+    }
+    
+    this.$store.dispatch('GetAllUsers')
+    this.$store.dispatch('GetTopicNotes', this.$route.params.id)
+  },
+
   methods: {
-    onClickComment() {
-      return
+    async onClickComment() {
+      await this.$store.dispatch('AddNotesToTopic', this.form)
+
+      this.form = {
+        id: this.$route.params.id,
+        text: '',
+        sentiment: ''
+      }
     },
   },
 }
