@@ -18,7 +18,7 @@
             </div>
           </q-item>
           <q-item>
-            <div class="col">
+            <div class="col" @click="onHandleClickTags">
               <q-select
                 v-model="form.tags"
                 multiple
@@ -32,14 +32,8 @@
                 hint="Add up to 5 tags to describe what your topic is about"
               >
                 <template v-slot:selected-item="scope">
-                  <q-chip
-                    removable
-                    :tabindex="scope.tabindex"
-                    @remove="scope.removeAtIndex(scope.index)"
-                    square
-                    color="secondary"
-                  >
-                  {{ scope.opt.label }}
+                  <q-chip :tabindex="scope.tabindex" square color="secondary">
+                    {{ scope.opt.label }}
                   </q-chip>
                 </template>
               </q-select>
@@ -61,32 +55,36 @@
       </div>
     </div>
 
-    <k-tag-dialog :open.sync="isFilterDialogOpened" />
+    <k-tag-dialog v-model="isFilterDialogOpened" @selected-tags="onHandleSelectedTags" />
   </q-page>
 </template>
 
 <script>
-
 export default {
   data() {
     return {
       form: {
-        title: '',
-        descripton: '',
-        tags: []
+        title: "",
+        descripton: "",
+        tags: [],
       },
       options: [],
-      isFilterDialogOpened: true
-    }
+      isFilterDialogOpened: false,
+    };
   },
 
   methods: {
     onClickPublish() {
-      this.$store.dispatch('AddTopic', this.form)
-        .then(res => {
-          this.$router.push({ path: '/general' })
-        })
-    }
+      this.$store.dispatch("AddTopic", this.form).then((res) => {
+        this.$router.push({ path: "/general" });
+      });
+    },
+    onHandleSelectedTags(tags) {
+      this.form.tags = tags;
+    },
+    onHandleClickTags() {
+      this.isFilterDialogOpened = true;
+    },
   },
-}
+};
 </script>
