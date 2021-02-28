@@ -38,7 +38,14 @@ const topics = {
 
     GetTopicById({ commit }, id) {
       return new Promise((resolve, reject) => {
-        this.$repository.topic.getById(id)
+        
+        let filter = {
+          include: [
+            { relation: 'user' }
+          ]
+        }
+
+        this.$repository.topic.getById(id, filter)
           .then(res => {
             Topic.insert(res)
             resolve(res.data)

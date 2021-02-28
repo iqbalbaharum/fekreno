@@ -13,7 +13,7 @@ const routes = [
         path: '/',
         meta: {
           title: 'My Account',
-          sidebar: true,
+          position: 'sidebar',
           icon: 'fas fa-user-circle',
           roles: ['user'],
           color: 'text-grey-5',
@@ -26,7 +26,7 @@ const routes = [
         meta: {
           title: 'Application',
           roles: ['user'],
-          sidebar: false,
+          position: '',
           icon: 'fas fa-book',
           subtitle: ''
         },
@@ -37,7 +37,7 @@ const routes = [
         meta: {
           title: 'Projects',
           roles: ['user'],
-          sidebar: true,
+          position: 'sidebar',
           icon: 'fas fa-code',
           color: 'text-grey-5',
           subtitle: ''
@@ -49,7 +49,7 @@ const routes = [
         meta: {
           title: 'Project',
           roles: ['user'],
-          sidebar: false,
+          position: '',
           icon: 'fas fa-code',
           color: 'text-grey-5',
           subtitle: ''
@@ -61,7 +61,7 @@ const routes = [
         meta: {
           title: 'Repository',
           roles: ['user'],
-          sidebar: false,
+          position: '',
           icon: 'fas fa-code',
           color: 'text-grey-5',
           subtitle: ''
@@ -73,7 +73,7 @@ const routes = [
         meta: {
           title: 'Applications',
           roles: ['user'],
-          sidebar: true,
+          position: 'sidebar',
           icon: 'fas fa-book',
           subtitle: ''
         },
@@ -85,7 +85,7 @@ const routes = [
         meta: {
           title: 'Journals',
           roles: ['cohort'],
-          sidebar: true,
+          position: 'sidebar',
           icon: 'fas fa-book'
         },
         component: () => import('pages/User/Journal.vue')
@@ -95,7 +95,7 @@ const routes = [
         meta: {
           title: 'Learning Materials',
           roles: ['cohort'],
-          sidebar: true,
+          position: 'sidebar',
           icon: 'fas fa-stream'
         },
         component: () => import('pages/User/Material.vue')
@@ -107,7 +107,7 @@ const routes = [
         meta: {
           title: 'Session Management',
           roles: ['admin', 'master'],
-          sidebar: true,
+          position: 'admin',
           icon: 'school',
           roles: ['admin']
         },
@@ -118,17 +118,18 @@ const routes = [
         meta: {
           title: 'User Management',
           roles: ['admin', 'master'],
-          sidebar: true,
+          position: 'admin',
           icon: 'school',
           roles: ['admin']
         },
         component: () => import('pages/User.vue')
       },
       {
-        path: 'general/new',
+        path: '/general/new',
         meta: {
-          sidebar: false,
-          icon: 'school'
+          position: '',
+          icon: 'school',
+          roles: ['admin', 'user']
         },
         component: () => import('pages/Forum/New.vue')
       },
@@ -137,7 +138,7 @@ const routes = [
         meta: {
           title: 'Environment Management',
           roles: ['admin', 'master'],
-          sidebar: true,
+          position: 'admin',
           icon: 'school'
         },
         component: () => import('pages/Environment.vue')
@@ -147,7 +148,7 @@ const routes = [
         meta: {
           title: 'Project Management',
           roles: ['admin', 'master'],
-          sidebar: true,
+          position: 'admin',
           icon: 'school'
         },
         component: () => import('pages/Project.vue')
@@ -157,7 +158,7 @@ const routes = [
         meta: {
           title: 'Application Management',
           roles: ['admin', 'master'],
-          sidebar: true,
+         position: 'admin',
           icon: 'school'
         },
         component: () => import('pages/Application.vue')
@@ -167,7 +168,7 @@ const routes = [
         meta: {
           title: 'Cohort Journals',
           roles: ['admin', 'master'],
-          sidebar: true,
+          position: 'admin',
           icon: 'school'
         },
         component: () => import('pages/Tab/Journal.vue')
@@ -177,7 +178,7 @@ const routes = [
         meta: {
           title: 'Cohort Materials',
           roles: ['admin', 'master'],
-          sidebar: true,
+          position: 'admin',
           icon: 'school'
         },
         component: () => import('pages/Tab/Material.vue')
@@ -187,7 +188,7 @@ const routes = [
         meta: {
           title: 'Application',
           roles: ['admin', 'master'],
-          sidebar: false,
+          position: '',
           icon: 'school'
         },
         component: () => import('pages/Tab/Application.vue')
@@ -197,7 +198,7 @@ const routes = [
         meta: {
           title: 'Position Management',
           roles: ['admin', 'master'],
-          sidebar: true,
+          position: 'admin',
           icon: 'school'
         },
         component: () => import('pages/Position.vue')
@@ -207,7 +208,7 @@ const routes = [
         meta: {
           title: 'Tags Management',
           roles: ['admin', 'master'],
-          sidebar: true,
+          position: 'admin',
           icon: 'school'
         },
         component: () => import('pages/Tags.vue')
@@ -216,7 +217,7 @@ const routes = [
         path: 'admin/participants/:id',
         meta: {
           roles: ['admin'],
-          sidebar: false,
+          position: '',
         },
         component: () => import('pages/Tab/Participants.vue')
       },
@@ -234,23 +235,26 @@ const routes = [
         path: '/general',
         meta: {
           title: 'Forum',
-          sidebar: true,
-          icon: 'school'
+          position: 'sidebar',
+          icon: 'school',
+          roles: [],
         },
         component: () => import('pages/Forum/Topics.vue')
       },
       {
         path: '/general/:id',
         meta: {
-          sidebar: false,
-          icon: 'school'
+          position: '',
+          icon: 'school',
+          roles: [],
         },
         component: () => import('pages/Forum/Topic.vue')
       },
       {
         path:'/policy',
         meta:{
-          sidebar: false,
+          title: 'Privacy Policy',
+          position: 'footer',
         },
         component: () => import('pages/User/Privacy.vue')
       },
@@ -258,7 +262,8 @@ const routes = [
       {
           path:'/terms',
           meta:{
-            sidebar: false,
+            title: 'Terms and Condition',
+            position: 'footer',
           },
           component: () => import('pages/User/Terms.vue')
       },

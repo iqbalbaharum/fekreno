@@ -31,14 +31,16 @@
           </q-item>
         </q-card>
 
-        <div class="row justify-between q-mb-lg q-mt-xl">
-          <span class="text-body1">Comments <span class="text-grey-6">({{ topic.notes.length }})</span></span>
+        <div class="row justify-between q-mb-md q-mt-xl">
+          <span class="text-body1"
+            >Comments <span class="text-grey-6">({{ topic.notes.length }})</span></span
+          >
         </div>
 
-        <div class="border-3 q-pa-md row">
+        <div class="border-3 q-pa-md row" v-if="userId">
           <div class="col-1 row justify-center">
             <q-avatar>
-              <img :src="avatar">
+              <img :src="avatar" />
             </q-avatar>
           </div>
           <div class="col">
@@ -51,7 +53,7 @@
           </div>
         </div>
 
-        <div class="q-pa-md q-gutter-y-md">
+        <div class="q-px-md q-pt-sm q-gutter-y-md">
           <q-card v-for="comment in topic.notes" :key="comment.id" flat bordered>
             <q-item>
               <q-item-section avatar>
@@ -83,9 +85,9 @@
 </template>
 
 <script>
-import { date } from 'quasar'
-import Topic from 'src/models/Topic'
-import { mapGetters } from 'vuex'
+import { date } from "quasar";
+import Topic from "src/models/Topic";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -93,47 +95,44 @@ export default {
       date: date,
       form: {
         id: this.$route.params.id,
-        text: '',
-        sentiment: ''
+        text: "",
+        sentiment: "",
       },
-    }
+    };
   },
 
   computed: {
-    ...mapGetters([
-      'avatar'
-    ]),
+    ...mapGetters(["userId", "avatar"]),
 
     topic() {
-      return Topic
-        .query()
-        .where('id', this.$route.params.id)
+      return Topic.query()
+        .where("id", this.$route.params.id)
         .withAll()
-        .with('notes.*')
-        .orderBy('createdAt','DESC')
-        .first()
+        .with("notes.*")
+        .orderBy("createdAt", "DESC")
+        .first();
     },
   },
 
   created() {
-    if(!this.topic) {
-      this.$store.dispatch('GetTopicById', this.$route.params.id)
+    if (!this.topic) {
+      this.$store.dispatch("GetTopicById", this.$route.params.id);
     }
-    
-    this.$store.dispatch('GetAllUsers')
-    this.$store.dispatch('GetTopicNotes', this.$route.params.id)
+
+    this.$store.dispatch("GetAllUsers");
+    this.$store.dispatch("GetTopicNotes", this.$route.params.id);
   },
 
   methods: {
     async onClickComment() {
-      await this.$store.dispatch('AddNotesToTopic', this.form)
+      await this.$store.dispatch("AddNotesToTopic", this.form);
 
       this.form = {
         id: this.$route.params.id,
-        text: '',
-        sentiment: ''
-      }
+        text: "",
+        sentiment: "",
+      };
     },
   },
-}
+};
 </script>

@@ -84,7 +84,7 @@
 
       <q-separator />
 
-      <q-item>
+      <q-item class="row justify-end">
         <q-btn label="Apply" color="primary" @click="onHandleClickApply" />
       </q-item>
     </q-card>

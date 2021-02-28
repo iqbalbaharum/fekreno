@@ -15,23 +15,33 @@ export default async ({ app, router, store, Vue }) => {
           try {
             await store.dispatch('GetInfo')
             let links = []
+            links['sidebar'] = []
+            links['footer'] = []
+            links['admin'] = []
 
             const routes = router.options.routes.filter(element => element.path === '/')
             routes.forEach(ro => {
               ro.children.forEach(route => {
-                if(route.meta.sidebar) {
-
-                  if(store.getters.roles.includes('master')) {
-                    links.push(route)
-                  } else {
-                    if(route.meta.roles.length) {
-                      if(route.meta.roles.some(element => store.getters.roles.includes(element))) {
-                        links.push(route)
-                      }
+                switch(route.meta.position) {
+                  case 'sidebar':
+                    if(store.getters.roles.includes('master')) {
+                      links['sidebar'].push(route)
                     } else {
-                      links.push(route)
+                      if(route.meta.roles.length) {
+                        if(route.meta.roles.some(element => store.getters.roles.includes(element))) {
+                          links['sidebar'].push(route)
+                        }
+                      } else {
+                        links['sidebar'].push(route)
+                      }
                     }
-                  }
+                    break
+                  case 'footer':
+                    links['footer'].push(route)
+                    break
+                  case 'admin':
+                    links['admin'].push(route)
+                    break
                 }
               })
             })
@@ -61,7 +71,7 @@ export default async ({ app, router, store, Vue }) => {
         if(route.children) {
           route.children.forEach(childRoute => {
             let r = { ...childRoute }
-            r.path = route.path + childRoute.path
+            r.path = childRoute.path
             publicRoutes.push(r)
           })
         } else {
@@ -70,7 +80,14 @@ export default async ({ app, router, store, Vue }) => {
       })
 
       let paths = publicRoutes.map(e => e.path)
-      store.dispatch('SetMenu', publicRoutes.filter(e => e.meta.sidebar))
+
+      //arrange menu
+      let menus = []
+      menus['sidebar'] = publicRoutes.filter(e => e.meta.position === 'sidebar')
+      menus['footer'] = publicRoutes.filter(e => e.meta.position === 'footer')
+      menus['admin'] = publicRoutes.filter(e => e.meta.position === 'admin')
+
+      store.dispatch('SetMenu', menus)
       if(to.matched.length && paths.indexOf(to.matched[to.matched.length - 1].path) !== -1) {
         next()
       } else {
