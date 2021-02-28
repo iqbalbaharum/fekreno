@@ -1,12 +1,19 @@
-# Krenovator LMS System (Open Source)
+# FEkreno - Krenovator LMS System (Open Source)
 
 ### Introduction
 
-Krenovator LMS (frontend) is a collaborative learning platform using Quasar Framework javascript flavor from VueJS
+Krenovator LMS (frontend) is a collaborative learning platform using Quasar Framework javascript flavor from VueJS.
+
+In order to make system to run well, you are required to have backend development as well or might want refer to [here]()
 
 
 
-## FEkreno - Prerequisite
+### Overview
+[logo]()
+
+
+
+## Prerequisite
 
 - Install Nodejs
 
