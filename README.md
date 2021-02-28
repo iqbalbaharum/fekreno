@@ -4,18 +4,18 @@
 
 Krenovator LMS (frontend) is a collaborative learning platform using Quasar Framework javascript flavor from VueJS.
 
-In order to make system to run well, you are required to have backend development as well or might want refer to [here]()
+In order to make system to run well, you are required to have backend development as well or might want fork repo [here](https://github.com/iqbalbaharum/bekreno)
 
 
 
 ### Overview
-[logo]()
+![logo](https://github.com/aktaktaw/fekreno/blob/master/docs/img/fekreno%26bekreno-architecture.jpg)
 
 
 
 ## Prerequisite
 
-- Install Nodejs
+- Node.js >=10 is required.
 
 - Install Quasar Framework
 
@@ -44,3 +44,5 @@ In order to make system to run well, you are required to have backend developmen
 
 3. Then run again command ***quasar dev*** 
 
+## FAQ
+To be determined
