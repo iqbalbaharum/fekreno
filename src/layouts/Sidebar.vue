@@ -17,7 +17,12 @@
       />
 
       <q-list>
-        <q-expansion-item switch-toggle-side expand-separator label="Admin">
+        <q-expansion-item
+          switch-toggle-side
+          expand-separator
+          label="Admin"
+          v-if="menus['admin'].length"
+        >
           <template v-slot:header>
             <q-item-section>
               <span class="text-body1 text-weight-medium">Admin</span>

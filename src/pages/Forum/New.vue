@@ -20,7 +20,7 @@
           <q-item>
             <div class="col" @click="onHandleClickTags">
               <q-select
-                v-model="form.tags"
+                v-model="selectedTags"
                 multiple
                 outlined
                 hide-dropdown-icon
@@ -43,7 +43,7 @@
             <div class="col">
               <div class="bg-grey-2 border-3 q-pa-md">
                 <div class="q-mt-md full-width">
-                  <q-editor filled v-model="form.descripton" />
+                  <q-editor filled v-model="form.description" />
                 </div>
               </div>
             </div>
@@ -65,9 +65,10 @@ export default {
     return {
       form: {
         title: "",
-        descripton: "",
-        tags: [],
+        description: "",
+        tagIds: [],
       },
+      selectedTags: [],
       options: [],
       isFilterDialogOpened: false,
     };
@@ -75,12 +76,16 @@ export default {
 
   methods: {
     onClickPublish() {
+      if (this.selectedTags.length) {
+        this.form.tagIds = this.selectedTags.map((tag) => tag.value);
+      }
+
       this.$store.dispatch("AddTopic", this.form).then((res) => {
         this.$router.push({ path: "/general" });
       });
     },
     onHandleSelectedTags(tags) {
-      this.form.tags = tags;
+      this.selectedTags = tags;
     },
     onHandleClickTags() {
       this.isFilterDialogOpened = true;
