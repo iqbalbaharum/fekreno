@@ -22,6 +22,9 @@
           <div class="col-12">
             <q-input filled v-model="form.title" label="Title" />
           </div>
+          <div class="col-12">
+            <q-select filled v-model="form.parentTagsId" emit-value map-options label="Grouping" :options="tagsOption" />
+          </div>
         </q-card-section>
 
         <q-card-section class="row q-gutter-md justify-between">
@@ -34,32 +37,33 @@
 </template>
 
 <script>
-import Tag from "./../../models/Tag";
+import Tag from './../../models/Tag';
 
 export default {
   data() {
     return {
       isCreateDialogOpened: false,
       columns: [
-        { name: "id", align: "left", label: "ID", field: "id" },
+        { name: 'id', align: 'left', label: 'ID', field: 'id' },
         {
-          name: "title",
-          align: "left",
-          label: "Title",
-          field: "title",
+          name: 'title',
+          align: 'left',
+          label: 'Title',
+          field: 'title',
           sortable: true,
         },
-        // { name: 'icon', align: 'left', label: 'Icon', field: 'icon', sortable: true },
+        { name: 'parent', align: 'left', label: 'Parent', field: 'parentTagsId', sortable: true },
         {
-          name: "createdAt",
-          align: "left",
-          label: "Created At",
-          field: "createdAt",
+          name: 'createdAt',
+          align: 'left',
+          label: 'Created At',
+          field: 'createdAt',
           sortable: true,
         },
       ],
       form: {
-        title: "",
+        title: '',
+        parentTagsId: ''
       },
     };
   },
@@ -68,19 +72,28 @@ export default {
     tags() {
       return Tag.all();
     },
+    tagsOption() {
+      let tags = Tag.all()
+      return tags.map((tag) => {
+        const container = [];
+        container.label = tag.title;
+        container.value = tag.id;
+        return container;
+      });
+    }
   },
 
   created() {
-    this.$store.dispatch("GetAllTags");
+    this.$store.dispatch('GetAllTags');
   },
 
   methods: {
     onDelete(id) {
-      this.$store.dispatch("DeleteTags", id);
+      this.$store.dispatch('DeleteTags', id);
     },
     async onAdd() {
       try {
-        await this.$store.dispatch("AddTags", this.form);
+        await this.$store.dispatch('AddTags', this.form);
         this.isCreateDialogOpened = false;
         this.resetForm();
       } catch (e) {
@@ -92,7 +105,7 @@ export default {
     },
     resetForm() {
       this.form = {
-        title: "",
+        title: '',
       };
     },
   },

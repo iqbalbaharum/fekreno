@@ -14,15 +14,15 @@ const journal = {
 		GetAllJournals() {
       return new Promise((resolve, reject) => {
         let filter = {
-          order: ["createdAt DESC"],
+          order: ['createdAt DESC'],
           include: [
             {
-              relation: "project"
+              relation: 'project'
             },
             {
-              relation: "user"
+              relation: 'user'
             },
-            { relation: "comments" }
+            { relation: 'comments' }
           ]
         }
 
@@ -69,7 +69,7 @@ const journal = {
           })
       })
     },
-    
+
     AddJournalComment({ commit, rootState }, data) {
 			return new Promise((resolve, reject) => {
 
@@ -77,7 +77,7 @@ const journal = {
           userId: rootState.user.userId,
           comment: data.comment
         }
-        
+
         this.$repository.journal.createComment(data.journalId, body)
           .then(res => {
             Comment.insert({ data: res.data })

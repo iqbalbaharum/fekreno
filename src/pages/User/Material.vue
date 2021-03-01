@@ -154,17 +154,17 @@
 </template>
 
 <script>
-import Material from "./../../models/Material";
-import { date } from "quasar";
-import { mapGetters } from "vuex";
+import Material from './../../models/Material';
+import { date } from 'quasar';
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
     return {
-      search: "",
+      search: '',
       date: date,
       form: {
-        description: ""
+        description: ''
       },
       dialog: {
         show: false,
@@ -172,24 +172,24 @@ export default {
       },
       options: [
         {
-          label: "Book",
-          value: "book"
+          label: 'Book',
+          value: 'book'
         },
         {
-          label: "Tutorial",
-          value: "tutorial"
+          label: 'Tutorial',
+          value: 'tutorial'
         },
         {
-          label: "Video",
-          value: "video"
+          label: 'Video',
+          value: 'video'
         },
         {
-          label: "Document",
-          value: "document"
+          label: 'Document',
+          value: 'document'
         },
         {
-          label: "Other",
-          value: "other"
+          label: 'Other',
+          value: 'other'
         }
       ]
     };
@@ -197,7 +197,7 @@ export default {
 
   computed: {
     materials() {
-      return this.search == ""
+      return this.search == ''
         ? Material.query()
             .withAll()
             .get()
@@ -206,11 +206,11 @@ export default {
             .search(this.search)
             .get();
     },
-    ...mapGetters(["userId"])
+    ...mapGetters(['userId'])
   },
 
   created() {
-    this.$store.dispatch("GetAllMaterials");
+    this.$store.dispatch('GetAllMaterials');
   },
 
   components: {},
@@ -218,7 +218,7 @@ export default {
   methods: {
     onClickAddMaterial() {
       this.form = {
-        description: ""
+        description: ''
       };
       this.dialog.show = true;
       this.dialog.update = false;
@@ -228,9 +228,9 @@ export default {
       let func;
 
       if (this.dialog.update) {
-        func = "UpdateMaterial";
+        func = 'UpdateMaterial';
       } else {
-        func = "AddMaterial";
+        func = 'AddMaterial';
       }
 
       this.$store
@@ -256,8 +256,8 @@ export default {
         type: material.type,
         url: material.url,
         description: material.description,
-        reviewStatus: "pending",
-        remark: ""
+        reviewStatus: 'pending',
+        remark: ''
       };
 
       this.dialog.show = true;
@@ -274,20 +274,20 @@ export default {
       var elapsed = new Date() - new Date(previous);
 
       if (elapsed < msPerMinute) {
-        return Math.round(elapsed / 1000) + " seconds ago";
+        return Math.round(elapsed / 1000) + ' seconds ago';
       } else if (elapsed < msPerHour) {
-        return Math.round(elapsed / msPerMinute) + " minutes ago";
+        return Math.round(elapsed / msPerMinute) + ' minutes ago';
       } else if (elapsed < msPerDay) {
-        return Math.round(elapsed / msPerHour) + " hours ago";
+        return Math.round(elapsed / msPerHour) + ' hours ago';
       } else if (elapsed < msPerMonth) {
-        return "approximately " + Math.round(elapsed / msPerDay) + " days ago";
+        return 'approximately ' + Math.round(elapsed / msPerDay) + ' days ago';
       } else if (elapsed < msPerYear) {
         return (
-          "approximately " + Math.round(elapsed / msPerMonth) + " months ago"
+          'approximately ' + Math.round(elapsed / msPerMonth) + ' months ago'
         );
       } else {
         return (
-          "approximately " + Math.round(elapsed / msPerYear) + " years ago"
+          'approximately ' + Math.round(elapsed / msPerYear) + ' years ago'
         );
       }
     }

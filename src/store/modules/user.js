@@ -14,7 +14,8 @@ const user = {
     userId: '',
     email: '',
     mobile: '',
-    name: ''
+    name: '',
+    avatar: 'https://cdn.quasar.dev/img/avatar.png'
   },
 
   mutations: {
@@ -176,7 +177,7 @@ const user = {
     async GetUserRoles({ commit }, id) {
       let res = await this.$repository.user.getUserRoles(id)
       const data = res.data
-      
+
       for (let role of data) {
         await UserRole.create({
           data: {
@@ -204,11 +205,11 @@ const user = {
       return new Promise((resolve, reject) => {
 
         let filter = {
-          order: ["createdAt DESC"],
+          order: ['createdAt DESC'],
           include: [
             {
-              relation: "comments",
-              include: [{ relation: "user" }]
+              relation: 'comments',
+              include: [{ relation: 'user' }]
             }
           ]
         }
@@ -231,16 +232,16 @@ const user = {
     async GetUserRepositories({ commit, rootState }) {
       return new Promise((resolve, reject) => {
         let filter = {
-          order: ["createdAt DESC"],
+          order: ['createdAt DESC'],
           include: [
             {
-              relation: "project",
+              relation: 'project',
             },
             {
-              relation: "devEnvironment",
+              relation: 'devEnvironment',
             },
             {
-              relation: "position",
+              relation: 'position',
             }
           ]
         }
@@ -295,7 +296,7 @@ const user = {
       let res = await this.$repository.user.unassignUserRoles(data.userId, data.roleId)
       return res.data
     },
-    
+
     ApplyUserApplication({ commit }, data) {
       return new Promise((resolve, reject) => {
         this.$repository.user.applyUserApplication(data.applicationId)
@@ -309,7 +310,7 @@ const user = {
           })
       })
     },
-    
+
 
     async UnapplyUserApplication({ commit }, data) {
       let res = await this.$repository.user.unapplyUserApplication(data.applicationId)

@@ -1,26 +1,27 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import VuexORM from "@vuex-orm/core";
-import getters from "./getters";
-import database from "../database";
-import VuexORMSearch from "@vuex-orm/plugin-search";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import VuexORM from '@vuex-orm/core';
+import getters from './getters';
+import database from '../database';
+import VuexORMSearch from '@vuex-orm/plugin-search';
 
-import user from "./modules/user";
-import app from "./modules/app";
-import session from "./modules/session";
-import zone from "./modules/zone";
-import role from "./modules/role";
-import project from "./modules/project";
-import journal from "./modules/journal";
-import country from "./modules/country";
-import material from "./modules/material";
-import devenvironment from "./modules/devenvironment";
-import repository from "./modules/repository";
-import position from "./modules/position";
-import applicaton from "./modules/application";
-import userapplication from "./modules/userapplication";
-import tags from "./modules/tags";
+import user from './modules/user';
+import app from './modules/app';
+import session from './modules/session';
+import zone from './modules/zone';
+import role from './modules/role';
+import project from './modules/project';
+import journal from './modules/journal';
+import country from './modules/country';
+import material from './modules/material';
+import devenvironment from './modules/devenvironment';
+import repository from './modules/repository';
+import position from './modules/position';
+import applicaton from './modules/application';
+import userapplication from './modules/userapplication';
+import tags from './modules/tags';
 import file from './modules/file'
+import topic from './modules/topic'
 
 Vue.use(Vuex);
 VuexORM.use(VuexORMSearch);
@@ -52,7 +53,8 @@ export default function(/* { ssrContext } */) {
       applicaton,
       userapplication,
       tags,
-      file
+      file,
+      topic
     },
     getters,
     plugins: [VuexORM.install(database)],

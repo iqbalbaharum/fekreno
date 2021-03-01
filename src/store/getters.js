@@ -5,6 +5,7 @@ const getters = {
   mobile: state => state.user.mobile,
   name: state => state.user.name,
   email: state => state.user.email,
+  avatar: state => state.user.avatar,
   //
   menus: state => state.app.menus,
 }

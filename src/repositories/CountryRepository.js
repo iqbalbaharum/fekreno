@@ -10,7 +10,7 @@ export default class JournalRepository extends Repository {
   async getAll() {
     return await datasource({
       method: 'get',
-      url: `all`,
+      url: 'all',
     })
   }
 }
