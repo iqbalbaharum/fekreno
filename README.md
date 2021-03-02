@@ -2,7 +2,7 @@
 
 ### Introduction
 
-Krenovator LMS (backend) is a collaborative learning platform.
+Krenovator LMS (frontend) is a collaborative learning platform.
 
 ## Documentation
 
