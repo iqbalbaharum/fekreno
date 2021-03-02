@@ -118,10 +118,7 @@ export default {
 
   computed: {
     parentTags() {
-      // return Tag.query().where((tag) => {
-      //   return tag.parentTagsId !== null && tag.parentTagsId.length > 0
-      // }).get()
-      let tags = Tag.all();
+      let tags = Tag.query().where("parentTagsId", "").get();
       return tags.map((tag) => {
         return {
           label: tag.title,

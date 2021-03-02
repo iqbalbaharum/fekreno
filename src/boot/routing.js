@@ -40,7 +40,17 @@ export default async ({ app, router, store, Vue }) => {
                     links['footer'].push(route)
                     break
                   case 'admin':
-                    links['admin'].push(route)
+                    if(store.getters.roles.includes('master')) {
+                      links['admin'].push(route)
+                    } else {
+                      if(route.meta.roles.length) {
+                        if(route.meta.roles.some(element => store.getters.roles.includes(element))) {
+                          links['admin'].push(route)
+                        }
+                      } else {
+                        links['admin'].push(route)
+                      }
+                    }
                     break
                 }
               })
