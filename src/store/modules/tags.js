@@ -23,6 +23,26 @@ const tags = {
           })
       })
 		},
+
+    GetParentTags() {
+      let filter = {
+        where: {
+          parentTagsId: ''
+        }
+      }
+
+      return new Promise((resolve, reject) => {
+        this.$repository.tags.listing(filter)
+          .then(res => {
+            Tag.insert({ data: res.data })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
 		
 		AddTags({ commit }, data) {
 			return new Promise((resolve, reject) => {
