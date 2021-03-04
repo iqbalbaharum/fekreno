@@ -19,6 +19,7 @@ export default class Profile extends Model {
       birthday: this.attr(''),
       userId: this.attr(''),
       telegram: this.attr(''),
+      isCompleted: this.attr(false),
 
       // relation
       user: this.belongsTo(User, 'uuid'),

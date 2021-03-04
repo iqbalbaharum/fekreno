@@ -159,6 +159,15 @@
         </q-tab-panels>
       </div>
     </div>
+    <prompt
+      :show.sync="dialog.alert"
+      boxtype="alert"
+      :buttons="['ok']"
+      icon="fas fa-bomb"
+      title="Profile not complete"
+      body="Please complete your profile before subsmission"
+      @ok="onClickOk"
+    />
   </q-page>
 </template>
 
@@ -169,10 +178,13 @@ import Environment from './../../models/DevEnvironment';
 import Position from './../../models/Position';
 import Repository from './../../models/Repository';
 import Tag from './../../models/Tag';
+import UserProfile from './../../models/UserProfile';
+
+import Prompt from './../../components/Prompt';
 
 export default {
   computed: {
-    ...mapGetters(['name']),
+    ...mapGetters(['name', 'userId']),
     project() {
       return Project.find(this.$route.params.id);
     },
@@ -215,6 +227,10 @@ export default {
 
       return opts;
     },
+    userprofile() {
+        let profile = UserProfile.query().where('userId', this.userId).first();
+        return profile ? profile.isCompleted : false
+      },
   },
 
   data() {
@@ -226,7 +242,15 @@ export default {
         projectId: this.$route.params.id,
         devEnvironmentId: '',
       },
+      dialog: {
+        alert: false,
+      },
+      profile: {},
     };
+  },
+
+  components: {
+    Prompt,
   },
 
   created() {
@@ -238,12 +262,20 @@ export default {
 
   methods: {
     async onClickSubmit() {
+      console.log(this.userprofile)
+      if (!this.userprofile) {
+        this.dialog.alert = true;
+        return
+      }
       try {
         await this.$store.dispatch('AddRepository', this.form);
         this.$router.push({ path: '/projects' });
       } catch (e) {
         console.log(e);
       }
+    },
+    onClickOk(){
+      this.$router.push('/')
     },
   },
 };
