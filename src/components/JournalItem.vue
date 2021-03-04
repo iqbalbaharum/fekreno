@@ -14,8 +14,17 @@
       </q-item-section>
 
       <q-item-section v-else>
-        <q-item-label class="text-weight-bold text-capitalize">{{ journal.category }}</q-item-label>
-        <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
+        <div class="row justify-between justify-center">
+          <div>
+            <q-item-label class="text-weight-bold text-capitalize">{{ journal.category }}</q-item-label>
+            <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
+        </div>
+        <div>
+          <q-btn round size="sm" color="positive" icon="create">
+            <q-tooltip>Edit Submission</q-tooltip>
+          </q-btn>
+        </div>
+        </div>
       </q-item-section>
 
       <q-item-section v-if="admin">
