@@ -21,7 +21,7 @@
         </div>
         <div>
           <!-- TODO: Add function for editing journal entry -->
-          <q-btn round size="sm" color="positive" icon="create" @click="onClickEditJournal">
+          <q-btn round size="sm" color="positive" icon="create" @click="onClickEdit">
             <q-tooltip>Edit Submission</q-tooltip>
           </q-btn>
         </div>
@@ -38,10 +38,23 @@
 
     <q-separator />
 
-    <q-card-section horizontal class="q-mb-lg">
-      <q-card-section v-html="journal.detail">
+      <q-card-section v-if="editdialog.show">
+        <q-editor 
+          v-model="journal.detail"
+          min-height="5rem"
+          :toolbar="[]"
+        />
+        <div class="row justify-end">
+        <q-btn :loading="progress" class="flex items-end q-mt-sm" color="primary" text-color="white" label="Update Journal" @click="onClickUpdate">
+          <template v-slot:loading>
+            <q-spinner-hourglass class="on-left" />
+            Loading...
+          </template>
+        </q-btn>
+        <q-btn class="flex items-end q-mt-sm" flat color="negative" label="Cancel" @click="onClickCancelEdit"/>
+        </div>
       </q-card-section>
-    </q-card-section>
+      <q-card-section v-else v-html="journal.detail" />
 
     <q-card-section>
       <q-list>
@@ -112,6 +125,9 @@ export default {
       dialog: {
         show: false
       },
+      editdialog: {
+        show: false
+      },
       progress: false
     }
   },
@@ -132,6 +148,7 @@ export default {
   methods: {
     onClickAddComment() {
       this.dialog.show = true
+      this.editdialog.show = false
     },
 
     onClickPost() {
@@ -151,6 +168,20 @@ export default {
           this.progress = false
         })
         
+    },
+
+    onClickEdit() {
+      this.form = {}
+      this.editdialog.show = true
+      this.dialog.show = false
+    },
+
+    onClickUpdate() {
+
+    },
+    
+    onClickCancelEdit() {
+      this.editdialog.show = false
     },
 
     onClickCancel() {
