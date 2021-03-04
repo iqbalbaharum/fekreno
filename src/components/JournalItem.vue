@@ -20,7 +20,8 @@
             <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
         </div>
         <div>
-          <q-btn round size="sm" color="positive" icon="create">
+          <!-- TODO: Add function for editing journal entry -->
+          <q-btn round size="sm" color="positive" icon="create" @click="onClickEditJournal">
             <q-tooltip>Edit Submission</q-tooltip>
           </q-btn>
         </div>
@@ -82,12 +83,15 @@
         min-height="6rem"
         :toolbar="[]"
       />
+      <div class="row justify-end">
       <q-btn :loading="progress" class="flex items-end q-mt-sm" color="primary" text-color="white" label="Post Comment" @click="onClickPost">
         <template v-slot:loading>
           <q-spinner-hourglass class="on-left" />
           Loading...
         </template>
       </q-btn>
+      <q-btn class="flex items-end q-mt-sm" flat color="negative" label="Cancel" @click="onClickCancel"/>
+      </div>
     </q-card-section>
     
   </q-card>
@@ -147,6 +151,10 @@ export default {
           this.progress = false
         })
         
+    },
+
+    onClickCancel() {
+      this.dialog.show = false
     },
 
     onClickUpdateStatus(status) {
