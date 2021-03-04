@@ -4,11 +4,9 @@
     </div>
     <div class="col bg-primary">
     </div>
-    <div class="fullscreen flex flex-center">
-      <q-card class="q-pa-md" style="width:400px;">
+    <div class="fullscreen flex flex-center"><q-card class="q-pa-md" style="width:400px;">
         <div class="text-weight-bold text-center q-pb-lg q-gutter-sm">
           <q-img class="q-mb-md" src="~assets/krenovator.png"/>
-          <div class="text-h4 text-primary">Hello!</div>
           <div class="ext-weight-bolder">
             Building Industry Revolution 4.0, NOW!
           </div>
@@ -30,7 +28,7 @@
             label="Not register? Create account"
             no-caps />
         </div>
-      </q-card>
+        </q-card>
     </div>
   </div>
 </template>
