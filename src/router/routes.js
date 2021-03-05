@@ -271,6 +271,15 @@ const routes = [
   },
 
   {
+    path: '/public',
+    meta: {
+      access: 'public',
+      sidebar: false
+    },
+    component: () => import('pages/Website/Home.vue')
+  },
+
+  {
     path: '/login',
     meta: {
       title: 'Login',
