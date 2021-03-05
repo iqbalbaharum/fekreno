@@ -38,7 +38,6 @@
             <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
         </div>
         <div class="justify-between justify-center">
-          <!-- TODO: Add function for editing journal entry -->
           <q-btn round size="sm" color="positive" icon="create" @click="onClickEdit">
             <q-tooltip>Edit Submission</q-tooltip>
           </q-btn>
@@ -55,10 +54,9 @@
     </q-item>
 
     <q-separator />
-
       <q-card-section v-if="editdialog.show">
         <q-editor 
-          v-model="journal.detail"
+          v-model="form.detail"
           min-height="5rem"
           :toolbar="[]"
         />
@@ -133,7 +131,8 @@ export default {
       date: date,
       form: {
         journalId: '',
-        comment: ''
+        detail: '',
+        comment: ' '
       },
       dialog: {
         show: false
@@ -184,30 +183,32 @@ export default {
     },
 
     onClickEdit() {
-      this.form = {}
+      this.form = {detail: this.journal.detail}
       this.editdialog.show = true
       this.dialog.show = false
     },
 
 
-    // TODO: Update journal.detail; change journal.status to 'new'
     onClickUpdate(status) {
       if(!this.journal) {
         return
       }
 
-      let dt = {}
-      dt.journalId = this.journal.id
-      dt.status = status
+      let edit = {}
+      edit.journalId = this.journal.id
+      edit.detail = this.form.detail
+      edit.status = status
 
       this.progress = true
-      this.$store.dispatch('UpdateJournal', dt)
+      this.$store.dispatch('UpdateJournal', edit)
         .then(res => {
           this.progress = false
         })
         .catch(res => {
           this.progress = false
         })
+
+      this.editdialog.show = false
     },
     
     onClickCancelEdit() {
