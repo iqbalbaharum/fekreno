@@ -16,10 +16,28 @@
       <q-item-section v-else>
         <div class="row justify-between justify-center">
           <div>
-            <q-item-label class="text-weight-bold text-capitalize">{{ journal.category }}</q-item-label>
+            <q-item-label 
+              class="text-weight-bold text-capitalize">
+                {{ journal.category }}
+                <q-badge 
+                  v-if="journal.status === 'new'"
+                  color="positive">
+                  {{ journal.status }}
+                </q-badge>
+                <q-badge 
+                  v-if="journal.status === 'review'"
+                  color="warning">
+                  {{ journal.status }}
+                </q-badge>
+                <q-badge 
+                  v-if="journal.status === 'discuss'"
+                  color="blue">
+                  {{ journal.status }}
+                </q-badge>
+            </q-item-label>
             <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
         </div>
-        <div>
+        <div class="justify-between justify-center">
           <!-- TODO: Add function for editing journal entry -->
           <q-btn round size="sm" color="positive" icon="create" @click="onClickEdit">
             <q-tooltip>Edit Submission</q-tooltip>
@@ -45,12 +63,7 @@
           :toolbar="[]"
         />
         <div class="row justify-end">
-        <q-btn :loading="progress" class="flex items-end q-mt-sm" color="primary" text-color="white" label="Update Journal" @click="onClickUpdate">
-          <template v-slot:loading>
-            <q-spinner-hourglass class="on-left" />
-            Loading...
-          </template>
-        </q-btn>
+        <q-btn class="flex items-end q-mt-sm" color="primary" text-color="white" label="Update Journal" @click="onClickUpdate('new')" />
         <q-btn class="flex items-end q-mt-sm" flat color="negative" label="Cancel" @click="onClickCancelEdit"/>
         </div>
       </q-card-section>
@@ -176,8 +189,25 @@ export default {
       this.dialog.show = false
     },
 
-    onClickUpdate() {
 
+    // TODO: Update journal.detail; change journal.status to 'new'
+    onClickUpdate(status) {
+      if(!this.journal) {
+        return
+      }
+
+      let dt = {}
+      dt.journalId = this.journal.id
+      dt.status = status
+
+      this.progress = true
+      this.$store.dispatch('UpdateJournal', dt)
+        .then(res => {
+          this.progress = false
+        })
+        .catch(res => {
+          this.progress = false
+        })
     },
     
     onClickCancelEdit() {
