@@ -13,10 +13,10 @@
     "@quasar/extras": "^1.0.0",
     "@vuex-orm/core": "^0.36.3",
     "@vuex-orm/plugin-search": "^0.24.1",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "qs": "^6.9.4",
-    "quasar": "^1.0.0",
+    "quasar": "^1.15.4",
     "vue": "^2.6.12",
     "vuelidate": "^0.7.5",
     "vuex": "^3.5.1"
