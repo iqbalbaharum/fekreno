@@ -6,7 +6,7 @@
 
     <q-item-section>
       <q-item-label
-        ><span class="text-subtitle1 text-weight-medium">{{
+        ><span :class="{ 'text-body1 text-weight-medium': !expanded }">{{
           title
         }}</span></q-item-label
       >
@@ -19,31 +19,34 @@
 
 <script>
 export default {
-  name: 'EssentialLink',
+  name: "EssentialLink",
   props: {
     title: {
       type: String,
       required: true,
     },
-
+    expanded: {
+      type: Boolean,
+      default: false,
+    },
     caption: {
       type: String,
-      default: '',
+      default: "",
     },
 
     link: {
       type: String,
-      default: '#',
+      default: "#",
     },
 
     icon: {
       type: String,
-      default: '',
+      default: "",
     },
 
     color: {
       type: String,
-      default: '',
+      default: "",
     },
   },
 };

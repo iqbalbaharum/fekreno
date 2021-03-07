@@ -14,15 +14,15 @@ const application = {
 	actions: {
 		GetAllApplications() {
       return new Promise((resolve, reject) => {
-        
+
         let filter = {
-          order: ["createdAt DESC"],
+          order: ['createdAt DESC'],
           include: [
-            { relation: "user" },
-            { relation: "projects" }
+            { relation: 'user' },
+            { relation: 'projects' }
           ]
         }
-        
+
         this.$repository.application.listing(filter)
           .then(res => {
             Application.insert({ data: res.data })
@@ -34,21 +34,21 @@ const application = {
           })
       })
     },
-    
+
     GetActiveApplications() {
       return new Promise((resolve, reject) => {
-        
+
         let filter = {
-          order: ["createdAt DESC"],
+          order: ['createdAt DESC'],
           include: [
-            { relation: "user" },
-            { relation: "projects" }
+            { relation: 'user' },
+            { relation: 'projects' }
           ],
           where: {
             status: 'active'
           }
         }
-        
+
         this.$repository.application.listing(filter)
           .then(res => {
             Application.insert({ data: res.data })
@@ -60,7 +60,7 @@ const application = {
           })
       })
 		},
-		
+
 		AddApplication({ commit, rootState }, data) {
 			return new Promise((resolve, reject) => {
         data.questions = JSON.stringify(data.questions)
@@ -89,7 +89,7 @@ const application = {
           })
       })
     },
-    
+
     UpdateApplication({ commit }, data) {
       return new Promise((resolve, reject) => {
         let id = data.id
@@ -109,10 +109,10 @@ const application = {
 
     async GetApplicationProject({ commit }, id) {
       return new Promise((resolve, reject) => {
-        
+
         this.$repository.application.getApplicationProjects(id)
           .then(res => {
-            
+
             for (let project of res.data) {
               ApplicationProject.insert({
                 data: {
@@ -147,13 +147,13 @@ const application = {
     },
 
     async DeactivateApplication({ commit }, data) {
-      let res = await this.$repository.application.deactisvateApplication(data.id)
+      let res = await this.$repository.application.deactivateApplication(data.id)
       return res.data
     },
 
     async CloseApplication({ commit }, data) {
       return new Promise((resolve, reject) => {
-        
+
         this.$repository.application.closeApplication(data.id, data.acceptedIds)
           .then(res => {
             resolve(res.data)

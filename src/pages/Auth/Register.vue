@@ -129,7 +129,7 @@ export default {
       type: 'password',
       dialog: {
         success: false,
-        alert: true,
+        alert: false,
       }
     };
   },
