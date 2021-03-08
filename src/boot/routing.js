@@ -98,12 +98,16 @@ export default async ({ app, router, store, Vue }) => {
       menus['admin'] = publicRoutes.filter(e => e.meta.position === 'admin')
 
       store.dispatch('SetMenu', menus)
+
+      if (to.path === '/') {
+        next({ path: '/welcomepage' });
+      } else {
       if(to.matched.length && paths.indexOf(to.matched[to.matched.length - 1].path) !== -1) {
         next()
       } else {
         next('/login')
       }
     }
-
-  })
-}
+  }
+  });
+};
