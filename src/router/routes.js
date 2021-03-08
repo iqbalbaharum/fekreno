@@ -271,6 +271,16 @@ const routes = [
   },
 
   {
+    path: '/welcomepage',
+    meta: {
+      title: 'Welcome',
+      sidebar: false,
+      roles: [],
+      access: 'public'
+    },
+    component: () => import('pages/Website/Welcome.vue')
+  },
+  {
     path: '/login',
     meta: {
       title: 'Login',
