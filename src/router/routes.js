@@ -1,4 +1,4 @@
-import MainLayout from 'layouts/MainLayout'
+import MainLayout from 'layouts/MainLayout';
 
 const routes = [
   //private
@@ -158,7 +158,7 @@ const routes = [
         meta: {
           title: 'Application Management',
           roles: ['admin', 'master'],
-         position: 'admin',
+          position: 'admin',
           icon: 'school'
         },
         component: () => import('pages/Application.vue')
@@ -217,10 +217,10 @@ const routes = [
         path: 'admin/participants/:id',
         meta: {
           roles: ['admin'],
-          position: '',
+          position: ''
         },
         component: () => import('pages/Tab/Participants.vue')
-      },
+      }
     ]
   },
   // public
@@ -237,7 +237,7 @@ const routes = [
           title: 'Forum',
           position: 'sidebar',
           icon: 'school',
-          roles: [],
+          roles: []
         },
         component: () => import('pages/Forum/Topics.vue')
       },
@@ -246,27 +246,27 @@ const routes = [
         meta: {
           position: '',
           icon: 'school',
-          roles: [],
+          roles: []
         },
         component: () => import('pages/Forum/Topic.vue')
       },
       {
-        path:'/policy',
-        meta:{
+        path: '/policy',
+        meta: {
           title: 'Privacy Policy',
-          position: 'footer',
+          position: 'footer'
         },
         component: () => import('pages/User/Privacy.vue')
       },
 
       {
-          path:'/terms',
-          meta:{
-            title: 'Terms and Condition',
-            position: 'footer',
-          },
-          component: () => import('pages/User/Terms.vue')
-      },
+        path: '/terms',
+        meta: {
+          title: 'Terms and Condition',
+          position: 'footer'
+        },
+        component: () => import('pages/User/Terms.vue')
+      }
     ]
   },
 
@@ -288,6 +288,22 @@ const routes = [
     },
     component: () => import('pages/Auth/Register.vue')
   },
+  {
+    path: '/forget',
+    meta: {
+      access: 'public',
+      sidebar: false
+    },
+    component: () => import('pages/Auth/ForgetPwd.vue')
+  },
+  {
+    path: '/user/forget/:token',
+    meta: {
+      access: 'public',
+      sidebar: false
+    },
+    component: () => import('pages/Auth/CreateNewPwd.vue')
+  },
 
   // Always leave this as last one,
   // but you can also remove i
@@ -299,6 +315,6 @@ const routes = [
     },
     component: () => import('pages/Error404.vue')
   }
-]
+];
 
-export default routes
+export default routes;

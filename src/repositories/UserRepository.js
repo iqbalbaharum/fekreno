@@ -1,21 +1,18 @@
-import datasource from './../datasources/baljs-rest-api'
-import Repository from './Repository'
-import User from './../models/User'
-import qs from 'qs'
+import datasource from './../datasources/baljs-rest-api';
+import Repository from './Repository';
+import User from './../models/User';
+import qs from 'qs';
 
 export default class UserRepository extends Repository {
-
-  constructor () {
-    super(User, datasource)
+  constructor() {
+    super(User, datasource);
   }
 
   get() {
     // logic
   }
 
-  list() {
-
-  }
+  list() {}
 
   async register(data) {
     const response = await datasource({
@@ -25,12 +22,12 @@ export default class UserRepository extends Repository {
       headers: {
         'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
       }
-    })
+    });
 
-    return response
+    return response;
   }
 
-  async login (email, password) {
+  async login(email, password) {
     const response = await datasource({
       method: 'post',
       url: `${User.entity}/login`,
@@ -41,32 +38,63 @@ export default class UserRepository extends Repository {
       headers: {
         'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
       }
-    })
+    });
 
-    return response
+    return response;
+  }
+
+  async forgetPassword(email) {
+    const response = await datasource({
+      method: 'post',
+      url: `${User.entity}/forget/email`,
+      data: qs.stringify({
+        email: email
+      }),
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+      }
+    });
+
+    return response;
+  }
+
+  async createNewPwd(token, password) {
+    const response = await datasource({
+      method: 'post',
+      url: `${User.entity}/forget`,
+      data: qs.stringify({
+        token: token,
+        password: password
+      }),
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+      }
+    });
+
+    return response;
   }
 
   async getInfo() {
     const response = await datasource({
       method: 'get',
-      url: 'me',
-    })
+      url: 'me'
+    });
 
-    return response
+    return response;
   }
 
   async logout() {
     await datasource({
       method: 'post',
-      url: `${User.entity}/user/logout`,
-    })
+      url: `${User.entity}/user/logout`
+    });
   }
 
   async getUserRoles(id) {
     return datasource({
       method: 'get',
-      url: `users/${id}/roles`,
-    })
+      url: `users/${id}/roles`
+    });
   }
 
   async getUserApplications(filter) {
@@ -76,7 +104,7 @@ export default class UserRepository extends Repository {
       params: {
         filter: filter
       }
-    })
+    });
   }
 
   async assignUserRoles(userId, rid) {
@@ -86,7 +114,7 @@ export default class UserRepository extends Repository {
       data: {
         roleId: rid
       }
-    })
+    });
   }
 
   async unassignUserRoles(userId, rid) {
@@ -96,7 +124,7 @@ export default class UserRepository extends Repository {
       data: {
         roleId: rid
       }
-    })
+    });
   }
 
   async applyUserApplication(applicationId) {
@@ -106,7 +134,7 @@ export default class UserRepository extends Repository {
       data: {
         applicationId: applicationId
       }
-    })
+    });
   }
 
   async changeUserApplicationStatus(applicationId, status) {
@@ -117,7 +145,7 @@ export default class UserRepository extends Repository {
         applicationId: applicationId,
         status: status
       }
-    })
+    });
   }
 
   async unapplyUserApplication(userId, applicationId) {
@@ -127,7 +155,7 @@ export default class UserRepository extends Repository {
       data: {
         applicationId: applicationId
       }
-    })
+    });
   }
 
   async getUserJournal(id, filter) {
@@ -137,7 +165,7 @@ export default class UserRepository extends Repository {
       params: {
         filter: filter
       }
-    })
+    });
   }
 
   async getUserRepositories(id, filter) {
@@ -147,17 +175,17 @@ export default class UserRepository extends Repository {
       params: {
         filter: filter
       }
-    })
+    });
   }
 
   async getUserProfile(id) {
     return datasource({
       method: 'get',
-      url: `users/${id}/profile`,
-    })
+      url: `users/${id}/profile`
+    });
   }
 
   async updateUserProfile(id, data) {
-    return await datasource.patch(`users/${id}/profile`, data)
+    return await datasource.patch(`users/${id}/profile`, data);
   }
 }
