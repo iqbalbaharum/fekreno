@@ -12,16 +12,16 @@ const material = {
 	actions: {
 		GetAllMaterials() {
       return new Promise((resolve, reject) => {
-        
+
         let filter = {
-          order: ["createdAt DESC"],
+          order: ['createdAt DESC'],
           include: [
             {
-              relation: "user"
+              relation: 'user'
             }
           ]
         }
-        
+
         this.$repository.material.listing(filter)
           .then(res => {
             Material.insert({ data: res.data })
@@ -33,7 +33,7 @@ const material = {
           })
       })
 		},
-		
+
 		AddMaterial({ commit, rootState }, data) {
 			return new Promise((resolve, reject) => {
         data.userId = rootState.user.userId
@@ -61,7 +61,7 @@ const material = {
           })
       })
     },
-    
+
     UpdateMaterial({ commit }, data) {
       return new Promise((resolve, reject) => {
         let id = data.materialId

@@ -18,13 +18,13 @@ const repo = {
       return new Promise((resolve, reject) => {
 
         let filter = {
-          order: ["createdAt DESC"],
+          order: ['createdAt DESC'],
           include: [
             {
-              relation: "user"
-              
+              relation: 'user'
+
             },
-            {relation: "tags"}
+            {relation: 'tags'}
           ]
         }
 
@@ -39,7 +39,7 @@ const repo = {
           })
       })
 		},
-		
+
 		AddRepository({ commit, rootState }, data) {
 			return new Promise((resolve, reject) => {
         data.userId = rootState.user.userId
@@ -72,8 +72,8 @@ const repo = {
       return new Promise(async (resolve, reject) => {
 
         let filter = {
-          order: ["createdAt DESC"],
-          include: [{ relation: "toUser" }, { relation: "fromUser" }]
+          order: ['createdAt DESC'],
+          include: [{ relation: 'toUser' }, { relation: 'fromUser' }]
         }
 
         this.$repository.repository.getNotes(id, filter)
@@ -125,7 +125,7 @@ const repo = {
           })
       })
     },
-    
+
     AddRepositoryNote({ rootState }, data) {
       data.from = rootState.user.userId
       return new Promise((resolve, reject) => {

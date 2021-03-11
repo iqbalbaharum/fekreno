@@ -51,7 +51,7 @@ export default class ApplicationRepository extends Repository {
   async closeApplication(id, acceptedIds) {
     return datasource({
       method: 'post',
-      url: `/application/close`,
+      url: '/application/close',
       data: {
         applicationId: id,
         acceptedUserApplicationIds: acceptedIds
