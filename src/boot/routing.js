@@ -116,7 +116,7 @@ export default async ({ app, router, store, Vue }) => {
         ) {
           next();
         } else {
-          next({ path: '/404' });
+          next({ path: '/login' });
         }
       }
     }
