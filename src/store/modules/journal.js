@@ -70,7 +70,6 @@ const journal = {
       })
     },
 
-<<<<<<< HEAD
     EditJournal({ commit }, data) {
       return new Promise((resolve, reject) => {
         let id = data.journalId
@@ -88,8 +87,6 @@ const journal = {
       })
     },
     
-=======
->>>>>>> 85cee2cf66ce1fa8003a35f4e4bf4e8f9116fa3d
     AddJournalComment({ commit, rootState }, data) {
 			return new Promise((resolve, reject) => {
 
