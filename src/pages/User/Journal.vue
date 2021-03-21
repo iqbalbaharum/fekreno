@@ -27,29 +27,29 @@
         </q-item-section>
         
         <q-card-section class="row q-gutter-sm justify-center">  
-        <div class="col-12">
-          <q-select 
-            filled
-            v-model="form.category" 
-            emit-value 
-            :options="options"
-            label="Category" />
-        </div>
+          <div class="col-12">
+            <q-select 
+              filled
+              v-model="form.category" 
+              emit-value 
+              :options="options"
+              label="Category" />
+          </div>
 
-        <q-space />
+          <q-space />
 
-        <div class="col-12">
-          <!-- <q-input
-            v-model="form.detail"
-            type="textarea"
-            label="Details"
-          /> -->
-          <q-editor 
-            v-model="form.detail"
-            min-height="5rem"
-            :toolbar="[]"
-          />
-        </div>
+          <div class="col-12">
+            <!-- <q-input
+              v-model="form.detail"
+              type="textarea"
+              label="Details"
+            /> -->
+            <q-editor 
+              v-model="form.detail"
+              min-height="5rem"
+              :toolbar="[]"
+            />
+          </div>
         </q-card-section>
 
         <q-card-section class="row q-gutter-md justify-between">

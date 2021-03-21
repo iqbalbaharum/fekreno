@@ -1,96 +1,96 @@
-import Journal from './../../models/Journal'
-import Comment from './../../models/Comment'
+import Journal from "./../../models/Journal";
+import Comment from "./../../models/Comment";
 
 const journal = {
-	state: {
+  state: {},
 
-	},
+  mutations: {},
 
-	mutations: {
-
-	},
-
-	actions: {
-		GetAllJournals() {
+  actions: {
+    GetAllJournals() {
       return new Promise((resolve, reject) => {
         let filter = {
-          order: ['createdAt DESC'],
+          order: ["createdAt DESC"],
           include: [
             {
-              relation: 'project'
+              relation: "project"
             },
             {
-              relation: 'user'
+              relation: "user"
             },
-            { relation: 'comments' }
+            {
+              relation: "comments"
+            }
           ]
-        }
+        };
 
-        this.$repository.journal.listing(filter)
+        this.$repository.journal
+          .listing(filter)
           .then(res => {
-            Journal.insert({ data: res.data })
-            resolve(res.data)
+            Journal.insert({ data: res.data });
+            resolve(res.data);
           })
           .catch(err => {
-            console.log(err)
-            reject(err)
-          })
-      })
+            console.log(err);
+            reject(err);
+          });
+      });
     },
 
     AddJournal({ commit, rootState }, data) {
-			return new Promise((resolve, reject) => {
-        data.userId = rootState.user.userId
-        this.$repository.journal.create(data)
+      return new Promise((resolve, reject) => {
+        data.userId = rootState.user.userId;
+        this.$repository.journal
+          .create(data)
           .then(res => {
-            Journal.insert({ data: res.data })
-            resolve(res.data)
+            Journal.insert({ data: res.data });
+            resolve(res.data);
           })
           .catch(err => {
-            console.log(err)
-            reject(err)
-          })
-      })
+            console.log(err);
+            reject(err);
+          });
+      });
     },
 
     UpdateJournal({ commit }, data) {
       return new Promise((resolve, reject) => {
-        let id = data.journalId
-        delete data.journalId
+        let id = data.journalId;
+        delete data.journalId;
 
-        this.$repository.journal.updateById(id, data)
+        this.$repository.journal
+          .updateById(id, data)
           .then(res => {
-            Journal.update({ where: id, data: data })
-            resolve(res.data)
+            Journal.update({ where: id, data: data });
+            resolve(res.data);
           })
           .catch(err => {
-            console.log(err)
-            reject(err)
-          })
-      })
+            console.log(err);
+            reject(err);
+          });
+      });
     },
 
     AddJournalComment({ commit, rootState }, data) {
-			return new Promise((resolve, reject) => {
-
+      return new Promise((resolve, reject) => {
         let body = {
           userId: rootState.user.userId,
           comment: data.comment
-        }
+        };
 
-        this.$repository.journal.createComment(data.journalId, body)
+        this.$repository.journal
+          .createComment(data.journalId, body)
           .then(res => {
-            Comment.insert({ data: res.data })
-            resolve(res.data)
+            Comment.insert({ data: res.data });
+            resolve(res.data);
           })
           .catch(err => {
-            console.log(err)
-            reject(err)
-          })
-      })
-    },
+            console.log(err);
+            reject(err);
+          });
+      });
+    }
+  }
+};
 
-	}
-}
-
-export default journal
+export default journal;

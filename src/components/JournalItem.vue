@@ -8,16 +8,29 @@
       </q-item-section>
 
       <q-item-section v-if="admin">
-        <q-item-label class="text-weight-bold"><user-popup popup :id="journal.userId" :username="journal.user ? journal.user.name : ''" /></q-item-label>
-        <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
-        <q-item-label class="text-capitalize text-caption">{{ journal.category }}</q-item-label>
+        <q-item-label header class="row justify-between justify-center">
+          <div class="q-gutter-sm">
+            <q-badge class="on-left" v-if="journal.status === 'updated'" transparent color="orange">
+              {{ journal.status }}
+            </q-badge>
+            <q-item-label class="text-weight-bold"><user-popup popup :id="journal.userId" :username="journal.user ? journal.user.name : ''" /></q-item-label>
+            <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
+            <q-item-label class="text-capitalize text-caption">{{ journal.category }}</q-item-label>
+          </div>
+        </q-item-label>
       </q-item-section>
 
       <q-item-section v-else>
-        <q-item-label class="text-weight-bold text-capitalize">{{ journal.category }}</q-item-label>
-        <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
+        <q-item-label header class="row justify-between justify-center">
+          <div class="q-gutter-sm">
+            <q-item-label class="text-weight-bold text-capitalize">{{ journal.category }}</q-item-label>
+            <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
+          </div>
+          <q-btn color="blue" icon="fas fa-edit" label="Edit" @click="onClickEditJournal()" />
+        </q-item-label>
       </q-item-section>
 
+      <!-- Review button & discuss button -->
       <q-item-section v-if="admin">
         <div class="row justify-end q-gutter-sm text-grey">
           <q-btn flat round :class="{ 'text-warning': journal.status === 'discuss' }" icon="fas fa-user-secret" @click="onClickUpdateStatus('discuss')" />
@@ -80,6 +93,55 @@
         </template>
       </q-btn>
     </q-card-section>
+
+    <!-- Dialog Edit Journal -->
+    <q-dialog v-model="editJournal" persistent>
+      <q-card style="width: 500px">
+        <q-item-section class="q-pa-md bg-primary text-white text-h6">
+          <q-item-label>Edit Journal</q-item-label>
+        </q-item-section>
+
+        <q-card-section class="row q-gutter-sm justify-center">
+          <div class="col-12">
+            <q-select 
+              filled
+              v-model="journalForm.category" 
+              emit-value 
+              :options="options"
+              label="Category" />
+          </div>
+          <div class="col-12">
+            <q-editor 
+              v-model="journalForm.detail"
+              min-height="5rem"
+              :toolbar="[]"
+            />
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right" class="bg-white text-teal">
+          <q-btn flat label="CLOSE" v-close-popup />
+          <q-btn flat label="CONFIRM" @click="onClickUpdateJournal()" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <!-- Dialog if edited journal successfully updated -->
+    <q-dialog v-model="updatedAlert">
+      <q-card style="width: 300px">
+        <q-card-section>
+          <div class="text-h6">Successfully Updated</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          Journal is successfully updated.
+        </q-card-section>
+
+        <q-card-actions align="right" class="bg-white text-teal">
+          <q-btn flat label="OK" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
     
   </q-card>
 </template>
@@ -96,10 +158,30 @@ export default {
         journalId: '',
         comment: ''
       },
+
+      journalForm: {
+        detail: '',
+        category: ''
+      },
+
       dialog: {
         show: false
       },
-      progress: false
+
+      options: [
+        {
+          label: 'Personal',
+          value: 'personal'
+        },
+        {
+          label: 'Wishlist',
+          value: 'wishlist'
+        }
+      ],
+
+      progress: false,
+      editJournal: false,
+      updatedAlert: false
     }
   },
 
@@ -138,6 +220,37 @@ export default {
           this.progress = false
         })
         
+    },
+
+    onClickEditJournal() {
+      // populate data
+      this.journalForm.detail = this.journal.detail
+      this.journalForm.category = this.journal.category
+      this.editJournal = true
+    },
+
+    onClickUpdateJournal() {
+      if(!this.journal) {
+        return
+      }
+
+      let editedJournal = {}
+      editedJournal.journalId = this.journal.id
+      editedJournal.detail = this.journalForm.detail
+      editedJournal.category = this.journalForm.category
+      editedJournal.updatedAt = Date.now
+
+      this.progress = true
+
+      this.$store.dispatch('UpdateJournal', editedJournal)
+        .then(res => {
+          this.progress = false
+          this.editJournal = false
+          this.updatedAlert = true
+        })
+        .catch(res => {
+          this.progress = false
+        })
     },
 
     onClickUpdateStatus(status) {
