@@ -107,17 +107,20 @@ export default async ({ app, router, store, Vue }) => {
 
       store.dispatch('SetMenu', menus);
 
-      if (to.path === '/') {
-        next({ path: '/public' });
-      } else {
-        if (
-          to.matched.length &&
-          paths.indexOf(to.matched[to.matched.length - 1].path) !== -1
-        ) {
-          next();
-        } else {
-          next({ path: '/login' });
-        }
+      switch(to.path) {
+        case '/':
+          next({ path: '/public' });
+          break
+        default: 
+          if (
+            to.matched.length &&
+            paths.indexOf(to.matched[to.matched.length - 1].path) !== -1
+          ) {
+            next();
+          } else {
+            next({ path: '/login' });
+          }
+          break
       }
     }
   });
