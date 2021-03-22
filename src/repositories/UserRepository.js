@@ -157,6 +157,13 @@ export default class UserRepository extends Repository {
     })
   }
 
+  async getUserProfileByName(username) {
+    return datasource({
+      method: 'get',
+      url: `/users/name/${username}/profile`,
+    })
+  }
+
   async updateUserProfile(id, data) {
     return await datasource.patch(`users/${id}/profile`, data)
   }

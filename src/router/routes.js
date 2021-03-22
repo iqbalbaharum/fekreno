@@ -266,6 +266,14 @@ const routes = [
           position: 'footer'
         },
         component: () => import('pages/User/Terms.vue')
+      },
+      {
+        path: '/profile/:userName',
+        meta: {
+          title: 'User Account',
+          position: ''
+        },
+        component: () => import('pages/User/Profile.vue')
       }
     ]
   },

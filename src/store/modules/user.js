@@ -273,6 +273,20 @@ const user = {
       })
     },
 
+    async GetUserProfileByName({ commit }, username) {
+      return new Promise((resolve, reject) => {
+        this.$repository.user.getUserProfileByName(username)
+          .then(res => {
+            User.insert({ data: res.data })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
+
     async GetUserProfileById({ commit }, id) {
       return new Promise((resolve, reject) => {
         this.$repository.user.getUserProfile(id)
