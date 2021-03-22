@@ -16,7 +16,9 @@
         </q-toolbar-title>
 
         <div>
-          <q-btn flat class="text-white" @click="onClickLogout">Logout</q-btn>
+          <q-btn flat class="text-white" v-if="isHide === false" @click="onClickLogout">Logout</q-btn>
+          <q-btn flat class="text-white" v-if="isHide === true" to="/login">Sign In</q-btn>
+          <q-btn flat class="text-white" v-if="isHide === true" to="/register">Register</q-btn>
         </div>
       </q-toolbar>
     </q-header>
@@ -39,13 +41,24 @@
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
 import Sidebar from './Sidebar'
+import { getToken } from 'src/datasources/localstorage.storage';
 
 export default {
   name: 'MainLayout',
   components: { Sidebar },
   data () {
     return {
-      leftDrawerOpen: false
+      leftDrawerOpen: false,
+      isHide: null
+    }
+  },
+
+  // will be processed first in vuejs without calling any method
+  created() {
+    if(getToken(process.env.MAIN_BE_TOKEN)) {
+      this.isHide = false
+    } else {
+      this.isHide = true
     }
   },
 
