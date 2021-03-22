@@ -7,8 +7,14 @@
             <q-card-section horizontal>
               <q-item-section>
                 <q-avatar size="100px" color="accent" square>
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyGo8XzszXwJThST5wxfqGFehUkRrVS6Njdw&usqp=CAU"
+                <div v-show="addButton" class="absolute-full text-subtitle flex flex-center">
+                  <q-btn icon="add" flat size="sm" @click="dialogPhoto=true" />
+                </div>
+                  <img v-if="this.userprofile.avatar != null"
+                    v-bind:src="userprofile.avatar"
+                  />
+                  <img v-if="this.userprofile.avatar == null"
+                    v-bind:src="this.form['avatar']"
                   />
                 </q-avatar>
               </q-item-section>
@@ -48,13 +54,14 @@
             flat
           >
             <!-- <q-tab name="overview" label="Overview" /> -->
-            <q-tab name="repository" label="Repositories" />
-            <q-tab name="application" label="Applications" />
+            <q-tab name="repository" label="Repositories" @click="addButton=false"/>
+            <q-tab name="application" label="Applications" @click="addButton=false"/>
             <div class="row justify-end full-width">
               <q-tab
                 name="profile"
                 label="Edit Profile"
                 class="bg-primary text-white"
+                @click="addButton=true"
               />
             </div>
           </q-tabs>
@@ -76,6 +83,15 @@
         </q-tab-panels>
       </div>
     </div>
+    <q-dialog v-model="dialogPhoto" >
+      <k-uploader
+      label="Avatar"
+      accept=".jpg, image/*"
+      @fileUrl="getUploadedFileUrl"
+      max-file-size="500000"
+      @rejected="onRejected"
+      />
+    </q-dialog>
   </q-page>
 </template>
 
@@ -88,11 +104,14 @@ import UserProfile from './../models/UserProfile';
 import User from './../models/User';
 import { mapGetters } from 'vuex';
 import { date } from 'quasar';
+import KUploader from 'src/components/KUploader.vue';
 
 export default {
   name: 'PageIndex',
   data() {
     return {
+      dialogPhoto: false,
+      addButton: false,
       tab: 'overview',
       dialog: {
         show: false,
@@ -108,12 +127,13 @@ export default {
         country: '',
         github: '',
         linkedin: '',
+        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyGo8XzszXwJThST5wxfqGFehUkRrVS6Njdw&usqp=CAU',
       },
     };
   },
 
   computed: {
-    ...mapGetters(['name', 'email', 'mobile', 'userId']),
+    ...mapGetters(['name', 'email', 'mobile', 'userId','avatar']),
 
     user() {
       return User.query().where('$id', this.userId).with('profile').first();
@@ -141,8 +161,25 @@ export default {
     ProfileTab,
     RepositoryTab,
     ApplicationTab,
+    KUploader,
   },
 
-  methods: {},
+  methods: {
+    getUploadedFileUrl(url) {
+     this.form.avatar = url
+     this.form['avatar'] === this.form.avatar
+     this.dialogPhoto = false
+     const payload = {
+       avatar: url
+     }
+     this.$store.dispatch('UpdateUserProfile', payload)
+    },
+    onRejected () {
+      this.$q.notify({
+        type: 'negative',
+        message: 'image size is more than 500 kb'
+      })
+    },
+  },
 };
 </script>
