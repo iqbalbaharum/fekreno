@@ -100,6 +100,15 @@ const routes = [
         },
         component: () => import('pages/User/Material.vue')
       },
+      {
+        path: '/profile/:userName',
+        meta: {
+          title: 'User Account',
+          roles: [],
+          subtitle:'', 
+        },
+        component: () => import('pages/Profile.vue')
+      },
 
       //admin
       {
