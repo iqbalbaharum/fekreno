@@ -13,7 +13,7 @@
     
     <div class="q-pa-md">
       <q-list class="q-gutter-sm">
-        <q-item v-for="(journal) in journals" :key="journal.id">
+        <q-item v-for="(journal) in journals" :key="journal">
           <journal-item :journal="journal" />
         </q-item>
       </q-list>

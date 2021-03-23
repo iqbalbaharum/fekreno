@@ -16,6 +16,7 @@ export default class Journal extends Model {
       createdAt: this.attr(''),
       updatedAt: this.attr(''),
       deletedAt: this.attr(''),
+      editedAt: this.attr(''),
       userId: this.attr(''),
       projectId: this.attr(''),
       category: this.attr(''),

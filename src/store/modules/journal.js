@@ -70,6 +70,23 @@ const journal = {
       })
     },
 
+    EditJournal({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        let id = data.journalId
+        delete data.journalId
+
+        this.$repository.journal.editById(id, data)
+          .then(res => {
+            Journal.edit({ where: id, data: data })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
+    
     AddJournalComment({ commit, rootState }, data) {
 			return new Promise((resolve, reject) => {
 
