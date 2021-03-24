@@ -12,7 +12,7 @@
         <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
         <q-item-label class="text-capitalize text-caption">{{ journal.category }}</q-item-label>
       </q-item-section>
-
+      
       <q-item-section v-else>
               <div class="row justify-between justify-center">
           <div>
