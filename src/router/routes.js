@@ -1,304 +1,304 @@
-import MainLayout from 'layouts/MainLayout'
+import MainLayout from "layouts/MainLayout";
 
 const routes = [
   //private
   {
-    path: '/',
+    path: "/",
     component: MainLayout,
     meta: {
-      access: 'jwt'
+      access: "jwt"
     },
     children: [
       {
-        path: '/',
+        path: "/",
         meta: {
-          title: 'My Account',
-          position: 'sidebar',
-          icon: 'fas fa-user-circle',
-          roles: ['user'],
-          color: 'text-grey-5',
-          subtitle: ''
+          title: "My Account",
+          position: "sidebar",
+          icon: "fas fa-user-circle",
+          roles: ["user"],
+          color: "text-grey-5",
+          subtitle: ""
         },
-        component: () => import('pages/Index.vue')
+        component: () => import("pages/Index.vue")
       },
       {
-        path: '/application/:id',
+        path: "/application/:id",
         meta: {
-          title: 'Application',
-          roles: ['user'],
-          position: '',
-          icon: 'fas fa-book',
-          subtitle: ''
+          title: "Application",
+          roles: ["user"],
+          position: "",
+          icon: "fas fa-book",
+          subtitle: ""
         },
-        component: () => import('pages/User/Application.vue')
+        component: () => import("pages/User/Application.vue")
       },
       {
-        path: '/projects',
+        path: "/projects",
         meta: {
-          title: 'Projects',
-          roles: ['user'],
-          position: 'sidebar',
-          icon: 'fas fa-code',
-          color: 'text-grey-5',
-          subtitle: ''
+          title: "Projects",
+          roles: ["user"],
+          position: "sidebar",
+          icon: "fas fa-code",
+          color: "text-grey-5",
+          subtitle: ""
         },
-        component: () => import('pages/User/Projects.vue')
+        component: () => import("pages/User/Projects.vue")
       },
       {
-        path: '/project/:id',
+        path: "/project/:id",
         meta: {
-          title: 'Project',
-          roles: ['user'],
-          position: '',
-          icon: 'fas fa-code',
-          color: 'text-grey-5',
-          subtitle: ''
+          title: "Project",
+          roles: ["user"],
+          position: "",
+          icon: "fas fa-code",
+          color: "text-grey-5",
+          subtitle: ""
         },
-        component: () => import('pages/User/Project.vue')
+        component: () => import("pages/User/Project.vue")
       },
       {
-        path: '/repository/:id',
+        path: "/repository/:id",
         meta: {
-          title: 'Repository',
-          roles: ['user'],
-          position: '',
-          icon: 'fas fa-code',
-          color: 'text-grey-5',
-          subtitle: ''
+          title: "Repository",
+          roles: ["user"],
+          position: "",
+          icon: "fas fa-code",
+          color: "text-grey-5",
+          subtitle: ""
         },
-        component: () => import('pages/User/Repository.vue')
+        component: () => import("pages/User/Repository.vue")
       },
       {
-        path: '/applications',
+        path: "/applications",
         meta: {
-          title: 'Applications',
-          roles: ['user'],
-          position: 'sidebar',
-          icon: 'fas fa-book',
-          subtitle: ''
+          title: "Applications",
+          roles: ["user"],
+          position: "sidebar",
+          icon: "fas fa-book",
+          subtitle: ""
         },
-        component: () => import('pages/User/Applications.vue')
+        component: () => import("pages/User/Applications.vue")
       },
 
       {
-        path: '/journal',
+        path: "/journal",
         meta: {
-          title: 'Journals',
-          roles: ['cohort'],
-          position: 'sidebar',
-          icon: 'fas fa-book'
+          title: "Journals",
+          roles: ["cohort"],
+          position: "sidebar",
+          icon: "fas fa-book"
         },
-        component: () => import('pages/User/Journal.vue')
+        component: () => import("pages/User/Journal.vue")
       },
       {
-        path: '/material',
+        path: "/material",
         meta: {
-          title: 'Learning Materials',
-          roles: ['cohort'],
-          position: 'sidebar',
-          icon: 'fas fa-stream'
+          title: "Learning Materials",
+          roles: ["cohort"],
+          position: "sidebar",
+          icon: "fas fa-stream"
         },
-        component: () => import('pages/User/Material.vue')
+        component: () => import("pages/User/Material.vue")
       },
 
       //admin
       {
-        path: '/session',
+        path: "/session",
         meta: {
-          title: 'Session Management',
-          roles: ['admin', 'master'],
-          position: 'admin',
-          icon: 'school',
-          roles: ['admin']
+          title: "Session Management",
+          roles: ["admin", "master"],
+          position: "admin",
+          icon: "school",
+          roles: ["admin"]
         },
-        component: () => import('pages/Session.vue')
+        component: () => import("pages/Session.vue")
       },
       {
-        path: '/user',
+        path: "/user",
         meta: {
-          title: 'User Management',
-          roles: ['admin', 'master'],
-          position: 'admin',
-          icon: 'school',
-          roles: ['admin']
+          title: "User Management",
+          roles: ["admin", "master"],
+          position: "admin",
+          icon: "school",
+          roles: ["admin"]
         },
-        component: () => import('pages/User.vue')
+        component: () => import("pages/User.vue")
       },
       {
-        path: '/general/new',
+        path: "/general/new",
         meta: {
-          position: '',
-          icon: 'school',
-          roles: ['admin', 'user']
+          position: "",
+          icon: "school",
+          roles: ["admin", "user"]
         },
-        component: () => import('pages/Forum/New.vue')
+        component: () => import("pages/Forum/New.vue")
       },
       {
-        path: '/admin/environment',
+        path: "/admin/environment",
         meta: {
-          title: 'Environment Management',
-          roles: ['admin', 'master'],
-          position: 'admin',
-          icon: 'school'
+          title: "Environment Management",
+          roles: ["admin", "master"],
+          position: "admin",
+          icon: "school"
         },
-        component: () => import('pages/Environment.vue')
+        component: () => import("pages/Environment.vue")
       },
       {
-        path: '/admin/project',
+        path: "/admin/project",
         meta: {
-          title: 'Project Management',
-          roles: ['admin', 'master'],
-          position: 'admin',
-          icon: 'school'
+          title: "Project Management",
+          roles: ["admin", "master"],
+          position: "admin",
+          icon: "school"
         },
-        component: () => import('pages/Project.vue')
+        component: () => import("pages/Project.vue")
       },
       {
-        path: '/admin/application',
+        path: "/admin/application",
         meta: {
-          title: 'Application Management',
-          roles: ['admin', 'master'],
-         position: 'admin',
-          icon: 'school'
+          title: "Application Management",
+          roles: ["admin", "master"],
+          position: "admin",
+          icon: "school"
         },
-        component: () => import('pages/Application.vue')
+        component: () => import("pages/Application.vue")
       },
       {
-        path: '/admin/journals',
+        path: "/admin/journals",
         meta: {
-          title: 'Cohort Journals',
-          roles: ['admin', 'master'],
-          position: 'admin',
-          icon: 'school'
+          title: "Cohort Journals",
+          roles: ["admin", "master"],
+          position: "admin",
+          icon: "school"
         },
-        component: () => import('pages/Tab/Journal.vue')
+        component: () => import("pages/Journal.vue")
       },
       {
-        path: '/admin/materials',
+        path: "/admin/materials",
         meta: {
-          title: 'Cohort Materials',
-          roles: ['admin', 'master'],
-          position: 'admin',
-          icon: 'school'
+          title: "Cohort Materials",
+          roles: ["admin", "master"],
+          position: "admin",
+          icon: "school"
         },
-        component: () => import('pages/Tab/Material.vue')
+        component: () => import("pages/Tab/Material.vue")
       },
       {
-        path: '/admin/application/:id',
+        path: "/admin/application/:id",
         meta: {
-          title: 'Application',
-          roles: ['admin', 'master'],
-          position: '',
-          icon: 'school'
+          title: "Application",
+          roles: ["admin", "master"],
+          position: "",
+          icon: "school"
         },
-        component: () => import('pages/Tab/Application.vue')
+        component: () => import("pages/Tab/Application.vue")
       },
       {
-        path: '/admin/position',
+        path: "/admin/position",
         meta: {
-          title: 'Position Management',
-          roles: ['admin', 'master'],
-          position: 'admin',
-          icon: 'school'
+          title: "Position Management",
+          roles: ["admin", "master"],
+          position: "admin",
+          icon: "school"
         },
-        component: () => import('pages/Position.vue')
+        component: () => import("pages/Position.vue")
       },
       {
-        path: '/admin/tags',
+        path: "/admin/tags",
         meta: {
-          title: 'Tags Management',
-          roles: ['admin', 'master'],
-          position: 'admin',
-          icon: 'school'
+          title: "Tags Management",
+          roles: ["admin", "master"],
+          position: "admin",
+          icon: "school"
         },
-        component: () => import('pages/Tags.vue')
+        component: () => import("pages/Tags.vue")
       },
       {
-        path: 'admin/participants/:id',
+        path: "admin/participants/:id",
         meta: {
-          roles: ['admin'],
-          position: '',
+          roles: ["admin"],
+          position: ""
         },
-        component: () => import('pages/Tab/Participants.vue')
-      },
+        component: () => import("pages/Tab/Participants.vue")
+      }
     ]
   },
   // public
   {
-    path: '/',
+    path: "/",
     component: MainLayout,
     meta: {
-      access: 'public'
+      access: "public"
     },
     children: [
       {
-        path: '/general',
+        path: "/general",
         meta: {
-          title: 'Forum',
-          position: 'sidebar',
-          icon: 'school',
-          roles: [],
+          title: "Forum",
+          position: "sidebar",
+          icon: "school",
+          roles: []
         },
-        component: () => import('pages/Forum/Topics.vue')
+        component: () => import("pages/Forum/Topics.vue")
       },
       {
-        path: '/general/:id',
+        path: "/general/:id",
         meta: {
-          position: '',
-          icon: 'school',
-          roles: [],
+          position: "",
+          icon: "school",
+          roles: []
         },
-        component: () => import('pages/Forum/Topic.vue')
+        component: () => import("pages/Forum/Topic.vue")
       },
       {
-        path:'/policy',
-        meta:{
-          title: 'Privacy Policy',
-          position: 'footer',
+        path: "/policy",
+        meta: {
+          title: "Privacy Policy",
+          position: "footer"
         },
-        component: () => import('pages/User/Privacy.vue')
+        component: () => import("pages/User/Privacy.vue")
       },
 
       {
-          path:'/terms',
-          meta:{
-            title: 'Terms and Condition',
-            position: 'footer',
-          },
-          component: () => import('pages/User/Terms.vue')
-      },
+        path: "/terms",
+        meta: {
+          title: "Terms and Condition",
+          position: "footer"
+        },
+        component: () => import("pages/User/Terms.vue")
+      }
     ]
   },
 
   {
-    path: '/login',
+    path: "/login",
     meta: {
-      title: 'Login',
+      title: "Login",
       sidebar: false,
       roles: [],
-      access: 'public'
+      access: "public"
     },
-    component: () => import('pages/Auth/Login.vue')
+    component: () => import("pages/Auth/Login.vue")
   },
   {
-    path: '/register',
+    path: "/register",
     meta: {
-      access: 'public',
+      access: "public",
       sidebar: false
     },
-    component: () => import('pages/Auth/Register.vue')
+    component: () => import("pages/Auth/Register.vue")
   },
 
   // Always leave this as last one,
   // but you can also remove i
   {
-    path: '*',
+    path: "*",
     meta: {
-      access: 'public',
+      access: "public",
       sidebar: false
     },
-    component: () => import('pages/Error404.vue')
+    component: () => import("pages/Error404.vue")
   }
-]
+];
 
-export default routes
+export default routes;

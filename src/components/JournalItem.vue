@@ -10,11 +10,15 @@
       <q-item-section v-if="admin">
         <q-item-label header class="row justify-between justify-center">
           <div class="q-gutter-sm">
-            <q-badge class="on-left" v-if="journal.status === 'updated'" transparent color="orange">
+            <!-- <q-badge class="on-left" v-if="journal.status === 'updated'" transparent color="orange">
               {{ journal.status }}
-            </q-badge>
+            </q-badge> -->
             <q-item-label class="text-weight-bold"><user-popup popup :id="journal.userId" :username="journal.user ? journal.user.name : ''" /></q-item-label>
-            <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
+            <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.updatedAt, 'DD MMM YYYY HH:mm A') }}
+              <q-badge class="on-left" v-if="journal.status === 'updated'" transparent color="orange">
+                Edited
+              </q-badge>
+            </q-item-label>
             <q-item-label class="text-capitalize text-caption">{{ journal.category }}</q-item-label>
           </div>
         </q-item-label>
@@ -24,7 +28,7 @@
         <q-item-label header class="row justify-between justify-center">
           <div class="q-gutter-sm">
             <q-item-label class="text-weight-bold text-capitalize">{{ journal.category }}</q-item-label>
-            <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
+            <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.updatedAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
           </div>
           <q-btn color="blue" icon="fas fa-edit" label="Edit" @click="onClickEditJournal()" />
         </q-item-label>
@@ -33,8 +37,8 @@
       <!-- Review button & discuss button -->
       <q-item-section v-if="admin">
         <div class="row justify-end q-gutter-sm text-grey">
-          <q-btn flat round :class="{ 'text-warning': journal.status === 'discuss' }" icon="fas fa-user-secret" @click="onClickUpdateStatus('discuss')" />
-          <q-btn flat round :class="{ 'text-positive': journal.status === 'review' }" icon="fas fa-check"  @click="onClickUpdateStatus('review')" />
+          <q-btn flat round :class="{ 'text-warning': journal.status === 'discuss' }" icon="fas fa-user-secret" @click="onClickUpdateStatusDiscuss()" />
+          <q-btn flat round :class="{ 'text-positive': journal.status === 'review' }" icon="fas fa-check" @click="onClickUpdateStatusReviewed()" />
         </div>
       </q-item-section>
     </q-item>
@@ -269,6 +273,34 @@ export default {
         })
         .catch(res => {
           this.progress = false
+        })
+    },
+
+    onClickUpdateStatusDiscuss() {
+      if(!this.journal) {
+        return
+      }
+
+      this.$store.dispatch('UpdateStatusDiscuss', this.journal)
+        .then(res => {
+          this.updatedAlert = true
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    },
+
+    onClickUpdateStatusReviewed() {
+      if(!this.journal) {
+        return
+      }
+      
+      this.$store.dispatch('UpdateStatusReviewed', this.journal)
+        .then(res => {
+          this.updatedAlert = true
+        })
+        .catch(err => {
+          console.log(err);
         })
     }
   },

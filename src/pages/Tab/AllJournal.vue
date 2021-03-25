@@ -10,7 +10,7 @@
 
 <script>
 import JournalItem from './../../components/JournalItem'
-import Journal from './../../models/Journal'
+import Journal from '../../models/Journal'
 import { date } from 'quasar'
 
 export default {
@@ -23,13 +23,12 @@ export default {
 
   computed: {
     journals() {
-      //return Journal.query().withAll().get()
-      return Journal.query().where('status', (status) => status !== 'review').get()
+      return Journal.query().withAll().get()
     }
   },
 
   created() {
-    this.$store.dispatch('GetUnreviewedJournal')
+    this.$store.dispatch('GetAllJournals')
   },
 
   components: {

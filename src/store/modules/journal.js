@@ -25,6 +25,36 @@ const journal = {
         };
 
         this.$repository.journal
+          .listAllJournal(filter)
+          .then(res => {
+            Journal.insert({ data: res.data });
+            resolve(res.data);
+          })
+          .catch(err => {
+            console.log(err);
+            reject(err);
+          });
+      });
+    },
+
+    GetUnreviewedJournal() {
+      return new Promise((resolve, reject) => {
+        let filter = {
+          order: ["createdAt DESC"],
+          include: [
+            {
+              relation: "project"
+            },
+            {
+              relation: "user"
+            },
+            {
+              relation: "comments"
+            }
+          ]
+        };
+
+        this.$repository.journal
           .listing(filter)
           .then(res => {
             Journal.insert({ data: res.data });
@@ -62,6 +92,37 @@ const journal = {
           .updateById(id, data)
           .then(res => {
             Journal.update({ where: id, data: data });
+            resolve(res.data);
+          })
+          .catch(err => {
+            console.log(err);
+            reject(err);
+          });
+      });
+    },
+
+    UpdateStatusDiscuss({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        this.$repository.journal
+          .updateDiscuss(data.id)
+          .then(res => {
+            Journal.update({ where: data.id, data: data });
+            resolve(res.data);
+          })
+          .catch(err => {
+            console.log(err);
+            reject(err);
+          });
+      });
+    },
+
+    UpdateStatusReviewed({ commit }, data) {
+      console.log("test at journal");
+      return new Promise((resolve, reject) => {
+        this.$repository.journal
+          .updateReviewed(data.id)
+          .then(res => {
+            Journal.update({ where: data.id, data: data });
             resolve(res.data);
           })
           .catch(err => {
