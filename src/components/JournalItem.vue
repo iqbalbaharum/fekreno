@@ -107,8 +107,6 @@
       <q-btn class="flex items-end q-mt-sm" flat color="negative" label="Cancel" @click="onClickCancel"/>
       </div>
     </q-card-section>
-
-
   </q-card>
 </template>
 <script>
