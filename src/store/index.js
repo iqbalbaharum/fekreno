@@ -22,6 +22,7 @@ import userapplication from './modules/userapplication';
 import tags from './modules/tags';
 import file from './modules/file'
 import topic from './modules/topic'
+import activity from './modules/activity'
 
 Vue.use(Vuex);
 VuexORM.use(VuexORMSearch);
@@ -54,7 +55,8 @@ export default function(/* { ssrContext } */) {
       userapplication,
       tags,
       file,
-      topic
+      topic,
+      activity
     },
     getters,
     plugins: [VuexORM.install(database)],

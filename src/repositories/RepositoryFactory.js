@@ -15,6 +15,7 @@ import ApplicationRepository from './ApplicationRepository'
 import UserApplicationRepository from './UserApplicationRepository'
 import TagRepository from './TagsRepository'
 import TopicRepository from './TopicRepository'
+import ActivityRepository from './ActivityRepository'
 
 export default {
   //userRepository: bind('userRepository', RepositoryInterface)
@@ -32,5 +33,6 @@ export default {
   application: new ApplicationRepository(),
   userapplication: new UserApplicationRepository(),
   tags: new TagRepository(),
-  topic: new TopicRepository()
+  topic: new TopicRepository(),
+  activity: new ActivityRepository()
 }
