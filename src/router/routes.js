@@ -318,12 +318,20 @@ const routes = [
         component: () => import('pages/Website/Krenofication.vue')
       },
       {
-        path: '/Blog',
+        path: '/BlogMain',
         meta: {
           access: 'public',
           sidebar: false
         },
-        component: () => import('pages/Website/Blog/Blog.vue')
+        component: () => import('src/pages/Website/Blog/BlogMain.vue')
+      },
+      {
+        path: '/ViewMore',
+        meta: {
+          access: 'public',
+          sidebar: false
+        },
+        component: () => import('src/pages/Website/Blog/ViewMore.vue')
       },
       {
         path: '/BlogInner',

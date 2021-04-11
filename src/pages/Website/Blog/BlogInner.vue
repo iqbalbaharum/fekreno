@@ -48,14 +48,15 @@
                 Arcu felis bibendum ut tristique et egestas.</p>
 
                <p> Ornare arcu odio ut sem nulla pharetra diam sit amet. Pharetra pharetra massa massa ultricies.</p>
-       
+     
 
 <div class="text-h6 text-weight-bold text-primary q-py-xl">More Articles</div>
+        </div>
 
-<div class="row flex flex-center q-gutter-lg q-py-xl">
+<div class="row flex q-gutter-md q-px-xl q-pb-xl justify-center">
         <div class="col-md-3 q-gutter-sm">
                 <q-card class="flex flex-center q-pa-lg">
-                   <img src="~assets/bro1.png" style="width:200px; height:200px">
+                   <img src="~assets/bro1.png" style="width:180px; height:180px">
                 </q-card>
 
                 <div class="q-pa-md">
@@ -66,7 +67,7 @@
         </div>
         <div class="col-md-3 q-gutter-sm">
                 <q-card class="flex flex-center q-pa-lg">
-                   <img src="~assets/bro1.png" style="width:200px; height:200px">
+                   <img src="~assets/bro3.png" style="width:180px; height:180px">
                 </q-card>
 
                 <div class="q-pa-md">
@@ -77,7 +78,7 @@
         </div>
         <div class="col-md-3 q-gutter-sm">
                 <q-card class="flex flex-center q-pa-lg">
-                   <img src="~assets/bro1.png" style="width:200px; height:200px">
+                   <img src="~assets/bro2.png" style="width:180px; height:180px">
                 </q-card>
 
                 <div class="q-pa-md">
@@ -90,5 +91,5 @@
  </div>
 </div>
 
-</div>
+
 </template>
