@@ -12,26 +12,54 @@
         <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
         <q-item-label class="text-capitalize text-caption">{{ journal.category }}</q-item-label>
       </q-item-section>
-
+      
       <q-item-section v-else>
-        <q-item-label class="text-weight-bold text-capitalize">{{ journal.category }}</q-item-label>
-        <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
-      </q-item-section>
-
-      <q-item-section v-if="admin">
-        <div class="row justify-end q-gutter-sm text-grey">
-          <q-btn flat round :class="{ 'text-warning': journal.status === 'discuss' }" icon="fas fa-user-secret" @click="onClickUpdateStatus('discuss')" />
-          <q-btn flat round :class="{ 'text-positive': journal.status === 'review' }" icon="fas fa-check"  @click="onClickUpdateStatus('review')" />
+              <div class="row justify-between justify-center">
+          <div>
+                      <q-item-label 
+              class="text-weight-bold text-capitalize">
+                {{ journal.category }}
+                <q-badge 
+                  v-if="journal.status === 'new'"
+                  color="positive">
+                  {{ journal.status }}
+                </q-badge>
+                <q-badge 
+                  v-if="journal.status === 'review'"
+                  color="warning">
+                  {{ journal.status }}
+                </q-badge>
+                <q-badge 
+                  v-if="journal.status === 'discuss'"
+                  color="blue">
+                  {{ journal.status }}
+                </q-badge>
+            </q-item-label>
+            <q-item-label class="text-capitalize text-caption">{{ date.formatDate(journal.createdAt, 'DD MMM YYYY HH:mm A') }}</q-item-label>
+        </div>
+        <div class="justify-between justify-center">
+         <q-btn round size="sm" color="positive" icon="create" @click="onClickEdit">
+            <q-tooltip>Edit Submission</q-tooltip>
+          </q-btn>
+        </div>
         </div>
       </q-item-section>
     </q-item>
 
     <q-separator />
 
-    <q-card-section horizontal class="q-mb-lg">
-      <q-card-section v-html="journal.detail">
+        <q-card-section v-if="editdialog.show">
+        <q-editor 
+         v-model="form.detail"
+          min-height="5rem"
+          :toolbar="[]"
+        />
+        <div class="row justify-end"> 
+       <q-btn class="flex items-end q-mt-sm" color="primary" text-color="white" label="Update Journal" @click="onClickUpdate('new')" />
+        <q-btn class="flex items-end q-mt-sm" flat color="negative" label="Cancel" @click="onClickCancelEdit"/>
+        </div>
       </q-card-section>
-    </q-card-section>
+    <q-card-section v-else v-html="journal.detail" />
 
     <q-card-section>
       <q-list>
@@ -73,12 +101,15 @@
         min-height="6rem"
         :toolbar="[]"
       />
+       <div class="row justify-end">
       <q-btn :loading="progress" class="flex items-end q-mt-sm" color="primary" text-color="white" label="Post Comment" @click="onClickPost">
         <template v-slot:loading>
           <q-spinner-hourglass class="on-left" />
           Loading...
         </template>
       </q-btn>
+      <q-btn class="flex items-end q-mt-sm" flat color="negative" label="Cancel" @click="onClickCancel"/>
+      </div>
     </q-card-section>
     
   </q-card>
@@ -94,9 +125,13 @@ export default {
       date: date,
       form: {
         journalId: '',
-        comment: ''
+        detail: '',
+        comment: ' '
       },
       dialog: {
+        show: false
+      },
+            editdialog: {
         show: false
       },
       progress: false
@@ -119,6 +154,7 @@ export default {
   methods: {
     onClickAddComment() {
       this.dialog.show = true
+      this.editdialog.show = false
     },
 
     onClickPost() {
@@ -138,6 +174,39 @@ export default {
           this.progress = false
         })
         
+    },
+        onClickEdit() {
+      this.form = {detail: this.journal.detail}
+      this.editdialog.show = true
+      this.dialog.show = false
+    },
+        // TODO: Update journal.detail; change journal.status to 'new'
+    onClickUpdate(status) {
+      if(!this.journal) {
+        return
+      }
+      let edit = {}
+      edit.journalId = this.journal.id
+      edit.detail = this.form.detail
+      edit.status = status
+      this.progress = true
+       this.$store.dispatch('UpdateJournal', edit)
+        .then(res => {
+          this.progress = false
+        })
+        .catch(res => {
+          this.progress = false
+        })
+        this.editdialog.show = false
+    },
+    
+    onClickCancelEdit() {
+      this.editdialog.show = false
+    },
+
+
+    onClickCancel() {
+      this.dialog.show = false
     },
 
     onClickUpdateStatus(status) {
