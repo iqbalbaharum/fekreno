@@ -1,20 +1,21 @@
 <template>
   <div class="fullscreen row">
-    <div class="col bg-primary"></div>
-    <div class="col"></div>
-    <div class="fullscreen flex flex-center">
-      <q-card class="q-pa-md" style="width: 400px">
-        <div class="text-weight-bold text-center q-pb-lg q-gutter-sm">
-          <q-img class="q-mb-md" src="~assets/krenovator.png" />
-          <div class="text-h4 text-primary">Create Account</div>
-          <div class="text-caption">
-            Dont have an account? Create your account quickly
-          </div>
-        </div>
+    <div class="col-md-3">
 
-        <div class="q-gutter-sm">
+    <div class="fullscreen flex flex-center q-pa-xl ">
+      <div class="col-xs-12 col-md-3">
+
+      <q-card class="bg-primary q-pa-md text-center text-white">
+        <q-card-section class="q-gutter-sm">
+          <q-img class="q-mb-md" src="~assets/FrameKreno.png" style="width:200px" />
+          <div class="text-h5 text-weight-bold">Create Your Account</div>
+     
+        <div class="q-gutter-sm q-px-xl">
+
           <q-input
-            filled
+          dark
+            outlined
+            dense
             v-model.trim="form.name"
             label="Username"
             ref="name"
@@ -24,7 +25,9 @@
           />
 
           <q-input
-            filled
+            dark
+            dense
+            outlined
             v-model.trim="form.email"
             label="Email Address"
             ref="email"
@@ -33,7 +36,9 @@
           />
 
           <q-input
-            filled
+          dark
+          dense
+            outlined
             v-model.trim="form.mobile"
             label="Mobile"
             ref="mobile"
@@ -42,11 +47,13 @@
           />
 
           <q-input
-            filled
+          dark
+          dense
+            outlined
             v-model="form.password"
             :type="type"
             ref="password"
-            label="Create Your Own Password"
+            label="Password"
             :error="$v.form.password.$error"
             error-message="Password can't be empty"
           >
@@ -58,35 +65,32 @@
                 @click="onClickShowPassword"
               />
             </template>
+
           </q-input>
-
-          <div>
-            <div class="text-caption">
-              By clicking Register, you have agreed with our Term of Conditions
-              of usage and using cookies.
+        
+        
+            <div class="text-caption text-weight-light">
+            By clicking the Sign Up button, you have agreed with our Terms & <br>Conditions and the usage of cookies.  
             </div>
-          </div>
-
-          <div class="q-mt-md q-gutter-sm text-center">
-            <q-btn
-              color="primary"
-              text-color="white"
-              label="Register"
-              no-caps
-              @click="onClickRegister"
-            />
-
-            <q-btn
-              color="primary"
-              text-color="primary"
-              outline
-              unelevated
-              to="/login"
-              label="Back to Login"
-              no-caps
-            />
-          </div>
         </div>
+         
+
+          <div class="q-pa-md">
+            <q-btn
+              color="cyan"
+              text-color="white"
+              label="SIGN UP"
+              no-caps
+              @click="onClickRegister">
+              <img src="~assets/Group 274.png" class="q-pl-md"/>
+            </q-btn>
+          </div>
+        
+            <div>
+              <span class="text-center">Already a member?</span>        
+           </div>
+            </q-card-section>
+
       </q-card>
 
       <prompt
@@ -111,6 +115,10 @@
 
     </div>
   </div>
+    </div>
+  </div>
+  
+  
 </template>
 
 <script>
