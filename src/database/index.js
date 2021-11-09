@@ -20,6 +20,7 @@ import Taging from '../models/Taging'
 import Topic from '../models/Topic'
 import TopicNotes from '../models/TopicNotes'
 import Notification from '../models/Notification'
+import Calendar from '../models/Calendar'
 
 // Relation
 import UserRole from '../models/UserRole'
@@ -48,6 +49,7 @@ database.register(Taging)
 database.register(Topic)
 database.register(TopicNotes)
 database.register(Notification)
+database.register(Calendar)
 //
 database.register(UserRole)
 database.register(UserProfile)

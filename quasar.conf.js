@@ -20,7 +20,7 @@ module.exports = function (/* ctx */) {
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
       'axios',
-      'vuelidate',
+      'plugins',
       'repository',
       'routing',
       'services',

@@ -251,6 +251,16 @@ const routes = [
         component: () => import('pages/Forum/Topic.vue')
       },
       {
+        path: '/calendar',
+        meta: {
+          title: 'Calendar',
+          position: 'sidebar',
+          icon: 'event',
+          roles: []
+        },
+        component: () => import('src/pages/User/Calendar/Calendar.vue')
+      },
+      {
         path: '/policy',
         meta: {
           title: 'Privacy Policy',

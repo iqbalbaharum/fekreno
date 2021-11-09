@@ -23,6 +23,7 @@ import tags from './modules/tags';
 import file from './modules/file'
 import topic from './modules/topic'
 import activity from './modules/activity'
+import calendar from './modules/calendar'
 
 Vue.use(Vuex);
 VuexORM.use(VuexORMSearch);
@@ -56,7 +57,8 @@ export default function(/* { ssrContext } */) {
       tags,
       file,
       topic,
-      activity
+      activity,
+      calendar
     },
     getters,
     plugins: [VuexORM.install(database)],
