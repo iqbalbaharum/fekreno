@@ -26,6 +26,7 @@
 
     <q-drawer
       v-model="leftDrawerOpen"
+      side="right"
       show-if-above
       bordered
       content-class="bg-grey-1"
