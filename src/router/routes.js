@@ -1,4 +1,6 @@
 import MainLayout from 'layouts/MainLayout';
+import WebLayout from 'layouts/WebLayout'
+
 
 const routes = [
   //private
@@ -226,11 +228,19 @@ const routes = [
   // public
   {
     path: '/',
-    component: MainLayout,
+    component: WebLayout,
     meta: {
       access: 'public'
     },
     children: [
+      {
+        path: '/home',
+        meta: {
+          access: 'public',
+          sidebar: false
+        },
+        component: () => import('pages/Website/Public.vue')
+      },
       {
         path: '/general',
         meta: {
@@ -284,7 +294,63 @@ const routes = [
           position: ''
         },
         component: () => import('pages/User/Profile.vue')
-      }
+      },
+      {
+        path: '/homepage',
+        meta: {
+          access: 'public',
+          sidebar: false
+        },
+        component: () => import('pages/Website/Homepage.vue')
+      },
+      {
+        path: '/TSA',
+        meta: {
+          access: 'public',
+          sidebar: false
+        },
+        component: () => import('pages/Website/TSA.vue')
+      },
+      {
+        path: '/hire',
+        meta: {
+          access: 'public',
+          sidebar: false
+        },
+        component: () => import('pages/Website/Hire.vue')
+      },
+      {
+        path: '/Krenofication',
+        meta: {
+          access: 'public',
+          sidebar: false
+        },
+        component: () => import('pages/Website/Krenofication.vue')
+      },
+      {
+        path: '/BlogMain',
+        meta: {
+          access: 'public',
+          sidebar: false
+        },
+        component: () => import('src/pages/Website/Blog/BlogMain.vue')
+      },
+      {
+        path: '/ViewMore',
+        meta: {
+          access: 'public',
+          sidebar: false
+        },
+        component: () => import('src/pages/Website/Blog/ViewMore.vue')
+      },
+      {
+        path: '/BlogInner',
+        meta: {
+          access: 'public',
+          sidebar: false
+        },
+        component: () => import('pages/Website/Blog/BlogInner.vue')
+      },
     ]
   },
 
@@ -314,6 +380,9 @@ const routes = [
     },
     component: () => import('pages/Website/Public.vue')
   },
+
+  
+  
 
   // Always leave this as last one,
   // but you can also remove i
